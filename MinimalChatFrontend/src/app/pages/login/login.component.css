@@ -1,0 +1,45 @@
+.center-content {
+    text-align: center;
+    color: #070164;
+    justify-content: center;
+  }
+  
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #e9f1f1;
+  }
+  img{
+      width: 120px;
+  }
+  .image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .register-card {
+    width: 350px;
+    text-align: center;
+    padding: 20px;
+    background-color: #e7e8f9;
+    border-radius: 35px;
+  }
+  a {
+    color: #0e077f;
+    text-decoration: none;
+  }
+  
+  .full-width {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  .mat-mdc-raised-button.mat-unthemed {
+    color: white;
+    background-color:#373283;
+    height: 50px;
+  }
+  

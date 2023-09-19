@@ -1,0 +1,29 @@
+<div class="container">
+    <mat-card class="register-card">
+      <div class="image" >
+        <img src="../../../assets/chat-app-logo-png.webp"  alt="img" />
+      </div>
+      <mat-card-header class="center-content">
+        <mat-card-title>Create Your account</mat-card-title>
+      </mat-card-header>
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <mat-card-content>
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Name" formControlName="name" />
+          </mat-form-field>
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Email" formControlName="email" />
+          </mat-form-field>
+          <mat-form-field class="full-width">
+            <input matInput type="password"  placeholder="Password" formControlName="password" />
+          </mat-form-field>
+        </mat-card-content>
+        <mat-card-actions>
+          <button class="full-width btn" [disabled]="registerForm.invalid" mat-raised-button type="submit">
+            Continue
+          </button>
+        </mat-card-actions>
+      </form>
+      <p>Already Have an Account? <a routerLink="/login">Login</a></p>
+    </mat-card>
+  </div>
