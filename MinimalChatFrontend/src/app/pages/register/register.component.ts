@@ -37,12 +37,19 @@ export class RegisterComponent {
             this.router.navigateByUrl('/login');
             console.log(this.registerForm.value);
           }
-          else {
-            this.toastr.error('Registration failed. Please check your credentials and try again.', 'Error');
+        },
+        (error) => {
+          this.toastr.error(
+            'Registration failed. Please check your credentials and try again.', 'Error'
+            );
           }
-        })
-    }
-    
+          
+          )
+        }
+        
+        else {
+          this.toastr.error('Validation Failed . Please Enter  your credentials carefully ', 'Error');
+        }
   }
   onReset() {
     this.registerForm.reset();

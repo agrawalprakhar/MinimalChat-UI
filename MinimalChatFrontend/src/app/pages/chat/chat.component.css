@@ -1,0 +1,84 @@
+.sidebar {
+  position: fixed;
+
+  height: 100%;
+  width: 280px;
+  overflow-y: auto;
+  display: flex;
+  /* justify-content: space-between; */
+  flex-direction: column;
+  /* Hide the scrollbar */
+
+  -ms-overflow-style: none;
+
+
+  background-color: #e7e8f9;
+}
+
+
+
+.bg {
+
+  display: flex;
+  flex-direction: column;
+
+  height: 100vh;
+  margin-left: 280px;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  margin-left: 0px;
+}
+
+.user-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #e0e0e0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin-right: 5px;
+  margin-left: 5px;
+
+}
+
+.user-image span {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333333;
+}
+
+.main {
+  display: flex;
+  justify-content: center;
+  /* Center horizontally */
+  align-items: center;
+  /* Center vertically */
+  height: 100vh;
+  /* Set the height of the parent div to fill the viewport */
+  margin-left: 80px;
+  padding-left: 250px;
+  background-color: #e9f1f1;
+}
+
+.app-logo {
+  width: 100px;
+  /* adjust size as needed */
+  height: 100px;
+  /* adjust size as needed */
+}
+
+.app-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.app-subtitle {
+  font-size: 16px;
+  color: #777;
+}

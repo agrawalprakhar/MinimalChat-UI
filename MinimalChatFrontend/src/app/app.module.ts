@@ -16,6 +16,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatListModule} from '@angular/material/list';
 import { ToastrModule } from 'ngx-toastr';
 
 import { LoginComponent } from './pages/login/login.component';
@@ -44,6 +46,8 @@ import { ChatComponent } from './pages/chat/chat.component';
     MatDialogModule,
     MatNativeDateModule,
     MatSidenavModule,
+    MatToolbarModule,
+    MatListModule,
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,

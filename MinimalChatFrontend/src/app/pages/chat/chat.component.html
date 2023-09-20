@@ -1,1 +1,37 @@
-<p>chat works!</p>
+<div class="sidebar">
+  <div class="flex-column align-items-stretch flex-shrink-0" style="background-color: #bfa7ef">
+    <a class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
+      <img src="../../../assets/chat-app-logo-png.webp" style="cursor: pointer" width="50" height="50" alt="img" />
+      &nbsp;&nbsp;
+      <span class="fs-5 fw-semibold" style="cursor: pointer">Minimal Chat</span>
+    </a>
+    <div *ngFor="let user of users" class="list-group list-group-flush border-bottom scrollarea">
+      <a class="list-group-item list-group-item-action py-3 lh-tight" aria-current="true"
+        style="background-color: lavender">
+        <div class="d-flex w-100 align-items-center">
+          <div class="profile">
+            <div class="user-image">
+              <span>{{ user.name.charAt(0) }}</span>
+            </div>
+          </div>
+          <div class="row">
+            <strong class="mb-1">{{ user.name }}</strong>
+
+            <small>{{ user.email }}</small>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <div style="text-align: center">
+    <img src="../../../assets/chat-app-logo-png.webp" alt="MinimalChat" class="app-logo" />
+    <h1 class="app-title">Minimal Chat : Start Your Conversation With Us</h1>
+  </div>
+</div>
+<div>
+  <!-- <app-conversation-history ></app-conversation-history> -->
+  <router-outlet></router-outlet>
+</div>
