@@ -33,10 +33,7 @@ body {
     padding: 16px;
 }
 
-/* Styles for the top navigation bar */
-.navbar {
-  
-}
+
 
 
 
@@ -49,19 +46,25 @@ strong {
 
 /* Styles for the chat container */
 .chat-container {
-    background-color: #fff;
+    background-color: #e7ddfb;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 10px;
-    width: 1200px;
-    margin-left:300px;
-    height: 700px;
+    margin-left: 300px;
+    /* margin-top: 52px; */
     margin-top: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    min-height: 622px;
 }
+.chat-messages {
+   /* Set a maximum height of 80% of the viewport height */
+    overflow-y: auto; /* Add a vertical scrollbar if necessary */
+  }
 
 /* Styles for individual chat messages */
 .chat-message {
-display: flex;
+   display: flex;
     flex-direction: column;
     padding: 10px;
     flex-grow: 1;
@@ -76,6 +79,7 @@ display: flex;
     max-width: 80%;
     margin: 4px 0;
     max-width: fit-content;
+    max-width: -moz-fit-content;
     align-self: flex-end;
 }
 
@@ -84,20 +88,36 @@ display: flex;
     color: #fff;
     align-self: flex-end;
     max-width: fit-content;
+    max-width: -moz-fit-content;
     margin-left: auto;
     padding: 8px;
     border-radius: 8px;
     cursor: pointer;
     display: flex;
     margin-top: 15px;
+    margin-bottom: 4px;
 }
 
 .incoming {
     background-color: #f1f1f1;
     color: #333;
-     align-self: flex-start;
-     margin-right: auto;
+    align-self: flex-start;
+    margin-right: auto;
+    padding: 5px;
+    margin-bottom: -7px;
+
 }
+
+.timeoutgoing{
+    font-size: 10px; /* Adjust the font size as needed */
+    text-align: end;
+  } 
+
+  .outgoing > .message-timestamp{
+    font-size: 10px;
+    padding-top: 17px;
+  }
+  
 
 /* Styles for editor actions */
 .editor-actions {
@@ -145,12 +165,18 @@ display: flex;
 
 /* Styles for the message input */
 input[type="text"] {
-    flex: 1;
     border: 1px solid #ccc;
     border-radius: 40px;
     padding: 8px;
-    margin-top: 100px;
-}
+    margin-top: auto;
+    position: fixed;
+    left: 311px;
+    right: 80px;
+    bottom: 19px;
+    /* width: calc(100% - 16px); */
+    z-index: 1;
+    background-color: #fff;
+  }
 
 /* Styles for the send button */
 .send-button {
@@ -159,7 +185,17 @@ input[type="text"] {
     border: none;
     border-radius: 4px;
     padding: 8px 16px;
-    margin-left: 8px;
-    margin-top: 100px;
     cursor: pointer;
+    position: fixed; /* Use absolute positioning */
+    bottom: 21px;
+    right: 21px;
+/* Adjust the distance from the right */
 }
+.message-text {
+    font-size: 16px; /* Adjust the font size as needed */
+  }
+  
+  .message-timestamp {
+    font-size: 12px; /* Adjust the font size as needed */
+  }
+  

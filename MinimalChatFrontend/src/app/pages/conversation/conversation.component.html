@@ -1,36 +1,45 @@
-<!DOCTYPE html>
-<html>
 
-<head>
-    <meta charset="utf-8" />
-    <title>Chat App</title>
-
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-</head>
-
-<body>
-    <div id="chat-container">
-        <div id="chat-window">
-            <div class="chat-container">
-                <div class="chat-messages" style="height: 492px;">
-                    <div [ngClass]="{'chat-message outgoing': message.senderId === currentUserId, 'chat-message incoming': message.senderId !== currentUserId
-                        }" *ngFor="let message of messages" >
-                        <span class="message-content" *ngIf="!message.editMode && !message.deleteMode">{{
-                            message.content
-                            }}
-                        </span>
-                       
-
-                    </div>
-
-                </div>
-
-                <!-- Chat Input -->
-                <div class="chat-input">
-                    <input type="text" placeholder="Type your message..." [(ngModel)]="messageContent" />
-                    <button class="send-button" (click)="sendMessage()"><i class="fa fa-send"></i></button>
-                </div>
+<div id="chat-container">
+    <div id="chat-window">
+      <div class="chat-container">
+        <!-- Chat Messages Container -->
+        <div class="chat-messages">
+          <div class="message" *ngFor="let message of messages">
+            <div
+              [ngClass]="{
+                'chat-message outgoing': message.senderId === currentUserId,
+                'chat-message incoming': message.senderId !== currentUserId
+              }"
+            >
+              <div class="message-content">
+                <ng-container *ngIf="!message.editMode && !message.deleteMode">
+                  <span class="message-text">{{ message.content }}</span>
+                  <!-- Edit button for messages sent by the current user -->
+                
+                </ng-container>
+               
+              </div>
             </div>
+            <div class="message-timestamp" [ngClass]="{
+                'chat-message timeoutgoing': message.senderId === currentUserId,
+                'chat-message timeincoming': message.senderId !== currentUserId
+              }">
+              {{ message.timestamp | date : "hh:mm a" }}
+            </div>
+          </div>
         </div>
+
+        <!-- Chat Input -->
+        <div class="chat-input">
+          <input
+            type="text"
+            placeholder="Type your message..."
+            [(ngModel)]="messageContent"
+          />
+          <button class="send-button" (click)="sendMessage()">
+            <i class="fa fa-send"></i>
+          </button>
+        </div>
+      </div>
     </div>
-</body>
+  </div>

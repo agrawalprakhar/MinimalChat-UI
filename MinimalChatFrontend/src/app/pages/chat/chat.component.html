@@ -4,7 +4,10 @@
             <img src="../../../assets/chat-app-logo-png.webp" style="cursor: pointer" width="50" height="50"
               alt="img" />
             &nbsp;&nbsp;
-            <span class="fs-5 fw-semibold" style="cursor: pointer">Minimal Chat</span>
+            <div class="head">
+              <span class="fs-5 fw-semibold header" style="cursor: pointer">Minimal Chat</span>
+              
+            </div>
           </a>
           <div *ngFor="let user of users" class="list-group list-group-flush border-bottom scrollarea" (click)="showMessage(user.id)">
             <a class="list-group-item list-group-item-action py-3 lh-tight" aria-current="true">
@@ -25,7 +28,7 @@
         </div>
       </div>
       <router-outlet name="childPopup"></router-outlet>
-<div class="main">
+<div class="main"  *ngIf="showWelcomeUI">
   <div style="text-align: center">
     <img src="../../../assets/chat-app-logo-png.webp" alt="MinimalChat" class="app-logo" />
     <h1 class="app-title">Minimal Chat : Start Your Conversation With Us</h1>

@@ -15,7 +15,14 @@
   background-color: #e7e8f9;
 }
 
-
+.header{
+  position: sticky;
+  top:3px;
+}
+/* Styles for the header */
+.head{
+ 
+}
 
 .bg {
 
