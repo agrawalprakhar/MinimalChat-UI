@@ -2,6 +2,7 @@ import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http'
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import jwt_decode from 'jwt-decode';
 
 
 
@@ -37,6 +38,14 @@ private tokenKey = 'auth_token';
     return localStorage.getItem(this.tokenKey);
   }
 
+    // Remove the token from local storage
+    removeToken(): void {
+      localStorage.removeItem(this.tokenKey);
+    }
+    isLoggedIn(): boolean {
+      return !!this.getToken();
+    }
+
   retrieveUsers(): Observable<any[]> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -44,4 +53,16 @@ private tokenKey = 'auth_token';
     });
     return this.http.get<any[]>("https://localhost:44313/api/users", { headers: headers });
   }
+  
+  getLoggedInUser(){
+    const decodedToken: any = jwt_decode(this.getToken()!.toString());
+    const id =
+      decodedToken[
+        'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'
+      ];
+
+    return +id;
+
+  }
+  
 }

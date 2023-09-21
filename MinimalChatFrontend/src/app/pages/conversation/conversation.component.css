@@ -1,0 +1,165 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+ html,
+body {
+    height: 100%;
+}
+
+
+#chat-container {
+    display: flex;
+    flex-grow: 1;
+    background: #FFF;
+    border-radius: 10px;
+}
+
+
+
+#chat-window {
+    border-radius: 0 10px 10px 0;
+    flex-grow: 1;
+    width: 250px;
+    
+}
+
+
+/* Styles for the main container */
+.bg {
+    background-color: #f1f1f1;
+    padding: 16px;
+}
+
+/* Styles for the top navigation bar */
+.navbar {
+  
+}
+
+
+
+/* Styles for the user profile name */
+strong {
+    color: white;
+    margin-left: 16px;
+    font-size: 20px;
+}
+
+/* Styles for the chat container */
+.chat-container {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    width: 1200px;
+    margin-left:300px;
+    height: 700px;
+    margin-top: 10px;
+}
+
+/* Styles for individual chat messages */
+.chat-message {
+display: flex;
+    flex-direction: column;
+    padding: 10px;
+    flex-grow: 1;
+    overflow-y: auto;
+    
+}
+
+.chat-message {
+    /* Common styles for chat messages */
+    padding: 8px;
+    border-radius: 8px;
+    max-width: 80%;
+    margin: 4px 0;
+    max-width: fit-content;
+    align-self: flex-end;
+}
+
+.outgoing {
+    background-color: #047BD5;
+    color: #fff;
+    align-self: flex-end;
+    max-width: fit-content;
+    margin-left: auto;
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    margin-top: 15px;
+}
+
+.incoming {
+    background-color: #f1f1f1;
+    color: #333;
+     align-self: flex-start;
+     margin-right: auto;
+}
+
+/* Styles for editor actions */
+.editor-actions {
+    display: flex;
+    margin-left: 8px;
+}
+
+/* Styles for edit and delete buttons */
+.edit-button,
+.delete-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-right: 4px;
+}
+
+/* Styles for the editor container */
+.message-editor-container {
+    display: flex;
+    align-items: center;
+}
+
+/* Styles for the message editor input */
+.message-editor {
+    flex: 1;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 4px 8px;
+   
+}
+
+/* Styles for accept and decline icons */
+.accept-icon,
+.decline-icon {
+    cursor: pointer;
+    font-size: 18px;
+}
+
+/* Styles for the chat input */
+.chat-input {
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+}
+
+/* Styles for the message input */
+input[type="text"] {
+    flex: 1;
+    border: 1px solid #ccc;
+    border-radius: 40px;
+    padding: 8px;
+    margin-top: 100px;
+}
+
+/* Styles for the send button */
+.send-button {
+    background-color: #047BD5;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    margin-left: 8px;
+    margin-top: 100px;
+    cursor: pointer;
+}

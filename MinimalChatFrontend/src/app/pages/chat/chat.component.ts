@@ -8,8 +8,7 @@ import { UserService } from 'src/app/core/services/user.service';
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent {
-  users: any[] | undefined ;
- 
+  users: any[] =[] ;
   currentReceiver: any;
 
   constructor(private userService: UserService, private router: Router) {}
@@ -19,10 +18,21 @@ export class ChatComponent {
     this.userService.retrieveUsers().subscribe((res) => {
  
       this.users=res;
+      this.currentReceiver = res[0];
 
     });
   }
 
+
+  onUserClick(user: any) {
+    console.log(user);
+
+    this.currentReceiver = user;
+  }
+
+  showMessage(id: any) {
+    this.router.navigate(['/chat', { outlets: { childPopup: ['user', id] } }]);
+  }
  
 
 

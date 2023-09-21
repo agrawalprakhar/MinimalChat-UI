@@ -24,13 +24,17 @@ import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ChatComponent } from './pages/chat/chat.component';
+import { ConversationComponent } from './pages/conversation/conversation.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     RegisterComponent,
     LoginComponent,
-    ChatComponent
+    ChatComponent,
+    ConversationComponent,
+   
   ],
   imports: [
     BrowserModule,

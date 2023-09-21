@@ -3,10 +3,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { RegisterComponent } from './pages/register/register.component';
 import { LoginComponent } from './pages/login/login.component';
 import { ChatComponent } from './pages/chat/chat.component';
+import { ConversationComponent } from './pages/conversation/conversation.component';
+
 
 const routes: Routes = [
   {
-    path:'',component:RegisterComponent
+    path:'',component:LoginComponent
   },
   {
     path:'register',component:RegisterComponent
@@ -14,9 +16,16 @@ const routes: Routes = [
   {
     path:'login',component:LoginComponent
   },
-  {
-    path:'chat',component:ChatComponent
-  },
+  {    path: 'chat',
+  component: ChatComponent,
+  children: [
+    {
+      path: 'user/:userId',
+      component: ConversationComponent,
+      outlet: 'childPopup',
+    },
+  ],
+},
 ];
 
 @NgModule({
