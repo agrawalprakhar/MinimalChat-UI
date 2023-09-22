@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, ElementRef, Renderer2,HostListener } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ChatService } from 'src/app/core/services/chat.service';
 import { UserService } from 'src/app/core/services/user.service';
@@ -13,17 +13,22 @@ export class ConversationComponent {
   currentUserId: number | any;
   currentReceiverId!: number;
   currentReceiver: any = {};
+  
   messages: any[] = [];
   messageContent: string = '';
   loadedMessages: any[] = [];
   // Add a variable to store the last message ID displayed
-lastMessageId: number | null = null;
+  lastLoadedMessage: Date | any;
+  scrolledToTop: boolean = false;
+
+
 
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,
     private chatService: ChatService,
-    private http: HttpClient
+    private http: HttpClient,
+    private el: ElementRef
   ) {
     this.currentUserId = this.userService.getLoggedInUser();
   }
@@ -40,26 +45,79 @@ lastMessageId: number | null = null;
       this.userService.retrieveUsers().subscribe((res) => {
         this.currentReceiver = res.find(
           (user) => user.UserId === this.currentReceiverId
-        );
+          );
+        });
       });
-    });
+      this.loadMessages();
 
     const savedMessages = localStorage.getItem('chatMessages');
     if (savedMessages) {
       this.messages = JSON.parse(savedMessages);
     }
   }
+ 
+  @HostListener('scroll', ['$event'])
+  onScroll(event: Event) {
+    console.log('Scroll event detected');
+    const element = event.target as HTMLElement;
+    if (element.scrollTop === 0) {
+      const initialScrollHeight = element.scrollHeight;
+  
+      this.loadMessages();
+  
+      // After loading new messages, adjust the scroll position to keep the scrollbar at the bottom
+      setTimeout(() => {
+        const newScrollHeight = element.scrollHeight;
+        element.scrollTop = newScrollHeight - (initialScrollHeight - element.scrollTop);
+      }, 0);
+    }
+  }
+  
+ 
+  
+  
+  
+  
+  
+ 
 
+  loadMessages() {
+    this.chatService.getMessages(this.currentReceiverId, this.lastLoadedMessage).subscribe((res) => {
+      console.log('getMessages response:', res);
+      const newMessages = res
+        .map((message) => ({
+          ...message,
+          timestamp: new Date(message.timestamp), // Convert to Date object
+        }))
+        .sort((a, b) => a.timestamp - b.timestamp);
+
+      // Add new messages to the beginning of the array
+      this.messages = [...newMessages, ...this.messages];
+
+      if (newMessages.length > 0) {
+        // Update the last loaded message timestamp
+        this.lastLoadedMessage = newMessages[newMessages.length - 1].timestamp;
+      }
+            
+
+    });
+  }
+ 
   getMessages(userId: number) {
-    debugger
+  
     this.messages = [];
     console.log(userId);
 
     this.chatService.getMessages(userId).subscribe((res) => {
       console.log('getMessages response:', res);
-      this.messages = res;
-    });
-    console.log('getMessages messages:', this.messages);
+      this.messages = res
+      .map((message) => ({
+        ...message,
+        timestamp: new Date(message.timestamp), // Convert to Date object
+      }))
+      .sort((a, b) => a.timestamp - b.timestamp);
+  });
+  console.log('getMessages messages:', this.messages);
   }
   // Modify the getMessages function to accept a "before" parameter
 // getMessages(userId: number, before: number | null = null) {
@@ -83,6 +141,7 @@ lastMessageId: number | null = null;
 //     this.getMessages(this.currentReceiverId, this.lastMessageId);
 //   }
 // }
+
 
   sendMessage() {
     if (this.messageContent.trim() === '') {
@@ -113,5 +172,79 @@ lastMessageId: number | null = null;
     );
   }
  
+  onContextMenu(event: MouseEvent, message: any) {
+    event.preventDefault();
+    if (message.senderId === this.currentUserId) {
+      message.isEvent = !message.isEvent;
+    }
+    this.sendMessage();
+  }
+  
  
+  onAcceptEdit(message: any) {
+    // Update the message content with edited content
+    message.content = message.editedContent;
+    message.editMode = false;
+    console.log(message);
+    
+    this.chatService.editMessage(message.id, message.content).subscribe(
+      (res) => {
+        const editedMessageIndex = this.messages.findIndex(
+          (m) => m.id === message.id
+        );
+        if (editedMessageIndex !== -1) {
+          this.messages[editedMessageIndex].content = message.editedContent;
+        }
+      },
+      (error) => {
+        console.error('Error editing message:', error);
+        // Handle the error if needed
+      }
+    );
+  }
+
+  onDeclineEdit(message: any) {
+    // Revert back to original content and close the inline editor
+    message.editMode = false;
+  }
+
+  onEditMessage(message: any) {
+    if (message.senderId === this.currentUserId) {
+      message.editMode = true;
+      message.editedContent = message.content;
+      message.showContextMenu = true; // Add a property to control the context menu visibility
+    }
+  }
+  
+  onAcceptDelete(message: any) {
+    this.chatService.deleteMessage(message.id).subscribe(
+      () => {
+        const index = this.messages.findIndex((m) => m.id === message.id);
+        if (index !== -1) {
+          this.messages.splice(index, 1); // Remove the message from the array
+        }
+      },
+      (error) => {
+        console.error('Error deleting message:', error);
+        // Handle the error if needed
+      }
+      );
+    }
+    
+  
+    onDeclineDelete(message: any) {
+      // Revert back to original content and close the inline editor
+    message.deleteMode = false;
+  }
+
+
+
+
+  onDeleteMessage(message: any) {
+    if (message.senderId === this.currentUserId) {
+      message.deleteMode = true;
+      message.showContextMenu = true; // Add a property to control the context menu visibility
+    }
+  }
+
 }
