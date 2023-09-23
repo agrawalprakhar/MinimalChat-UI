@@ -20,53 +20,7 @@ export class ChatService {
 
   
   
-  // getMessages(id: number): Observable<any[]> {
-  //   debugger
-  //   let token = localStorage.getItem('auth_token');
-  //   console.log(token);
-
-  //   const headers = new HttpHeaders({
-  //     'Content-Type': 'application/json',
-  //     Authorization: `Bearer ${token}`,
-  //   });
-
-  //   console.log(id);
-
-  //   return this.http
-  //     .get<any[]>(`https://localhost:44313/api/messages?userId=${id}&sort=desc&limit=20`, {
-  //       headers: headers,
-  //     })
-  //     .pipe(
-  //       map((response: any) => {
-  //         console.log('getMessages response:', response);
-  //         return response.messages;
-  //       })
-  //     );
-  // }
-  // getMessages(userId: number ): Observable<any[]> {
-  //   const token = localStorage.getItem('auth_token');
-  //   const headers = new HttpHeaders({
-  //     'Content-Type': 'application/json',
-  //     Authorization: `Bearer ${token}`,
-  //   });
-
-  //   const limit = 20;
-
-  //   // Use HttpParams for query parameters
-  //   let params = new HttpParams()
-  //     .set('userId', userId.toString())
-  //     .set('sort', 'desc')
-  //     .set('limit', limit.toString())
-
-
-  //   return this.http.get<any[]>(this.url, { headers: headers, params: params }).pipe(
-  //           map((response: any) => {
-  //             console.log('getMessages response:', response);
-  //             return response.messages;
-  //           })
-  //         );
-  // }
-
+ 
   getMessages(userId: number, before?: Date, count: number = 20, sort: string = 'desc'):Observable<any[]>{
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',

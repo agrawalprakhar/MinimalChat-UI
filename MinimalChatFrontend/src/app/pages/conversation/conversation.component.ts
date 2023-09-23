@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, ElementRef, Renderer2,HostListener } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, ElementRef,HostListener } from '@angular/core';
+import { ActivatedRoute , Router} from '@angular/router';
 import { ChatService } from 'src/app/core/services/chat.service';
 import { UserService } from 'src/app/core/services/user.service';
 
@@ -28,17 +28,21 @@ export class ConversationComponent {
     private userService: UserService,
     private chatService: ChatService,
     private http: HttpClient,
-    private el: ElementRef
+    private el: ElementRef,
+    private router : Router
   ) {
     this.currentUserId = this.userService.getLoggedInUser();
   }
 
   ngOnInit(): void {
+    debugger
     this.route.params.subscribe((params) => {
       const userId = +params['userId'];
       this.currentReceiverId = userId;
-
+      
+      console.log('name',this.currentReceiver.value)
       console.log('currentReceiverId:', this.currentReceiverId);
+
  // Load the initial 20 messages
       this.getMessages(this.currentReceiverId);
 
@@ -246,5 +250,10 @@ export class ConversationComponent {
       message.showContextMenu = true; // Add a property to control the context menu visibility
     }
   }
+  navigateToLogs() {
+    // Navigate to the 'logs' route
+    this.router.navigate(['/logs']); // Replace 'logs' with your actual route
+  }
+
 
 }

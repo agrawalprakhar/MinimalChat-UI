@@ -17,7 +17,15 @@ body {
     border-radius: 10px;
 }
 
+ 
 
+
+
+
+/* Add some padding to the body to account for the fixed navbar */
+body {
+    padding-top: 60px; /* Adjust this value as needed */
+}
 
 #chat-window {
     border-radius: 0 10px 10px 0;
@@ -25,18 +33,34 @@ body {
     width: 250px;
     
 }
+.buttonclass{
+    height: 40px;
+    width: 100px;
+    margin-right: 10px;
+  
+}
+h1 {
+    font-size: 53px;
+    font-weight: 600;
+    line-height: -2px;
+    font-family: Roboto, sans-serif;
+    letter-spacing: normal;
+    margin: -1px 12px 9px;}
 /* Styles for the top navigation bar */
 .navbar {
     background-color: lavender;
     height: 61px;
-    width: 1044px;
+    width: 80%;
+   
     display: flex;
-    align-items: center;
-    justify-content: flex-end;
+
+  
     /* float: left; */
     margin-left: auto;
     margin-top: 6px;
     border-radius: 14px;
+
+    margin-right: 10px;
 }
 
 /* Styles for the user profile image */
@@ -83,7 +107,7 @@ strong {
     margin-top: 10px;
     margin-right: 10px;
     margin-bottom: 10px;
-    min-height: 97vh;
+    min-height: 80vh;
     padding-bottom: 100px;
     max-height: 400px; /* Set a maximum height for the container */
     overflow-y: auto; /* Add a vertical scrollbar when content overflows */

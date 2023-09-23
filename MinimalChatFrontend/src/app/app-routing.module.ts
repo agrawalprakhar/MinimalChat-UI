@@ -4,6 +4,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { LoginComponent } from './pages/login/login.component';
 import { ChatComponent } from './pages/chat/chat.component';
 import { ConversationComponent } from './pages/conversation/conversation.component';
+import { RequestLogsComponent } from './pages/request-logs/request-logs.component';
 
 
 const routes: Routes = [
@@ -25,6 +26,9 @@ const routes: Routes = [
       outlet: 'childPopup',
     },
   ],
+},
+{
+  path:'logs',component:RequestLogsComponent
 },
 ];
 
