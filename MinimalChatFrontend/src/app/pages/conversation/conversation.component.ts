@@ -20,6 +20,7 @@ export class ConversationComponent {
   // Add a variable to store the last message ID displayed
   lastLoadedMessage: Date | any;
   scrolledToTop: boolean = false;
+  before : Date | any=new Date();
 
 
 
@@ -40,11 +41,11 @@ export class ConversationComponent {
       const userId = +params['userId'];
       this.currentReceiverId = userId;
       
-      console.log('name',this.currentReceiver.value)
+
       console.log('currentReceiverId:', this.currentReceiverId);
 
  // Load the initial 20 messages
-      this.getMessages(this.currentReceiverId);
+      this.getMessages(this.currentReceiverId,this.before);
 
       this.userService.retrieveUsers().subscribe((res) => {
         this.currentReceiver = res.find(
@@ -52,7 +53,7 @@ export class ConversationComponent {
           );
         });
       });
-      this.loadMessages();
+      
 
     const savedMessages = localStorage.getItem('chatMessages');
     if (savedMessages) {
@@ -62,13 +63,15 @@ export class ConversationComponent {
  
   @HostListener('scroll', ['$event'])
   onScroll(event: Event) {
+   
     console.log('Scroll event detected');
     const element = event.target as HTMLElement;
     if (element.scrollTop === 0) {
       const initialScrollHeight = element.scrollHeight;
   
-      this.loadMessages();
-  
+       debugger
+      this.getMessages(this.currentReceiverId,this.lastLoadedMessage);
+       console.log(this.lastLoadedMessage);
       // After loading new messages, adjust the scroll position to keep the scrollbar at the bottom
       setTimeout(() => {
         const newScrollHeight = element.scrollHeight;
@@ -76,43 +79,15 @@ export class ConversationComponent {
       }, 0);
     }
   }
+
   
  
-  
-  
-  
-  
-  
- 
+  getMessages(userId: number,before:Date) {
+  debugger
 
-  loadMessages() {
-    this.chatService.getMessages(this.currentReceiverId, this.lastLoadedMessage).subscribe((res) => {
-      console.log('getMessages response:', res);
-      const newMessages = res
-        .map((message) => ({
-          ...message,
-          timestamp: new Date(message.timestamp), // Convert to Date object
-        }))
-        .sort((a, b) => a.timestamp - b.timestamp);
-
-      // Add new messages to the beginning of the array
-      this.messages = [...newMessages, ...this.messages];
-
-      if (newMessages.length > 0) {
-        // Update the last loaded message timestamp
-        this.lastLoadedMessage = newMessages[newMessages.length - 1].timestamp;
-      }
-            
-
-    });
-  }
- 
-  getMessages(userId: number) {
-  
-    this.messages = [];
     console.log(userId);
 
-    this.chatService.getMessages(userId).subscribe((res) => {
+    this.chatService.getMessages(userId,before).subscribe((res) => {
       console.log('getMessages response:', res);
       this.messages = res
       .map((message) => ({
@@ -120,6 +95,9 @@ export class ConversationComponent {
         timestamp: new Date(message.timestamp), // Convert to Date object
       }))
       .sort((a, b) => a.timestamp - b.timestamp);
+      if (this.messages.length > 0) {
+        this.lastLoadedMessage = this.messages[this.messages.length - 20].timestamp;
+      }
   });
   console.log('getMessages messages:', this.messages);
   }
@@ -254,6 +232,10 @@ export class ConversationComponent {
     // Navigate to the 'logs' route
     this.router.navigate(['/logs']); // Replace 'logs' with your actual route
   }
-
+  Logout(){
+    this.userService.removeToken();
+  
+    this.router.navigate(["/login"]);
+  }
 
 }
