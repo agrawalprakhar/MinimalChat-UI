@@ -1,107 +1,125 @@
-/* Add styles to the filters container */
+/* Add your custom CSS styles here */
+
+/* Styling for the whole component */
+.request-logs-component {
+  font-family: Arial, sans-serif;
+  background-color: #e7ddfb;
+  padding: 20px;
+}
+
+/* Styling for the filters container */
 .filters-container {
-    display: flex;
-    align-items: center;
-    margin: 10px;
-    gap:10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  background-color: #e7ddfb;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Styling for filter inputs and buttons */
+.filter-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.time-range-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.time-range-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.filter-button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+/* Styling for the column toggle section */
+.column-toggle {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  background-color: #e7ddfb;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.column-label {
+  display: flex;
+  align-items: center;
+}
+
+/* Styling for the logs table */
+.logs-container {
+  background-color: #e7ddfb;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th {
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+  text-align: left;
+  padding: 0.5rem 1rem;
+}
+
+.table td {
+  background-color: #e7ddfb;
+  padding: 0.5rem 1rem;
+}
+
+/* Styling for hidden columns */
+.hidden {
+  display: none;
+}
+
+/* Styling for the "No logs found" message */
+.no-logs-message {
+  text-align: center;
+  margin-top: 1rem;
+  color: #999;
+}
+
+/* Styling for checkboxes */
+.mat-checkbox {
+  margin-right: 8px;
+}
+
+/* Styling for the responsive layout */
+@media (max-width: 768px) {
+  .filters-container {
+    flex-direction: column;
   }
-  
-  /* Add styles to the date inputs and time range buttons */
-  .filters-container div,
-  .time-range-buttons {
-    display: flex;
-    align-items: center;
+  .column-toggle {
+    margin-top: 1rem;
   }
-  
-  /* Add styles to the labels */
-  label {
-    margin-right: 10px;
-  }
-  
-  /* Add styles to the datetime inputs */
-  input[type="datetime-local"] {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    outline: none;
-  }
-  
-  /* Add styles to the time range buttons */
-  .time-range-buttons button {
-    padding: 8px 16px;
-    margin-right: 10px;
-    background-color: #047BD5;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  /* Add hover effect to time range buttons */
-  .time-range-buttons button:hover {
-    background-color: #035293;
-  }
-  
-  /* Add styles to the filter button */
-  .filter-button {
-    padding: 8px 16px;
-    background-color: #4CAF50;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  /* Add hover effect to the filter button */
-  .filter-button:hover {
-    background-color: #45a049;
-  }
-  
-  /* Add styles to the table */
-  table {
-    border-collapse: collapse;
-    width: 100%;
-  }
-  
-  /* Add styles to table header */
-  th {
-    background-color: #f2f2f2;
-    text-align: left;
-    padding: 8px;
-  }
-  
-  /* Add styles to table rows */
-  tr {
-    border-bottom: 1px solid #ddd;
-  }
-  
-  /* Add styles to table data cells */
-  td {
-    padding: 8px;
-  }
-  
-  /* Add styles to pre tag inside table cell */
-  pre {
-    margin: 0;
-    white-space: pre-wrap;
-  }
-  /* ... Existing CSS ... */
-  
-  /* Add styles to the logs container */
   .logs-container {
-    text-align: center;
-    margin-top: 20px;
+    margin-top: 1rem;
   }
-  
-  /* Add styles to the "No logs found" message */
-  .no-logs-message {
-    font-size: 18px;
-    color: #777;
-    padding: 20px;
-  }
-  .column-toggle{
-    margin: 10px;
-  }
-  .hidden {
-    display: none;
-  }
+}

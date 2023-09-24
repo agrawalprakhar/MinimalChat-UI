@@ -25,25 +25,23 @@
                
                   <div *ngIf="message.isEvent && !message.editMode && !message.deleteMode" class="editor-actions">
       
-                    <button class="edit-button" (click)="onEditMessage(message)"><i class="fa fa-pencil-square-o"
-                        aria-hidden="true"></i></button>
-                    <button class="delete-button" (click)="onDeleteMessage(message)"><i class="fa fa-trash-o"
-                        aria-hidden="true"></i></button>
+                    <button class="edit-button" (click)="onEditMessage(message)">Edit</button>
+                    <button class="delete-button" (click)="onDeleteMessage(message)">Delete</button>
           
           
                   </div>
                   <div class="message-editor-container" *ngIf="message.editMode && !message.deleteMode">
                     <input type="text" class="message-editor" [(ngModel)]="message.editedContent">
                     <div class="editor-actions">
-                      <span class="accept-icon" (click)="onAcceptEdit(message)">&#10003;</span>&nbsp; &nbsp;
-                      <span class="decline-icon" (click)="onDeclineEdit(message)">&#10005;</span>
+                      <span class="accept-icon" (click)="onAcceptEdit(message)">Edit</span>&nbsp; &nbsp;
+                      <span class="decline-icon" (click)="onDeclineEdit(message)">Cancel</span>
                     </div>
                   </div>
                   <div class="message-editor-container" *ngIf="message.deleteMode && !message.editMode">
                     <span>Confirm To Delete This Message ? </span> &nbsp; &nbsp;
                     <div class="editor-actions">
-                      <span class="accept-icon" (click)="onAcceptDelete(message)">&#10003;</span>&nbsp; &nbsp;
-                      <span class="decline-icon" (click)="onDeclineDelete(message)">&#10005;</span>
+                      <span class="accept-icon" (click)="onAcceptDelete(message)">Delete</span>&nbsp; &nbsp;
+                      <span class="decline-icon" (click)="onDeclineDelete(message)">Cancel</span>
                     </div>
                   </div>
               </div>
@@ -62,7 +60,7 @@
       <!-- Chat Input -->
     <div class="chat-input">
       <input type="text" placeholder="Type your message..." [(ngModel)]="messageContent" class="chat" />
-      <button class="send-button" (click)="sendMessage()"><i class="fa fa-paper-plane"></i></button>
+      <button class="send-button" (click)="sendMessage()">Send</button>
     </div>
     </div>
   </div>

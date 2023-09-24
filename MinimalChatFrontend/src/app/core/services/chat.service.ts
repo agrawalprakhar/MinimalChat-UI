@@ -21,7 +21,8 @@ export class ChatService {
   
   
  
-  getMessages(userId: number, before?: Date, count: number = 20, sort: string = 'desc'):Observable<any[]>{
+  messages(userId: number, before?: Date, count: number = 20, sort: string = 'desc'):Observable<any[]>{
+    debugger
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${this.user.getToken()}`

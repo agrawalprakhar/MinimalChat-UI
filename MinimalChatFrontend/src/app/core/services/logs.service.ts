@@ -30,6 +30,6 @@ export class LogsService {
   
     return this.http.get<any[]>(this.url,{headers:headers,params:params}).pipe(
       map((response: any) => response.logs) // Extract the 'messages' array from the response
-    );;;
+    )
   }
 }

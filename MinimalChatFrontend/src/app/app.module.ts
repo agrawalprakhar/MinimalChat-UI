@@ -18,6 +18,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatListModule} from '@angular/material/list';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatTableModule } from '@angular/material/table';
 import { ToastrModule } from 'ngx-toastr';
 
 import { LoginComponent } from './pages/login/login.component';
@@ -53,6 +55,8 @@ import { RequestLogsComponent } from './pages/request-logs/request-logs.componen
     MatNativeDateModule,
     MatSidenavModule,
     MatToolbarModule,
+    MatCheckboxModule,
+    MatTableModule,
     MatListModule,
     FormsModule,
     HttpClientModule,

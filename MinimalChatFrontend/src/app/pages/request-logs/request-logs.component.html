@@ -1,63 +1,61 @@
 <div class="filters-container">
-
-    <div>
-        <label for="startTime">Start Time:</label>
-        <input type="datetime-local" id="startTime" [(ngModel)]="startTime" (change)="getLogs()" />
-    </div>
-    <div>
-        <label for="endTime">End Time:</label>
-        <input type="datetime-local" id="endTime" [(ngModel)]="endTime" (change)="getLogs()" />
-    </div>
-    <div class="time-range-buttons">
-        <button (click)="getLastLogs(5)">Last 5 mins</button>
-        <button (click)="getLastLogs(10)">Last 10 mins</button>
-        <button (click)="getLastLogs(30)">Last 30 mins</button>
-    </div>
-    <button class="filter-button" (click)="customeTime()">Filter</button>
+  <div class="filter-group">
+    <label for="startTime">Start Time:</label>
+    <input type="datetime-local" id="startTime" [(ngModel)]="startTime" (change)="getLogs()" />
+  </div>
+  <div class="filter-group">
+    <label for="endTime">End Time:</label>
+    <input type="datetime-local" id="endTime" [(ngModel)]="endTime" (change)="getLogs()" />
+  </div>
+  <div class="time-range-buttons">
+    <button class="time-range-button" (click)="getLastLogs(5)">Last 5 mins</button>
+    <button class="time-range-button" (click)="getLastLogs(10)">Last 10 mins</button>
+    <button class="time-range-button" (click)="getLastLogs(30)">Last 30 mins</button>
+  </div>
+  <button class="filter-button" (click)="customTime()">Filter</button>
 </div>
 <div class="column-toggle">
-    <label>Show Columns:</label>
-    <label>
-      <input type="checkbox" [(ngModel)]="showIdColumn" (change)="toggleColumn('id')" /> ID
-    </label>
-    <label>
-      <input type="checkbox" [(ngModel)]="showTimestampColumn" (change)="toggleColumn('timestamp')" /> Timestamp
-    </label>
-    <label>
-      <input type="checkbox" [(ngModel)]="showIpAddressColumn" (change)="toggleColumn('ipAddress')" /> IP Address
-    </label>
-    <label>
-      <input type="checkbox" [(ngModel)]="showUsernameColumn" (change)="toggleColumn('username')" /> Username
-    </label>
-    <label>
-      <input type="checkbox" [(ngModel)]="showRequestBodyColumn" (change)="toggleColumn('requestBody')" /> Request Body
-    </label>
-  </div>
+  <label>Show Columns:</label>
+  <label class="column-label">
+    <input type="checkbox" [(ngModel)]="showIdColumn" (change)="toggleColumn('id')" /> ID
+  </label>
+  <label class="column-label">
+    <input type="checkbox" [(ngModel)]="showTimestampColumn" (change)="toggleColumn('timestamp')" /> Timestamp
+  </label>
+  <label class="column-label">
+    <input type="checkbox" [(ngModel)]="showIpAddressColumn" (change)="toggleColumn('ipAddress')" /> IP Address
+  </label>
+  <label class="column-label">
+    <input type="checkbox" [(ngModel)]="showUsernameColumn" (change)="toggleColumn('username')" /> Username
+  </label>
+  <label class="column-label">
+    <input type="checkbox" [(ngModel)]="showRequestBodyColumn" (change)="toggleColumn('requestBody')" /> Request Body
+  </label>
+</div>
 <div class="logs-container">
-
-    <table class="table table-bordered" *ngIf="logs.length > 0">
-        <thead>
-            <tr>
-              <th [class.hidden]="!showIdColumn">ID</th>
-              <th [class.hidden]="!showTimestampColumn">Timestamp</th>
-              <th [class.hidden]="!showIpAddressColumn">IP Address</th>
-              <th [class.hidden]="!showUsernameColumn">Username</th>
-              <th [class.hidden]="!showRequestBodyColumn">Request Body</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let log of logs">
-              <td [class.hidden]="!showIdColumn">{{ log.id }}</td>
-              <td [class.hidden]="!showTimestampColumn">{{ log.timestamp }}</td>
-              <td [class.hidden]="!showIpAddressColumn">{{ log.ip}}</td>
-              <td [class.hidden]="!showUsernameColumn">{{ log.username || 'N/A' }}</td>
-              <td [class.hidden]="!showRequestBodyColumn">
-                <pre>{{ log.requestBody }}</pre>
-              </td>
-            </tr>
-          </tbody>
-    </table>
-    <div class="no-logs-message" *ngIf="logs.length === 0">
-        No logs found.
-    </div>
+  <table class="table table-bordered" *ngIf="logs.length > 0">
+    <thead>
+      <tr>
+        <th class="table-column" [class.hidden]="!showIdColumn">ID</th>
+        <th class="table-column" [class.hidden]="!showTimestampColumn">Timestamp</th>
+        <th class="table-column" [class.hidden]="!showIpAddressColumn">IP Address</th>
+        <th class="table-column" [class.hidden]="!showUsernameColumn">Username</th>
+        <th class="table-column" [class.hidden]="!showRequestBodyColumn">Request Body</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let log of logs">
+        <td class="table-column" [class.hidden]="!showIdColumn">{{ log.id }}</td>
+        <td class="table-column" [class.hidden]="!showTimestampColumn">{{ log.timestamp }}</td>
+        <td class="table-column" [class.hidden]="!showIpAddressColumn">{{ log.ip }}</td>
+        <td class="table-column" [class.hidden]="!showUsernameColumn">{{ log.username || 'N/A' }}</td>
+        <td class="table-column" [class.hidden]="!showRequestBodyColumn">
+          <pre>{{ log.requestBody }}</pre>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="no-logs-message" *ngIf="logs.length === 0">
+    No logs found.
+  </div>
 </div>

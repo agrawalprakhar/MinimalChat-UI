@@ -47,7 +47,7 @@ export class RequestLogsComponent {
     })
   }
 
-  customeTime(){
+  customTime(){
     console.log(this.startTime,this.endTime)
     this.logService.getLogs(this.startTime?.toString(),this.endTime?.toString()).subscribe((res)=>{
       console.log(res);

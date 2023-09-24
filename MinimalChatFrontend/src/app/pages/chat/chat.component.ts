@@ -27,10 +27,7 @@ export class ChatComponent {
 
     });
 
-     // Subscribe to the mainFlag$ observable to update the 'main' flag
-     this.chatService.mainFlag$.subscribe((flag) => {
-      this.main = flag;
-    });
+
   
     
   }
@@ -46,7 +43,7 @@ export class ChatComponent {
   
   showMessage(id: any) {
    // Update the 'main' flag via the service
-   this.chatService.setMainFlag(false);
+ this.main=false;
     this.router.navigate(['/chat', { outlets: { childPopup: ['user', id] } }]);
   }
   

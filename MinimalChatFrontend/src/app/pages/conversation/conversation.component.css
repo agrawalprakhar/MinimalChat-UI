@@ -239,12 +239,13 @@ strong {
     background-color: #047BD5;
     color: #fff;
     border: none;
-    border-radius: 4px;
+    border-radius: 17px;
     padding: 8px 16px;
     cursor: pointer;
     position: fixed; /* Use absolute positioning */
     bottom: 21px;
-    right: 21px;
+    right: 13px;
+   
 /* Adjust the distance from the right */
 }
 .message-text {
