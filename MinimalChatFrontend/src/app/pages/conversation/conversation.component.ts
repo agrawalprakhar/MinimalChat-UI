@@ -100,7 +100,7 @@ export class ConversationComponent {
  
   getMessages(userId: number) {
   debugger
-
+  this.messages = [];
     console.log(userId);
 
     this.chatService.messages(userId).subscribe((res) => {
