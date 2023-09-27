@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
+import { CredentialResponse,PromptMomentNotification } from 'google-one-tap';
 import {
   AbstractControl,
   FormBuilder,
@@ -14,7 +15,7 @@ import { UserService } from 'src/app/core/services/user.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   respdata: any;
 
@@ -22,13 +23,60 @@ export class LoginComponent {
     private fb: FormBuilder,
     private router: Router,
     private userService: UserService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private _ngZone : NgZone,
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
+  ngOnInit(): void {
+    // @ts-ignore
+    window.onGoogleLibraryLoad = () => {
+      // @ts-ignore
+      google.accounts.id.initialize({
+        client_id: '530667277747-dsfmpfefecvfnqup51pl491fla2stdq1.apps.googleusercontent.com',
+        callback: this.handleCredentialResponse.bind(this),
+        auto_select: false,
+        cancel_on_tap_outside: true,
+      });
+      // @ts-ignore
+      google.accounts.id.renderButton(
+        // @ts-ignore
+        document.getElementById('buttonDiv'),
+        { theme: 'outline', size: 'large', width: 'small' }
+      );
+      // @ts-ignore
+      google.accounts.id.prompt((notification: PromptMomentNotification) => {});
+    };
+  }
+
+  async handleCredentialResponse(response : CredentialResponse)
+  { debugger
+    await this.userService.LoginWithGoogle(response.credential).subscribe(
+      (x : any )=>{
+        x.token=JSON.stringify(x.token);
+        localStorage.setItem("token",x.token);
+        this._ngZone.run(() =>{
+          this.router.navigate(['/chat']);
+        })
+      },
+      (error : any ) =>{
+        console.log(error);
+      }
+    );
+  } 
+
+  public logout(){
+    this.userService.signOutExternal();
+    this._ngZone.run(()=>{
+      this.router.navigate(['/']).then(() => window.location.reload());
+    })
+  }
+
+
+
   getControl(name: any): AbstractControl | null {
     return this.loginForm.get(name);
   }
@@ -60,5 +108,8 @@ export class LoginComponent {
         'Error'
       );
     }
+  }
+  loginWithGoogle(){
+
   }
 }

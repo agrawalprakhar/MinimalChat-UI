@@ -16,7 +16,7 @@ private tokenKey = 'auth_token';
 
   registerUser(data : any):Observable<any>{
 
-    return this.http.post("https://localhost:44313/api/register",data);
+    return this.http.post("https://localhost:44326/api/register",data);
 
   }
 
@@ -26,7 +26,7 @@ private tokenKey = 'auth_token';
       'Content-Type': 'application/json'
     });
       
-    return this.http.post<any>("https://localhost:44313/api/login",data,{headers});
+    return this.http.post<any>("https://localhost:44326/api/login",data,{headers});
 
   }
   // Save the token to local storage
@@ -51,7 +51,7 @@ private tokenKey = 'auth_token';
       'Content-Type': 'application/json',
       Authorization: `Bearer ${this.getToken()}`,
     });
-    return this.http.get<any[]>("https://localhost:44313/api/users", { headers: headers });
+    return this.http.get<any[]>("https://localhost:44326/api/Users", { headers: headers });
   }
   
   getLoggedInUser(){
@@ -64,5 +64,15 @@ private tokenKey = 'auth_token';
     return +id;
 
   }
+  public signOutExternal =() =>{
+    localStorage.removeItem("token");
+    console.log("token Deleted")
+  }
+
+  LoginWithGoogle(credentials : string): Observable<any>{
+    const header = new HttpHeaders().set('Content-Type','application/json');
+    return  this.http.post("https://localhost:44326/api/LoginWithGoogle",JSON.stringify(credentials),{headers:header});
+  }
+
   
 }
