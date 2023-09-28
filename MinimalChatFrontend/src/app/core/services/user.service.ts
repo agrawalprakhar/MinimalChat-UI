@@ -31,10 +31,12 @@ private tokenKey = 'auth_token';
   }
   // Save the token to local storage
   saveToken(token: string): void {
+    debugger
     localStorage.setItem(this.tokenKey, token);
   }
   // Retrieve the token from local storage
   getToken(): string | null {
+    debugger
     return localStorage.getItem(this.tokenKey);
   }
 
@@ -43,10 +45,12 @@ private tokenKey = 'auth_token';
       localStorage.removeItem(this.tokenKey);
     }
     isLoggedIn(): boolean {
+      debugger
       return !!this.getToken();
     }
 
   retrieveUsers(): Observable<any[]> {
+    debugger
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${this.getToken()}`,
@@ -64,15 +68,22 @@ private tokenKey = 'auth_token';
     return +id;
 
   }
-  public signOutExternal =() =>{
-    localStorage.removeItem("token");
-    console.log("token Deleted")
-  }
+  // public signOutExternal =() =>{
+  //   localStorage.removeItem("token");
+  //   console.log("token Deleted")
+  // }
 
-  LoginWithGoogle(credentials : string): Observable<any>{
-    const header = new HttpHeaders().set('Content-Type','application/json');
-    return  this.http.post("https://localhost:44326/api/LoginWithGoogle",JSON.stringify(credentials),{headers:header});
+  // LoginWithGoogle(credentials : string): Observable<any>{
+  //   const header = new HttpHeaders().set('Content-Type','application/json');
+  //   return  this.http.post("https://localhost:44326/api/LoginWithGoogle",JSON.stringify(credentials),{headers:header});
+  // }
+  sendSocialToken(token: string): Observable<any> {
+    debugger
+    const body = {
+      TokenId: token,
+    };
+    // Send the token to the backend
+    return this.http.post("https://localhost:44326/api/LoginWithGoogle", body);
   }
-
   
 }

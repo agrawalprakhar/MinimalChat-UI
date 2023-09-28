@@ -14,8 +14,8 @@
           <div class="message" *ngFor="let message of messages"(contextmenu)="onContextMenu($event, message)">
             <div
               [ngClass]="{
-                'chat-message outgoing': message.senderId === currentUserId,
-                'chat-message incoming': message.senderId !== currentUserId
+                'chat-message outgoing': message?.senderId !== currentReceiverId,
+                'chat-message incoming': message?.senderId === currentReceiverId
               }"
             >
               <div class="message-content">
@@ -47,8 +47,8 @@
               </div>
             </div>
             <div class="message-timestamp" [ngClass]="{
-                'chat-message timeoutgoing': message.senderId === currentUserId,
-                'chat-message timeincoming': message.senderId !== currentUserId
+                'chat-message timeoutgoing': message.senderId !== currentReceiverId,
+                'chat-message timeincoming': message.senderId === currentReceiverId
               }">
               {{ message.timestamp | date : "hh:mm a" }}
             </div>

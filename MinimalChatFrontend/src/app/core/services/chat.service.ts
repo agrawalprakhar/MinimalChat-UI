@@ -9,7 +9,7 @@ import { BehaviorSubject, Observable, map } from 'rxjs';
 export class ChatService {
 
   constructor(private http: HttpClient, private user: UserService) {}
-  url = 'https://localhost:44313/api/messages';
+  url = 'https://localhost:44326/api/Message';
 
   private mainFlagSubject = new BehaviorSubject<boolean>(true);
   mainFlag$ = this.mainFlagSubject.asObservable();
@@ -21,7 +21,7 @@ export class ChatService {
   
   
  
-  messages(userId: number, before?: Date, count: number = 20, sort: string = 'desc'):Observable<any[]>{
+  messages(userId: string, before?: Date, count: number = 20, sort: string = 'desc'):Observable<any[]>{
     debugger
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -41,7 +41,7 @@ export class ChatService {
   );
   }
 
-  sendMessage(receiverId: number, content: string): Observable<any> {
+  sendMessage(receiverId: string, content: string): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${this.user.getToken()}`,
@@ -59,6 +59,7 @@ export class ChatService {
   }
 
   editMessage(messageId: number, content: string): Observable<any> {
+    debugger
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${this.user.getToken()}`,

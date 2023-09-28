@@ -26,7 +26,7 @@ export class RegisterComponent {
     return this.registerForm.get(name);
   }
   onSubmit()
-  { 
+  { debugger
     if(this.registerForm.valid)
     {
         this.userService.registerUser(this.registerForm.value).subscribe((item)=>{

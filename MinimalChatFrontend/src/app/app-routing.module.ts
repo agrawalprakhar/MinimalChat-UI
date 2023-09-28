@@ -8,6 +8,7 @@ import { RequestLogsComponent } from './pages/request-logs/request-logs.componen
 import { AuthGuard } from './core/services/auth/auth.guard';
 
 
+
 const routes: Routes = [
   {
     path:'',component:LoginComponent
@@ -24,13 +25,14 @@ const routes: Routes = [
   children: [
     {
       path: 'user/:userId',
+      canActivate:[AuthGuard],
       component: ConversationComponent,
       outlet: 'childPopup',
     },
   ],
 },
 {
-  path:'logs',canActivate:[AuthGuard],component:RequestLogsComponent
+  path:'logs',component:RequestLogsComponent
 },
 ];
 

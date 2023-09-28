@@ -10,7 +10,7 @@ export class LogsService {
 
  
   constructor(private http: HttpClient,private user:UserService) {}
-  url = "https://localhost:44313/api/logs";
+  url = "https://localhost:44326/api/Logs";
 
   getLogs(startTime?: string, endTime?: string): Observable<any[]> {
 

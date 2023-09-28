@@ -11,7 +11,7 @@ import { UserService } from 'src/app/core/services/user.service';
 })
 export class ConversationComponent {
   currentUserId: number | any;
-  currentReceiverId!: number;
+  currentReceiverId!: string;
   currentReceiver: any = {};
   
   messages: any[] = [];
@@ -38,8 +38,8 @@ export class ConversationComponent {
   ngOnInit(): void {
     debugger
     this.route.params.subscribe((params) => {
-      const userId = +params['userId'];
-      this.currentReceiverId = userId;
+      const userId = params['userId'];
+      this.currentReceiverId = userId.toString();
       
 
       console.log('currentReceiverId:', this.currentReceiverId);
@@ -81,7 +81,7 @@ export class ConversationComponent {
     }
   }
 
-  loadMessage(currentReceiverId:number,lastLoadedMessage:Date){
+  loadMessage(currentReceiverId:string,lastLoadedMessage:Date){
     debugger
     this.chatService.messages(currentReceiverId,lastLoadedMessage).subscribe((res) => {
       console.log('loadMessages response:', res);
@@ -98,24 +98,20 @@ export class ConversationComponent {
   console.log('loadMessages messages:', this.messages);
   }
  
-  getMessages(userId: number) {
+  getMessages(userId: string) {
   debugger
   this.messages = [];
     console.log(userId);
 
     this.chatService.messages(userId).subscribe((res) => {
       console.log('getMessages response:', res);
-     this.messages = res
-      .map((message) => ({
-        ...message,
-        timestamp: new Date(message.timestamp), // Convert to Date object
-      }))
-      .sort((a, b) => a.timestamp - b.timestamp);
+     this.messages = res.reverse();
+    
+     console.log('getMessages messages:', this.messages);
       if (this.messages.length > 0) {
         this.lastLoadedMessage = this.messages[this.messages.length - 20].timestamp;
       }
       
-      console.log('getMessages messages:', this.messages);
       console.log('time of last loaded message', this.lastLoadedMessage);
   });
   }
@@ -174,7 +170,7 @@ export class ConversationComponent {
  
   onContextMenu(event: MouseEvent, message: any) {
     event.preventDefault();
-    if (message.senderId === this.currentUserId) {
+    if (message.senderId !== this.currentReceiverId) {
       message.isEvent = !message.isEvent;
     }
     this.sendMessage();
@@ -183,6 +179,7 @@ export class ConversationComponent {
  
   onAcceptEdit(message: any) {
     // Update the message content with edited content
+    debugger
     message.content = message.editedContent;
     message.editMode = false;
     console.log(message);
@@ -209,7 +206,7 @@ export class ConversationComponent {
   }
 
   onEditMessage(message: any) {
-    if (message.senderId === this.currentUserId) {
+    if (message.senderId !== this.currentReceiverId) {
       message.editMode = true;
       message.editedContent = message.content;
       message.showContextMenu = true; // Add a property to control the context menu visibility
@@ -241,7 +238,7 @@ export class ConversationComponent {
 
 
   onDeleteMessage(message: any) {
-    if (message.senderId === this.currentUserId) {
+    if (message.senderId !== this.currentReceiverId) {
       message.deleteMode = true;
       message.showContextMenu = true; // Add a property to control the context menu visibility
     }
