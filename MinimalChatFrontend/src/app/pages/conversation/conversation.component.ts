@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef,HostListener } from '@angular/core';
 import { ActivatedRoute , Router} from '@angular/router';
 import { ChatService } from 'src/app/core/services/chat.service';
+import { SignalrService } from 'src/app/core/services/signalr.service';
 import { UserService } from 'src/app/core/services/user.service';
 
 @Component({
@@ -21,6 +22,7 @@ export class ConversationComponent {
   lastLoadedMessage !: Date ;
   scrolledToTop: boolean = false;
   before : Date =new Date;
+  public newMessage: string = '';
 
 
 
@@ -30,9 +32,11 @@ export class ConversationComponent {
     private chatService: ChatService,
     private http: HttpClient,
     private el: ElementRef,
-    private router : Router
+    private router : Router,
+    private signalRService: SignalrService
   ) {
     this.currentUserId = this.userService.getLoggedInUser();
+   
   }
 
   ngOnInit(): void {
@@ -59,7 +63,32 @@ export class ConversationComponent {
     if (savedMessages) {
       this.messages = JSON.parse(savedMessages);
     }
+
+    this.signalRService.receiveMessages().subscribe((message: any) => {
+      debugger
+      const existingMessage = this.messages.find((m: any) => m.messageId === message.messageId);
+      if (!existingMessage) {
+        this.messages.push(message);
+      
+      }
+      
+    });
+
+    this.signalRService.receiveEditedMessages().subscribe(data => {
+      const message = this.messages.find(m => m.id === data.messageId);
+      if (message) {
+        message.content = data.content;
+      }
+    });
+
+    this.signalRService.receiveDeletedMessages().subscribe(messageId => {
+      const index = this.messages.findIndex(m => m.id === messageId);
+      if (index !== -1) {
+        this.messages.splice(index, 1);
+      }
+    });
   }
+
  
   @HostListener('scroll', ['$event'])
   onScroll(event: Event) {
@@ -82,7 +111,6 @@ export class ConversationComponent {
   }
 
   loadMessage(currentReceiverId:string,lastLoadedMessage:Date){
-    debugger
     this.chatService.messages(currentReceiverId,lastLoadedMessage).subscribe((res) => {
       console.log('loadMessages response:', res);
       this.messages = [...this.messages, ...res]
@@ -99,7 +127,6 @@ export class ConversationComponent {
   }
  
   getMessages(userId: string) {
-  debugger
   this.messages = [];
     console.log(userId);
 
@@ -115,31 +142,10 @@ export class ConversationComponent {
       console.log('time of last loaded message', this.lastLoadedMessage);
   });
   }
-  // Modify the getMessages function to accept a "before" parameter
-// getMessages(userId: number, before: number | null = null) {
-//   debugger;
-//   const queryParams = before ? `?userId=${userId}&sort=asc&limit=20&before=${before}` : `?userId=${userId}&sort=asc&limit=20`;
-
-//   this.chatService.getMessages(queryParams).subscribe((res) => {
-//     console.log('getMessages response:', res);
-
-//     // Update the lastMessageId with the ID of the last message in the fetched messages
-//     if (res.length > 0) {
-//       this.lastMessageId = res[res.length - 1].id;
-//     }
-
-//     // Append the new messages to the existing messages
-//     this.messages = [...this.messages, ...res];
-//   });
-// }
-// loadMoreMessages() {
-//   if (this.lastMessageId) {
-//     this.getMessages(this.currentReceiverId, this.lastMessageId);
-//   }
-// }
 
 
   sendMessage() {
+    debugger
     if (this.messageContent.trim() === '') {
       // Don't send an empty message
       return;
@@ -152,20 +158,45 @@ export class ConversationComponent {
       isEvent: false,
     };
 
-    this.messages.push(message);
+    
     localStorage.setItem('chatMessages', JSON.stringify(this.messages));
+
+    // this.messageService.sendMessage(message).subscribe({
+    //   next: (res) => {
+    //     const existingMessage = this.conversationHistory.find((m: any) => m.messageId === res.data.messageId);
+    //     if (!existingMessage) {
+    //       this.conversationHistory.push(res.data);
+    //       this.scrollToBottom();
+    //     }
+    //     this.toast.success({ detail: "SUCCESS", summary: res.message, duration: 3000 });
+    //     this.signalRService.sendMessage$(res.data);
+    //     // Clear the input box after sending the message
+    //     this.newMessageContent = '';
+    //     this.scrollToBottom();
+    //   }
+    // });
 
     this.chatService.sendMessage(message.receiverId, message.content).subscribe(
       (response) => {
+        debugger
         // Handle the response from the backend if needed
-        this.messages.push(response);
         this.messageContent = '';
+        
+        const existingMessage = this.messages.find((m: any) => m.messageId === response.messageId);
+        if (!existingMessage) {
+           this.messages.push(response);
+          }
+          this.signalRService.sendMessage(message);
+          
+          this.newMessage = '';
       },
       (error : any) => {
         console.error('Error sending message:', error);
         // Handle the error if needed
       }
+     
     );
+
   }
  
   onContextMenu(event: MouseEvent, message: any) {
@@ -179,7 +210,6 @@ export class ConversationComponent {
  
   onAcceptEdit(message: any) {
     // Update the message content with edited content
-    debugger
     message.content = message.editedContent;
     message.editMode = false;
     console.log(message);
@@ -191,6 +221,7 @@ export class ConversationComponent {
         );
         if (editedMessageIndex !== -1) {
           this.messages[editedMessageIndex].content = message.editedContent;
+          this.signalRService.editMessage(message.id, message.content);
         }
       },
       (error) => {
@@ -219,6 +250,7 @@ export class ConversationComponent {
         const index = this.messages.findIndex((m) => m.id === message.id);
         if (index !== -1) {
           this.messages.splice(index, 1); // Remove the message from the array
+          this.signalRService.deleteMessage(message.id);
         }
       },
       (error) => {

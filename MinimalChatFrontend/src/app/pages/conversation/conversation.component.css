@@ -50,11 +50,13 @@ h1 {
 .navbar {
     background-color: lavender;
     height: 61px;
-    width: 80%;
+
    
     display: flex;
-
-  
+    position: fixed;
+    justify-content: flex-end; /* Align items to the right */
+    left: 311px;
+    right: 0px;
     /* float: left; */
     margin-left: auto;
     margin-top: 6px;
@@ -104,7 +106,7 @@ strong {
     padding: 10px;
     margin-left: 300px;
     /* margin-top: 52px; */
-    margin-top: 10px;
+    margin-top: 72px;
     margin-right: 10px;
     margin-bottom: 10px;
     min-height: 80vh;
@@ -112,6 +114,7 @@ strong {
     max-height: 400px; /* Set a maximum height for the container */
     overflow-y: auto; /* Add a vertical scrollbar when content overflows */
     border: 1px solid #ccc; /* Add a border for visual separation */
+
    
     
 }
@@ -224,7 +227,7 @@ strong {
     border: 1px solid #ccc;
     border-radius: 40px;
     padding: 8px;
-    margin-top: auto;
+    margin-top: 50px;
     position: fixed;
     left: 311px;
     right: 80px;
@@ -232,6 +235,7 @@ strong {
     /* width: calc(100% - 16px); */
     z-index: 1;
     background-color: #fff;
+    filter: drop-shadow(4px 4px 8px #999999);
   }
 
 /* Styles for the send button */
@@ -268,7 +272,9 @@ strong {
   .chat-container::-webkit-scrollbar-thumb:hover {
     background-color: #555; /* Customize scrollbar thumb color on hover */
   }
- 
+ .buttonclass{
+    align-items: end;
+ }
   
   
   

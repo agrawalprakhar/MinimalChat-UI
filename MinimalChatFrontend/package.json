@@ -22,6 +22,7 @@
     "@angular/platform-browser-dynamic": "^16.2.0",
     "@angular/router": "^16.2.0",
     "@auth0/angular-jwt": "^5.1.2",
+    "@microsoft/signalr": "^7.0.11",
     "@types/google-one-tap": "^1.2.3",
     "jsonwebtoken": "^9.0.2",
     "jwt-decode": "^3.1.2",

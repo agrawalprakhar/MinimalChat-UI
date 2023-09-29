@@ -41,50 +41,7 @@ export class LoginComponent  {
     
 	}
 
-  // ngOnInit(): void {
-  //   // @ts-ignore
-  //   window.onGoogleLibraryLoad = () => {
-  //     // @ts-ignore
-  //     google.accounts.id.initialize({
-  //       client_id: '530667277747-dsfmpfefecvfnqup51pl491fla2stdq1.apps.googleusercontent.com',
-  //       callback: this.handleCredentialResponse.bind(this),
-  //       auto_select: false,
-  //       cancel_on_tap_outside: true,
-  //     });
-  //     // @ts-ignore
-  //     google.accounts.id.renderButton(
-  //       // @ts-ignore
-  //       document.getElementById('buttonDiv'),
-  //       { theme: 'outline', size: 'large', width: 'small' }
-  //     );
-  //     // @ts-ignore
-  //     google.accounts.id.prompt((notification: PromptMomentNotification) => {});
-  //   };
-  // }
-
-  // async handleCredentialResponse(response : CredentialResponse)
-  // { debugger
-  //   await this.userService.LoginWithGoogle(response.credential).subscribe(
-  //     (x : any )=>{
-  //       this.response=x;
-  //       localStorage.setItem("token",x.token);
-  //       this._ngZone.run(() =>{
-  //         this.router.navigate(['/chat']);
-  //       })
-  //     },
-  //     (error : any ) =>{
-  //       console.log(error);
-  //     }
-  //   );
-  // } 
-
-  // public logout(){
-  //   this.userService.signOutExternal();
-  //   this._ngZone.run(()=>{
-  //     this.router.navigate(['/']).then(() => window.location.reload());
-  //   })
-  // }
-
+ 
   ngOnInit() {
     this.authService.authState.subscribe((user) => {
       this.signInWithGoogle(user.idToken);
@@ -138,17 +95,20 @@ export class LoginComponent  {
     debugger
     this.userService.sendSocialToken(token).subscribe(
       (response) => {
-        console.log('Social token sent successfully to the backend:', response);
+        console.log('Social token sent successfully to the backend:', response.token);
 
         if (response && response.token) {
           // Store the token and user profile in local storage
-          localStorage.setItem('token', response.token);
+          this.userService.saveToken(response.token);
+          // localStorage.setItem('tokenKey', response.token);
+     
           localStorage.setItem('userProfile', JSON.stringify(response.profile));
    
-
           // Redirect to the chat route
           this.toastr.success('Login successful!', 'Success');
+
           this.router.navigateByUrl('/chat');
+
         
         }
       },
