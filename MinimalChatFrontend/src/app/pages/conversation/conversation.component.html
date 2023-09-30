@@ -2,11 +2,31 @@
 
   <div id="chat-container">
     <div id="chat-window">
-      <div class="navbar">
+      <!-- <div class="navbar">
 
-        <button class="buttonclass btn btn-primary "(click)="navigateToLogs()">Logs Details</button>
+      </div> -->
+      <nav class="navbar" style="background-color: #047BD5; height: 63px;">
+        <div class="container-fluid" style="justify-content: start">
+          <a class="navbar-brand">
+            <div class="profile">
+              <div class="user-image">
+                <span>{{ currentReceiver.name.charAt(0) }}</span>
+              </div>
+            </div>
+            
+          </a>
+          <strong style="color: white;">{{currentReceiver.name}}</strong>
+          <div class="buttonstyle">
+
+          </div>
+        </div>
+        
+        <button class="buttonclass btn btn-success "(click)="navigateToLogs()">Logs Details</button>
         <button class="buttonclass btn btn-danger"(click)="Logout()">Log Out</button>
-    </div>
+  
+      <!--Chat interface-->
+  
+    </nav>
       
       <div class="chat-container" (scroll)="onScroll($event)"  > 
         <!-- Chat Messages Container -->

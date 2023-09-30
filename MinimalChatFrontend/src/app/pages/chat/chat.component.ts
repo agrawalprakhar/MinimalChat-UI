@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { UserService } from 'src/app/core/services/user.service';
 import { ChatService } from 'src/app/core/services/chat.service';
 
@@ -16,10 +16,14 @@ export class ChatComponent {
   selectedUserName: string = '';
   selectedUserId: string | null = null; 
 
-  constructor(private userService: UserService, private router: Router,private chatService : ChatService) {}
+  constructor(private userService: UserService, private router: Router,private chatService : ChatService,private route : ActivatedRoute) {
+
+  //  Navigate to ConversationComponent and pass currentReceiver in route data
+    
+  }
 
   ngOnInit(): void {
-    debugger
+  
     this.userService.retrieveUsers().subscribe((res) => {
  
       this.users=res;
@@ -33,18 +37,14 @@ export class ChatComponent {
   }
   
 
-  onUserClick(user: any) {
-    debugger
-    console.log(user);
-    
-    this.currentReceiver = user;
   
-  }
   
-  showMessage(id: any) {
+  showMessage(user: any) {
    // Update the 'main' flag via the service
- this.main=false;
-    this.router.navigate(['/chat', { outlets: { childPopup: ['user', id] } }]);
+     this.main=false;
+    this.router.navigate(['/chat', { outlets: { childPopup: ['user', user.id] } }]);
+
+    console.log(user.name);
   }
   
 

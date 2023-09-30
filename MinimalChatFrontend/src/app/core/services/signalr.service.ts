@@ -21,13 +21,13 @@ export class SignalrService {
   }
 
   sendMessage(message: any): void {
-    debugger
+
     this.hubConnection.invoke('SendMessage', message)
       .catch(err => console.error(err));
   }
 
   editMessage(messageId: number, content: string): void {
-    debugger
+
     this.hubConnection.invoke('EditMessage', messageId, content)
       .catch(err => console.error(err));
   }
@@ -38,7 +38,7 @@ export class SignalrService {
   }
 
   receiveMessages(): Observable<any> {
-    debugger
+   
     return new Observable<any>(observer => {
       this.hubConnection.on('ReceiveMessage', (data: any) => {
         observer.next(data);

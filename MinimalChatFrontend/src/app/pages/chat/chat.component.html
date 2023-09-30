@@ -9,7 +9,7 @@
               
             </div>
           </a>
-          <div *ngFor="let user of users" class="list-group list-group-flush border-bottom scrollarea" (click)="showMessage(user.id)">
+          <div *ngFor="let user of users" class="list-group list-group-flush border-bottom scrollarea" (click)="showMessage(user)">
             <a class="list-group-item list-group-item-action py-3 lh-tight" aria-current="true">
               <div class="d-flex w-100 align-items-center">
                 <div class="profile">
@@ -28,6 +28,7 @@
         </div>
       </div>
       <div >
-        <router-outlet name="childPopup"></router-outlet>
 
+        <router-outlet name="childPopup"></router-outlet>
+         <!-- <app-conversation></app-conversation> -->
       </div>

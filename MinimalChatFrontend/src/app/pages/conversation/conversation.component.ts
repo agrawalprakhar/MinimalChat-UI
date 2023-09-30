@@ -5,6 +5,7 @@ import { ChatService } from 'src/app/core/services/chat.service';
 import { SignalrService } from 'src/app/core/services/signalr.service';
 import { UserService } from 'src/app/core/services/user.service';
 
+
 @Component({
   selector: 'app-conversation',
   templateUrl: './conversation.component.html',
@@ -19,9 +20,9 @@ export class ConversationComponent {
   messageContent: string = '';
   loadedMessages: any[] = [];
   // Add a variable to store the last message ID displayed
-  lastLoadedMessage !: Date ;
+  lastLoadedMessage! : Date;
   scrolledToTop: boolean = false;
-  before : Date =new Date;
+
   public newMessage: string = '';
 
 
@@ -40,7 +41,7 @@ export class ConversationComponent {
   }
 
   ngOnInit(): void {
-    debugger
+
     this.route.params.subscribe((params) => {
       const userId = params['userId'];
       this.currentReceiverId = userId.toString();
@@ -48,24 +49,28 @@ export class ConversationComponent {
 
       console.log('currentReceiverId:', this.currentReceiverId);
 
+     
+
  // Load the initial 20 messages
       this.getMessages(this.currentReceiverId);
 
       this.userService.retrieveUsers().subscribe((res) => {
+
         this.currentReceiver = res.find(
-          (user) => user.UserId === this.currentReceiverId
+          (user) => user.id === this.currentReceiverId
           );
+          console.log(this.currentReceiver.name)
         });
       });
       
 
-    const savedMessages = localStorage.getItem('chatMessages');
-    if (savedMessages) {
-      this.messages = JSON.parse(savedMessages);
-    }
+    // const savedMessages = localStorage.getItem('chatMessages');
+    // if (savedMessages) {
+    //   this.messages = JSON.parse(savedMessages);
+    // }
 
     this.signalRService.receiveMessages().subscribe((message: any) => {
-      debugger
+     
       const existingMessage = this.messages.find((m: any) => m.messageId === message.messageId);
       if (!existingMessage) {
         this.messages.push(message);
@@ -95,7 +100,7 @@ export class ConversationComponent {
    
     console.log('Scroll event detected');
     const element = event.target as HTMLElement;
-    if (element.scrollTop === 0) {
+    if (element.scrollTop === 0 )  {
       const initialScrollHeight = element.scrollHeight;
   
       
@@ -111,6 +116,7 @@ export class ConversationComponent {
   }
 
   loadMessage(currentReceiverId:string,lastLoadedMessage:Date){
+
     this.chatService.messages(currentReceiverId,lastLoadedMessage).subscribe((res) => {
       console.log('loadMessages response:', res);
       this.messages = [...this.messages, ...res]
@@ -127,6 +133,7 @@ export class ConversationComponent {
   }
  
   getMessages(userId: string) {
+
   this.messages = [];
     console.log(userId);
 
@@ -145,7 +152,7 @@ export class ConversationComponent {
 
 
   sendMessage() {
-    debugger
+
     if (this.messageContent.trim() === '') {
       // Don't send an empty message
       return;
@@ -159,7 +166,7 @@ export class ConversationComponent {
     };
 
     
-    localStorage.setItem('chatMessages', JSON.stringify(this.messages));
+    // localStorage.setItem('chatMessages', JSON.stringify(this.messages));
 
     // this.messageService.sendMessage(message).subscribe({
     //   next: (res) => {
@@ -178,7 +185,7 @@ export class ConversationComponent {
 
     this.chatService.sendMessage(message.receiverId, message.content).subscribe(
       (response) => {
-        debugger
+   
         // Handle the response from the backend if needed
         this.messageContent = '';
         
@@ -189,6 +196,7 @@ export class ConversationComponent {
           this.signalRService.sendMessage(message);
           
           this.newMessage = '';
+  
       },
       (error : any) => {
         console.error('Error sending message:', error);
