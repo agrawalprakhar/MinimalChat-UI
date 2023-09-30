@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserService } from './user.service';
 import { BehaviorSubject, Observable, map } from 'rxjs';
+import { DatePipe } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +33,7 @@ export class ChatService {
     .set('count', count.toString())
     .set('sort', sort);
 
-  if (before) {
+  if (before ) {
     params = params.set('before', before.toISOString());
   }
 

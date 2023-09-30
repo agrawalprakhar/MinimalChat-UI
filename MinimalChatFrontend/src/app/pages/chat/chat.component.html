@@ -9,8 +9,8 @@
               
             </div>
           </a>
-          <div *ngFor="let user of users" class="list-group list-group-flush border-bottom scrollarea" (click)="showMessage(user)">
-            <a class="list-group-item list-group-item-action py-3 lh-tight" aria-current="true">
+          <div *ngFor="let user of users" class="list-group list-group-flush border-bottom scrollarea" >
+            <a class="list-group-item list-group-item-action py-3 lh-tight" aria-current="true" [routerLink]="'user/' + user.id">
               <div class="d-flex w-100 align-items-center">
                 <div class="profile">
                   <div class="user-image">
@@ -27,8 +27,13 @@
           </div>
         </div>
       </div>
-      <div >
+      <div *ngIf="!main" >
 
-        <router-outlet name="childPopup"></router-outlet>
+        <router-outlet ></router-outlet>
          <!-- <app-conversation></app-conversation> -->
       </div>
+      <div class="main"  *ngIf="main">
+        <div style="text-align: center">
+          <img src="../../../assets/chat-app-logo-png.webp" alt="MinimalChat" class="app-logo" />
+          <h1 class="app-title">Minimal Chat : Start Your Conversation With Us</h1>
+        <div>

@@ -2,9 +2,10 @@
 
   <div id="chat-container">
     <div id="chat-window">
-      <!-- <div class="navbar">
-
-      </div> -->
+      <div class="message-search">
+        <input type="text" placeholder="Search messages..." [(ngModel)]="searchQuery" />
+        <button (click)="searchMessages()">Search</button>
+    </div>
       <nav class="navbar" style="background-color: #047BD5; height: 63px;">
         <div class="container-fluid" style="justify-content: start">
           <a class="navbar-brand">
@@ -21,8 +22,11 @@
           </div>
         </div>
         
-        <button class="buttonclass btn btn-success "(click)="navigateToLogs()">Logs Details</button>
-        <button class="buttonclass btn btn-danger"(click)="Logout()">Log Out</button>
+        <div class="buttonstyle" style="justify-content: end;">
+          <button class="buttonclass btn btn-success "(click)="navigateToLogs()">Logs Details</button>
+          <button class="buttonclass btn btn-danger"(click)="Logout()">Log Out</button>
+
+        </div>
   
       <!--Chat interface-->
   

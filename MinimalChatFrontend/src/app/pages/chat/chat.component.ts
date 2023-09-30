@@ -16,6 +16,7 @@ export class ChatComponent {
   selectedUserName: string = '';
   selectedUserId: string | null = null; 
 
+
   constructor(private userService: UserService, private router: Router,private chatService : ChatService,private route : ActivatedRoute) {
 
   //  Navigate to ConversationComponent and pass currentReceiver in route data
@@ -28,24 +29,31 @@ export class ChatComponent {
  
       this.users=res;
       this.currentReceiver = res[0];
-
+        
     });
 
 
-  
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        // Check if the route has changed, and hide the welcome div if the router outlet is showing
+        if(this.router.url.startsWith('/chat/user/')){
+          this.main = false
+        }
+      }
+    });
     
   }
   
 
   
   
-  showMessage(user: any) {
-   // Update the 'main' flag via the service
-     this.main=false;
-    this.router.navigate(['/chat', { outlets: { childPopup: ['user', user.id] } }]);
+  // showMessage(user: any) {
+  //  // Update the 'main' flag via the service
+  //    this.main=false;
+  //   this.router.navigate(['/chat', { outlets: { childPopup: ['user', user.id] } }]);
 
-    console.log(user.name);
-  }
+  //   console.log(user.name);
+  // }
   
 
 

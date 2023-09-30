@@ -20,10 +20,12 @@ export class ConversationComponent {
   messageContent: string = '';
   loadedMessages: any[] = [];
   // Add a variable to store the last message ID displayed
-  lastLoadedMessage! : Date;
+  lastLoadedMessage !: Date;
   scrolledToTop: boolean = false;
+  before: Date = new Date(); 
 
   public newMessage: string = '';
+  searchQuery: string = '';
 
 
 
@@ -291,6 +293,9 @@ export class ConversationComponent {
     this.userService.removeToken();
   
     this.router.navigate(["/login"]);
+  }
+  searchMessages(){
+
   }
 
 }

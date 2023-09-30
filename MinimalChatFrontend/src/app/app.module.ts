@@ -33,6 +33,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ChatComponent } from './pages/chat/chat.component';
 import { ConversationComponent } from './pages/conversation/conversation.component';
 import { RequestLogsComponent } from './pages/request-logs/request-logs.component';
+import { ErrorComponent } from './pages/error/error.component';
 
 
 @NgModule({
@@ -43,6 +44,7 @@ import { RequestLogsComponent } from './pages/request-logs/request-logs.componen
     ChatComponent,
     ConversationComponent,
     RequestLogsComponent,
+    ErrorComponent,
    
   ],
   imports: [
