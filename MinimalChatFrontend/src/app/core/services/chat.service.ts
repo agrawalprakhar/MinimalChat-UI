@@ -42,7 +42,9 @@ export class ChatService {
   );
   }
 
+  
   sendMessage(receiverId: string, content: string): Observable<any> {
+
 
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -55,37 +57,51 @@ export class ChatService {
     return this.http.post(this.url, body, { headers: headers }).pipe(
       map((response: any) => {
         console.log('sendMessage response:', response);
-        return response.messages;
+        return response;
       })
-    );
-  }
-
-  editMessage(messageId: number, content: string): Observable<any> {
-
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${this.user.getToken()}`,
-    });
-   
-
-    return this.http.put<any>(
-      `${this.url}/${messageId}`,
-      { content: content },
-      {
-        headers: headers,
+      );
+    }
+    
+    editMessage(messageId: number, content: string): Observable<any> {
+      
+      
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.user.getToken()}`,
+      });
+      
+      
+      return this.http.put<any>(
+        `${this.url}/${messageId}`,
+        { content: content },
+        {
+          headers: headers,
+        }
+        );
       }
-    );
-  }
-
-  deleteMessage(messageId : number):Observable<any>{
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
+      
+      deleteMessage(messageId : number):Observable<any>{
+        const headers = new HttpHeaders({
+          'Content-Type': 'application/json',
       Authorization: `Bearer ${this.user.getToken()}`,
     });
 
     return this.http.delete<any>(`${this.url}/${messageId}`,{headers : headers})
   }
-
   
+  searchMessages(query: string): Observable<any[]> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${this.user.getToken()}`,
+    });
+    
+    const params = new HttpParams().set('query', query);
+    
+    return this.http.get<any[]>(`${this.url}/search/${query}`, {
+      headers: headers,
+      params: params,
+    });
+  }
+
 
 }

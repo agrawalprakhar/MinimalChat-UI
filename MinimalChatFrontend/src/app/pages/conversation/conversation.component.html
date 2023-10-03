@@ -1,90 +1,132 @@
-
-
-  <div id="chat-container">
-    <div id="chat-window">
-      <div class="message-search">
-        <input type="text" placeholder="Search messages..." [(ngModel)]="searchQuery" />
-        <button (click)="searchMessages()">Search</button>
+<div id="chat-container">
+  <div id="chat-window">
+    <div class="message-search">
+      <input
+        type="text"
+        placeholder="Search messages..."
+        [(ngModel)]="searchQuery" class="msearch"
+      />
+      <button (click)="searchMessages()"><i class="fas fa-search"></i></button>
     </div>
-      <nav class="navbar" style="background-color: #047BD5; height: 63px;">
-        <div class="container-fluid" style="justify-content: start">
-          <a class="navbar-brand">
-            <div class="profile">
-              <div class="user-image">
-                <span>{{ currentReceiver.name.charAt(0) }}</span>
-              </div>
-            </div>
-            
-          </a>
-          <strong style="color: white;">{{currentReceiver.name}}</strong>
-          <div class="buttonstyle">
-
-          </div>
-        </div>
-        
-        <div class="buttonstyle" style="justify-content: end;">
-          <button class="buttonclass btn btn-success "(click)="navigateToLogs()">Logs Details</button>
-          <button class="buttonclass btn btn-danger"(click)="Logout()">Log Out</button>
-
-        </div>
-  
-      <!--Chat interface-->
-  
-    </nav>
-      
-      <div class="chat-container" (scroll)="onScroll($event)"  > 
-        <!-- Chat Messages Container -->
-        <div class="chat-messages" >
-          <div class="message" *ngFor="let message of messages"(contextmenu)="onContextMenu($event, message)">
-            <div
-              [ngClass]="{
-                'chat-message outgoing': message?.senderId !== currentReceiverId,
-                'chat-message incoming': message?.senderId === currentReceiverId
-              }"
-            >
-              <div class="message-content">
-                
-                  <span class="message-text"*ngIf="!message.editMode && !message.deleteMode">{{ message.content }}</span>
-              
-               
-                  <div *ngIf="message.isEvent && !message.editMode && !message.deleteMode" class="editor-actions">
-      
-                    <button class="edit-button" (click)="onEditMessage(message)">Edit</button>
-                    <button class="delete-button" (click)="onDeleteMessage(message)">Delete</button>
-          
-          
-                  </div>
-                  <div class="message-editor-container" *ngIf="message.editMode && !message.deleteMode">
-                    <input type="text" class="message-editor" [(ngModel)]="message.editedContent">
-                    <div class="editor-actions">
-                      <span class="accept-icon" (click)="onAcceptEdit(message)">Edit</span>&nbsp; &nbsp;
-                      <span class="decline-icon" (click)="onDeclineEdit(message)">Cancel</span>
-                    </div>
-                  </div>
-                  <div class="message-editor-container" *ngIf="message.deleteMode && !message.editMode">
-                    <span>Confirm To Delete This Message ? </span> &nbsp; &nbsp;
-                    <div class="editor-actions">
-                      <span class="accept-icon" (click)="onAcceptDelete(message)">Delete</span>&nbsp; &nbsp;
-                      <span class="decline-icon" (click)="onDeclineDelete(message)">Cancel</span>
-                    </div>
-                  </div>
-              </div>
-            </div>
-            <div class="message-timestamp" [ngClass]="{
-                'chat-message timeoutgoing': message.senderId !== currentReceiverId,
-                'chat-message timeincoming': message.senderId === currentReceiverId
-              }">
-              {{ message.timestamp | date : "hh:mm a" }}
+    <nav class="navbar" style="background-color: #047bd5; height: 63px">
+      <div class="container-fluid" style="justify-content: start">
+        <a class="navbar-brand">
+          <div class="profile">
+            <div class="user-image">
+              <span>{{ currentReceiver.name.charAt(0) }}</span>
             </div>
           </div>
-        </div>
-
-    
+        </a>
+        <strong style="color: white">{{ currentReceiver.name }}</strong>
+        <div class="buttonstyle"></div>
       </div>
-      <!-- Chat Input -->
-    <div class="chat-input">
-      <input type="text" placeholder="Type your message..." [(ngModel)]="messageContent" class="chat" />
-      <button class="send-button" (click)="sendMessage()">Send</button>
+
+      <div class="buttonstyle" style="justify-content: end">
+        <button class="buttonclass btn btn-success" (click)="navigateToLogs()">
+          Logs Details
+        </button>
+        <button class="buttonclass btn btn-danger" (click)="Logout()">
+          Log Out
+        </button>
+      </div>
+
+   
+    </nav>
+
+    <div class="chat-container" (scroll)="onScroll($event)">
+      <!-- Chat Messages Container -->
+      <div class="chat-messages">
+        <div
+          class="message"
+          *ngFor="let message of messages"
+          (contextmenu)="onContextMenu($event, message)"
+        >
+          <div
+            [ngClass]="{
+              'chat-message outgoing': message?.senderId !== currentReceiverId,
+              'chat-message incoming': message?.senderId === currentReceiverId
+            }"
+          >
+            <div class="message-content">
+              <span
+                class="message-text"
+                *ngIf="!message.editMode && !message.deleteMode"
+                >{{ message.content }}</span
+              >
+
+              <div
+                *ngIf="
+                  message.isEvent && !message.editMode && !message.deleteMode
+                "
+                class="editor-actions"
+              >
+                <button class="edit-button" (click)="onEditMessage(message)">
+                  Edit
+                </button>
+                <button
+                  class="delete-button"
+                  (click)="onDeleteMessage(message)"
+                >
+                  Delete
+                </button>
+              </div>
+              <div
+                class="message-editor-container"
+                *ngIf="message.editMode && !message.deleteMode"
+              >
+                <input
+                  type="text"
+                  class="message-editor"
+                  [(ngModel)]="message.editedContent"
+                />
+                <div class="editor-actions">
+                  <span class="accept-icon" (click)="onAcceptEdit(message)"
+                    >Edit</span
+                  >&nbsp; &nbsp;
+                  <span class="decline-icon" (click)="onDeclineEdit(message)"
+                    >Cancel</span
+                  >
+                </div>
+              </div>
+              <div
+                class="message-editor-container"
+                *ngIf="message.deleteMode && !message.editMode"
+              >
+                <span>Confirm To Delete This Message ? </span> &nbsp; &nbsp;
+                <div class="editor-actions">
+                  <span class="accept-icon" (click)="onAcceptDelete(message)"
+                    >Delete</span
+                  >&nbsp; &nbsp;
+                  <span class="decline-icon" (click)="onDeclineDelete(message)"
+                    >Cancel</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="message-timestamp"
+            [ngClass]="{
+              'chat-message timeoutgoing':
+                message.senderId !== currentReceiverId,
+              'chat-message timeincoming':
+                message.senderId === currentReceiverId
+            }"
+          >
+            {{ message.timestamp | date : "hh:mm a" }}
+          </div>
+        </div>
+      </div>
     </div>
+    <!-- Chat Input -->
+    <div class="chat-input">
+      <input
+        type="text"
+        placeholder="Type your message..."
+        [(ngModel)]="messageContent"
+        class="chat"
+      />
+      <button class="send-button" (click)="sendMessage()"><i class="fas fa-rocket"></i></button>
     </div>
   </div>
+</div>

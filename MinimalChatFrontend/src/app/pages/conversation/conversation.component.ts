@@ -82,14 +82,14 @@ export class ConversationComponent {
     });
 
     this.signalRService.receiveEditedMessages().subscribe(data => {
-      const message = this.messages.find(m => m.id === data.messageId);
+      const message = this.messages.find(m => m.messageId === data.messageId);
       if (message) {
         message.content = data.content;
       }
     });
 
     this.signalRService.receiveDeletedMessages().subscribe(messageId => {
-      const index = this.messages.findIndex(m => m.id === messageId);
+      const index = this.messages.findIndex(m => m.messageId=== messageId);
       if (index !== -1) {
         this.messages.splice(index, 1);
       }
@@ -155,6 +155,8 @@ export class ConversationComponent {
 
   sendMessage() {
 
+
+
     if (this.messageContent.trim() === '') {
       // Don't send an empty message
       return;
@@ -189,6 +191,7 @@ export class ConversationComponent {
       (response) => {
    
         // Handle the response from the backend if needed
+        console.log(response);
         this.messageContent = '';
         
         const existingMessage = this.messages.find((m: any) => m.messageId === response.messageId);
@@ -219,12 +222,14 @@ export class ConversationComponent {
   
  
   onAcceptEdit(message: any) {
+
     // Update the message content with edited content
     message.content = message.editedContent;
     message.editMode = false;
     console.log(message);
     
-    this.chatService.editMessage(message.id, message.content).subscribe(
+    this.chatService.editMessage(message.messageId
+      , message.content).subscribe(
       (res) => {
         const editedMessageIndex = this.messages.findIndex(
           (m) => m.id === message.id
@@ -255,9 +260,9 @@ export class ConversationComponent {
   }
   
   onAcceptDelete(message: any) {
-    this.chatService.deleteMessage(message.id).subscribe(
+    this.chatService.deleteMessage(message.messageId).subscribe(
       () => {
-        const index = this.messages.findIndex((m) => m.id === message.id);
+        const index = this.messages.findIndex((m) => m.id === message.messageId);
         if (index !== -1) {
           this.messages.splice(index, 1); // Remove the message from the array
           this.signalRService.deleteMessage(message.id);
@@ -295,6 +300,8 @@ export class ConversationComponent {
     this.router.navigate(["/login"]);
   }
   searchMessages(){
+
+    this
 
   }
 
