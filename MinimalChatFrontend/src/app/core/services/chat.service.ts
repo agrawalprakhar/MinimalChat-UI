@@ -22,7 +22,7 @@ export class ChatService {
   
   
  
-  messages(userId: string, before?: Date, count: number = 20, sort: string = 'desc'):Observable<any[]>{
+  messages(userId: string, before ?: string, count: number = 20, sort: string = 'desc'):Observable<any[]>{
 
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -34,7 +34,7 @@ export class ChatService {
     .set('sort', sort);
 
   if (before ) {
-    params = params.set('before', before.toISOString());
+    params = params.set('before', before.toString());
   }
 
   return this.http.get<any[]>(this.url, {headers:headers, params:params }).pipe(
@@ -90,18 +90,22 @@ export class ChatService {
   }
   
   searchMessages(query: string): Observable<any[]> {
+    debugger
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${this.user.getToken()}`,
     });
     
     const params = new HttpParams().set('query', query);
-    
-    return this.http.get<any[]>(`${this.url}/search/${query}`, {
+    // return this.http.get<any[]>(this.url, {headers:headers, params:params }).pipe(
+    //   map((response: any) => response.messages) // Extract the 'messages' array from the response
+    // );
+    return this.http.get<any[]>(`${this.url}/search`, {
       headers: headers,
       params: params,
-    });
+    }).pipe(map((response:any)=>response.searchResult));
   }
 
+  
 
 }

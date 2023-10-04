@@ -20,7 +20,7 @@ export class RequestLogsComponent {
   constructor(private logService:LogsService) { }
 
   ngOnInit(): void {
-    this.getLogs();
+    this.getLastLogs(5);
   }
 
 

@@ -25,7 +25,7 @@ export class ConversationComponent {
   before: Date = new Date(); 
 
   public newMessage: string = '';
-  searchQuery: string = '';
+  query: string = '';
 
 
 
@@ -119,8 +119,9 @@ export class ConversationComponent {
 
   loadMessage(currentReceiverId:string,lastLoadedMessage:Date){
 
-    this.chatService.messages(currentReceiverId,lastLoadedMessage).subscribe((res) => {
+    this.chatService.messages(currentReceiverId,lastLoadedMessage.toString()).subscribe((res) => {
       console.log('loadMessages response:', res);
+      
       this.messages = [...this.messages, ...res]
       .map((message) => ({
         ...message,
@@ -131,7 +132,7 @@ export class ConversationComponent {
         this.lastLoadedMessage = this.messages[this.messages.length - 1].timestamp;
       }
   });
-  console.log('loadMessages messages:', this.messages);
+
   }
  
   getMessages(userId: string) {
@@ -299,10 +300,17 @@ export class ConversationComponent {
   
     this.router.navigate(["/login"]);
   }
-  searchMessages(){
+  searchMessages(): void {
+    debugger
+    if (this.query.trim() === '') {
+      // Don't search with an empty query
+      return;
+    }
 
-    this
-
+    this.chatService.searchMessages(this.query).subscribe((res) => {
+      this.messages = res;
+      console.log('Search results:', this.messages);
+    });
   }
 
 }
