@@ -4,6 +4,8 @@ import { ActivatedRoute , Router} from '@angular/router';
 import { ChatService } from 'src/app/core/services/chat.service';
 import { SignalrService } from 'src/app/core/services/signalr.service';
 import { UserService } from 'src/app/core/services/user.service';
+import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
+import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
 
 
 @Component({
@@ -17,6 +19,7 @@ export class ConversationComponent {
   currentReceiver: any = {};
   
   messages: any[] = [];
+  results: any[] = [];
   messageContent: string = '';
   loadedMessages: any[] = [];
   // Add a variable to store the last message ID displayed
@@ -26,11 +29,13 @@ export class ConversationComponent {
 
   public newMessage: string = '';
   query: string = '';
-
+  user :SocialUser | undefined;
+  showSearchResult : boolean | undefined ;
 
 
   constructor(
     private route: ActivatedRoute,
+    private authService: SocialAuthService,
     private userService: UserService,
     private chatService: ChatService,
     private http: HttpClient,
@@ -39,6 +44,9 @@ export class ConversationComponent {
     private signalRService: SignalrService
   ) {
     this.currentUserId = this.userService.getLoggedInUser();
+    this.authService.authState.subscribe((user) => {
+      this.user = user;
+    });
    
   }
 
@@ -296,21 +304,31 @@ export class ConversationComponent {
     this.router.navigate(['/logs']); // Replace 'logs' with your actual route
   }
   Logout(){
+    debugger
     this.userService.removeToken();
-  
+    this.authService.signOut().then(() => {
+      console.log('Logged out successfully!');
+      // Perform additional logout tasks if needed
+    });
     this.router.navigate(["/login"]);
+
   }
   searchMessages(): void {
     debugger
+
     if (this.query.trim() === '') {
       // Don't search with an empty query
       return;
     }
 
     this.chatService.searchMessages(this.query).subscribe((res) => {
-      this.messages = res;
-      console.log('Search results:', this.messages);
+      this.results= res;
+      
+      console.log('Search results:', this.results);
     });
+
+    // this.chatService.setSearchQuery(this.query);
+    this.chatService.setSearchResults(this.results);
   }
 
 }

@@ -9,7 +9,7 @@
       <button (click)="searchMessages()"><i class="fas fa-search"></i></button>
     </div>
     <nav class="navbar" style="background-color: #047bd5; height: 63px">
-      <div class="container-fluid" style="justify-content: start">
+      <div class="container-fluid" style="position: fixed;left: 300px;">
         <a class="navbar-brand">
           <div class="profile">
             <div class="user-image">
@@ -21,11 +21,11 @@
         <div class="buttonstyle"></div>
       </div>
 
-      <div class="buttonstyle" style="justify-content: end">
-        <button class="buttonclass btn btn-success" (click)="navigateToLogs()">
+      <div class="buttonstyle" >
+        <button class="buttonclass btn btn-success" style="position: fixed; right: 120px;top:72px;left:1080px" (click)="navigateToLogs()">
           Logs Details
         </button>
-        <button class="buttonclass btn btn-danger" (click)="Logout()">
+        <button class="buttonclass btn btn-danger" style="position: fixed; right: 10px;top:72px;left:1200px" (click)="Logout()">
           Log Out
         </button>
       </div>

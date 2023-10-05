@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { UserService } from 'src/app/core/services/user.service';
 import { ChatService } from 'src/app/core/services/chat.service';
@@ -15,9 +15,12 @@ export class ChatComponent {
   main:boolean=true;
   selectedUserName: string = '';
   selectedUserId: string | null = null; 
+  showSearchResults: boolean = false;
+  searchQuery: string = '';
+  searchResults: any[] = [];
 
 
-  constructor(private userService: UserService, private router: Router,private chatService : ChatService,private route : ActivatedRoute) {
+  constructor(private cdr: ChangeDetectorRef,private userService: UserService, private router: Router,private chatService : ChatService) {
 
   //  Navigate to ConversationComponent and pass currentReceiver in route data
     
@@ -31,30 +34,30 @@ export class ChatComponent {
       this.currentReceiver = res[0];
         
     });
+   // Subscribe to search query changes
+  
 
-
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        // Check if the route has changed, and hide the welcome div if the router outlet is showing
-        if(this.router.url.startsWith('/chat/user/')){
-          this.main = false
-        }
-      }
-    });
-    
+  // Subscribe to search results changes
+  this.chatService.searchResults$.subscribe(results => {
+    console.log(results)
+    this.searchResults = results;
+    // Handle search results as needed in your component
+    this.showSearchResults = this.searchResults.length > 0;
+    this.cdr.detectChanges(); // Manually trigger change detection
+  });
   }
-  
 
-  
-  
-  // showMessage(user: any) {
-  //  // Update the 'main' flag via the service
-  //    this.main=false;
-  //   this.router.navigate(['/chat', { outlets: { childPopup: ['user', user.id] } }]);
+  // ... existing methods ...
 
-  //   console.log(user.name);
-  // }
-  
+
+
+
+closeSearchResults(): void {
+    this.showSearchResults = false; // Hide search results panel
+    this.searchQuery = ''; // Clear the search query
+    // Optionally, clear the searchResults array as well if you don't want to display previous search results when reopened.
+}
+
 
 
 }

@@ -11,17 +11,20 @@ export class ChatService {
 
   constructor(private http: HttpClient, private user: UserService) {}
   url = 'https://localhost:44326/api/Message';
+  // private searchQuerySubject = new BehaviorSubject<string>('');
+  // searchQuery$ = this.searchQuerySubject.asObservable();
 
-  private mainFlagSubject = new BehaviorSubject<boolean>(true);
-  mainFlag$ = this.mainFlagSubject.asObservable();
+  private searchResultsSubject = new BehaviorSubject<any[]>([]);
+  searchResults$ = this.searchResultsSubject.asObservable();
 
-  setMainFlag(flag: boolean) {
-    this.mainFlagSubject.next(flag);
+  // setSearchQuery(query: string) {
+  //   this.searchQuerySubject.next(query);
+  // }
+
+  setSearchResults(results: any[]) {
+    this.searchResultsSubject.next(results);
   }
 
-  
-  
- 
   messages(userId: string, before ?: string, count: number = 20, sort: string = 'desc'):Observable<any[]>{
 
     const headers = new HttpHeaders({

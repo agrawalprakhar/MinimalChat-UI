@@ -81,9 +81,9 @@ export class LoginComponent  {
       );
     }
   }
-  refreshToken(): void {
-    this.authService.refreshAuthToken(GoogleLoginProvider.PROVIDER_ID);
-  }
+  // refreshToken(): void {
+  //   this.authService.refreshAuthToken(GoogleLoginProvider.PROVIDER_ID);
+  // }
 
   getAccessToken(): void {
     this.authService

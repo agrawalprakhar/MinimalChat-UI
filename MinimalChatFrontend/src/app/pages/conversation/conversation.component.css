@@ -18,8 +18,9 @@ body {
 }
 
  .container-fluid{
-    max-width:808px;
-    min-width:100px;
+    justify-content: flex-start;
+    max-width: 300px;
+    min-width: 100px;
  }
 
  .message-search {

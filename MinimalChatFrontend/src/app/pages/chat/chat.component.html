@@ -1,5 +1,5 @@
     <div class="sidebar">
-        <div class="flex-column align-items-stretch flex-shrink-0" style="background-color: #bfa7ef">
+        <div class="flex-column align-items-stretch flex-shrink-0" style="background-color: #bfa7ef"  *ngIf="!showSearchResults">
           <a class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
             <img src="../../../assets/chat-app-logo-png.webp" style="cursor: pointer" width="50" height="50"
               alt="img" />
@@ -26,6 +26,16 @@
             </a>
           </div>
         </div>
+     
+        <div class="flex-column align-items-stretch flex-shrink-0" style="background-color: #bfa7ef" *ngIf="showSearchResults" class="search-results">
+          <!-- Search Results Content -->
+          <div *ngFor="let result of searchResults" class="search-result-item">
+              <!-- Display search results here -->
+             {{result.content}}
+          </div>
+          <!-- Close Button to Revert Back -->
+          <button (click)="closeSearchResults()">Close</button>
+      </div>
       </div>
       <div  >
 
