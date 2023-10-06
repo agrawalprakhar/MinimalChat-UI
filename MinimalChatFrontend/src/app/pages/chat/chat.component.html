@@ -26,15 +26,34 @@
             </a>
           </div>
         </div>
-     
+        
         <div class="flex-column align-items-stretch flex-shrink-0" style="background-color: #bfa7ef" *ngIf="showSearchResults" class="search-results">
-          <!-- Search Results Content -->
-          <div *ngFor="let result of searchResults" class="search-result-item">
-              <!-- Display search results here -->
-             {{result.content}}
-          </div>
           <!-- Close Button to Revert Back -->
-          <button (click)="closeSearchResults()">Close</button>
+          <button class="close-button"  (click)="closeSearchResults()">Close</button>
+          <!-- Search Results Content -->
+          
+          <div *ngFor="let result of searchResults" class="search-result-item" >
+              <!-- Display search results here -->
+              
+             <div *ngIf="searchResults.length > 0">
+
+               <div
+               [ngClass]="{
+                 'incoming': result?.receiverId !== receiverId,
+                 ' outgoing': result?.receiverId === receiverId
+                }"
+                >
+                
+                {{result.content}}
+                
+              </div>
+                  </div>
+                  <div *ngIf="searchResults.length === 0" class="no-results-message">
+                    No search results found.
+                  </div>
+             
+          </div>
+          
       </div>
       </div>
       <div  >

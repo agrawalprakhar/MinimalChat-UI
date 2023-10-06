@@ -8,22 +8,34 @@ import { DatePipe } from '@angular/common';
   providedIn: 'root'
 })
 export class ChatService {
-
+  
   constructor(private http: HttpClient, private user: UserService) {}
   url = 'https://localhost:44326/api/Message';
   // private searchQuerySubject = new BehaviorSubject<string>('');
   // searchQuery$ = this.searchQuerySubject.asObservable();
-
+  
   private searchResultsSubject = new BehaviorSubject<any[]>([]);
   searchResults$ = this.searchResultsSubject.asObservable();
-
+  
   // setSearchQuery(query: string) {
-  //   this.searchQuerySubject.next(query);
-  // }
+    //   this.searchQuerySubject.next(query);
+    // }
+    
+    private searchCurrentReceiverIdSubject = new BehaviorSubject<string>('');
+    searchcurrentReceiverId$ = this.searchCurrentReceiverIdSubject.asObservable();
+    
+    private searchCurrentUserIdSubject = new BehaviorSubject<string>('');
+    searchcurrentUserId$ = this.searchCurrentUserIdSubject.asObservable();
 
-  setSearchResults(results: any[]) {
-    this.searchResultsSubject.next(results);
-  }
+    setSearchResults(results: any[]) {
+      this.searchResultsSubject.next(results);
+    }
+    setCurrentUserId(currentUserId: any) {
+      this.searchCurrentUserIdSubject.next(currentUserId);
+    }
+    setCurrentReceiverId(currentReceiverId: string) {
+      this.searchCurrentReceiverIdSubject.next(currentReceiverId);
+    }
 
   messages(userId: string, before ?: string, count: number = 20, sort: string = 'desc'):Observable<any[]>{
 

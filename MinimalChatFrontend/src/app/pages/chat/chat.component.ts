@@ -18,6 +18,8 @@ export class ChatComponent {
   showSearchResults: boolean = false;
   searchQuery: string = '';
   searchResults: any[] = [];
+  receiverId:string="";
+  userId: string="";
 
 
   constructor(private cdr: ChangeDetectorRef,private userService: UserService, private router: Router,private chatService : ChatService) {
@@ -35,16 +37,34 @@ export class ChatComponent {
         
     });
    // Subscribe to search query changes
-  
+   this.searchResults =[];
 
   // Subscribe to search results changes
   this.chatService.searchResults$.subscribe(results => {
     console.log(results)
     this.searchResults = results;
+     
     // Handle search results as needed in your component
-    this.showSearchResults = this.searchResults.length > 0;
+    this.showSearchResults = true
     this.cdr.detectChanges(); // Manually trigger change detection
   });
+
+  this.chatService.searchcurrentReceiverId$.subscribe(receiver =>{
+    this.receiverId=receiver
+    console.log(this.receiverId)
+
+  })
+ 
+
+
+
+
+
+
+
+
+
+  
   }
 
   // ... existing methods ...
@@ -55,6 +75,8 @@ export class ChatComponent {
 closeSearchResults(): void {
     this.showSearchResults = false; // Hide search results panel
     this.searchQuery = ''; // Clear the search query
+
+    this.searchResults = []; // Clear search results array
     // Optionally, clear the searchResults array as well if you don't want to display previous search results when reopened.
 }
 

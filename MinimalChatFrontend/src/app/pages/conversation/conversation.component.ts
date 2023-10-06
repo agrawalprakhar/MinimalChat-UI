@@ -5,6 +5,7 @@ import { ChatService } from 'src/app/core/services/chat.service';
 import { SignalrService } from 'src/app/core/services/signalr.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
+import { Renderer2 } from '@angular/core';
 import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
 
 
@@ -41,7 +42,8 @@ export class ConversationComponent {
     private http: HttpClient,
     private el: ElementRef,
     private router : Router,
-    private signalRService: SignalrService
+    private signalRService: SignalrService,
+    private renderer : Renderer2,
   ) {
     this.currentUserId = this.userService.getLoggedInUser();
     this.authService.authState.subscribe((user) => {
@@ -210,6 +212,7 @@ export class ConversationComponent {
           this.signalRService.sendMessage(message);
           
           this.newMessage = '';
+          this.scrollToBottom();
   
       },
       (error : any) => {
@@ -315,20 +318,42 @@ export class ConversationComponent {
   }
   searchMessages(): void {
     debugger
-
+    this.results=[];
     if (this.query.trim() === '') {
       // Don't search with an empty query
       return;
     }
-
+    
     this.chatService.searchMessages(this.query).subscribe((res) => {
-      this.results= res;
-      
-      console.log('Search results:', this.results);
-    });
+      if(res){
+        this.results= res;
+      }
+      else {
+        this.results = []; // Empty the results array if the response is falsy
+      }
+       console.log(this.results);
+      // this.chatService.setSearchQuery(this.query);
+      this.chatService.setSearchResults(this.results);
+      this.chatService.setCurrentReceiverId(this.currentReceiverId);
 
-    // this.chatService.setSearchQuery(this.query);
-    this.chatService.setSearchResults(this.results);
+
+    },
+    (error) => {
+      console.error('Error fetching search results:', error);
+      this.results = []; // Empty the results array in case of an error
+      // Handle the error as needed, such as showing a user-friendly error message.
+    }
+  );
+   
+
+  }
+  private scrollToBottom(): void {
+    setTimeout(() => {
+      const chatContainer = this.el.nativeElement.querySelector('.chat-container'); // Replace '.chat-container' with the actual class or selector of your chat container element
+      if (chatContainer) {
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+      }
+    });
   }
 
 }

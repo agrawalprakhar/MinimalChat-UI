@@ -27,6 +27,7 @@
         </button>
         <button class="buttonclass btn btn-danger" style="position: fixed; right: 10px;top:72px;left:1200px" (click)="Logout()">
           Log Out
+
         </button>
       </div>
 
@@ -61,13 +62,14 @@
                 class="editor-actions"
               >
                 <button class="edit-button" (click)="onEditMessage(message)">
-                  Edit
+                  <i class="fas fa-pen"></i>
                 </button>
                 <button
                   class="delete-button"
                   (click)="onDeleteMessage(message)"
                 >
-                  Delete
+                <i class="fas fa-trash-alt "></i>
+
                 </button>
               </div>
               <div
@@ -81,10 +83,11 @@
                 />
                 <div class="editor-actions">
                   <span class="accept-icon" (click)="onAcceptEdit(message)"
-                    >Edit</span
+                    ><i class="fas fa-pen"></i>
+                    </span
                   >&nbsp; &nbsp;
                   <span class="decline-icon" (click)="onDeclineEdit(message)"
-                    >Cancel</span
+                    ><i class="fas fa-times"></i></span
                   >
                 </div>
               </div>
@@ -92,13 +95,15 @@
                 class="message-editor-container"
                 *ngIf="message.deleteMode && !message.editMode"
               >
-                <span>Confirm To Delete This Message ? </span> &nbsp; &nbsp;
+              <span style="color: red; font-weight: bold;">Confirm To Delete This Message?</span>
+              &nbsp; &nbsp;
                 <div class="editor-actions">
                   <span class="accept-icon" (click)="onAcceptDelete(message)"
-                    >Delete</span
+                    ><i class="fas fa-trash-alt"></i>
+                    </span
                   >&nbsp; &nbsp;
                   <span class="decline-icon" (click)="onDeclineDelete(message)"
-                    >Cancel</span
+                    ><i class="fas fa-times"></i></span
                   >
                 </div>
               </div>

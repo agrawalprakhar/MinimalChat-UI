@@ -19,10 +19,48 @@
   position: sticky;
   top:3px;
 }
-/* Styles for the header */
-.head{
- 
+/* styles.css (or your component-specific CSS file) */
+
+/* Search Results Container */
+.search-results {
+  background-color: #ffffff; /* Background color for search results container */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Box shadow for a subtle elevation effect */
+  border-radius: 8px; /* Border radius for rounded corners */
+  padding: 20px; /* Padding inside the search results container */
+
+  overflow-y: auto; /* Enable vertical scroll when search results overflow */
 }
+
+/* Search Result Item */
+.search-result-item {
+  margin-bottom: 10px; /* Spacing between search result items */
+  padding: 10px; /* Padding inside each search result item */
+  border: 1px solid #e0e0e0; /* Border for each search result item */
+  border-radius: 4px; /* Border radius for rounded corners */
+  transition: background-color 0.3s ease; /* Smooth transition for background color */
+}
+
+.search-result-item:hover {
+  background-color: #f9f9f9; /* Background color on hover */
+}
+
+/* Close Button */
+.close-button {
+  background-color: #ff6f61; /* Close button background color */
+  color: #ffffff; /* Close button text color */
+  border: none; /* Remove button border */
+  border-radius: 4px; /* Border radius for rounded corners */
+  padding: 10px 20px; /* Padding inside the close button */
+  cursor: pointer; /* Show pointer cursor on hover */
+  margin-bottom: 20px; /* Spacing between search results and close button */
+  transition: background-color 0.3s ease; /* Smooth transition for background color */
+  margin-left: 150px;
+}
+
+.close-button:hover {
+  background-color: #d9534f; /* Close button background color on hover */
+}
+
 
 .bg {
 
@@ -88,4 +126,30 @@
 .app-subtitle {
   font-size: 16px;
   color: #777;
+}
+.outgoing {
+  background-color: #047BD5;
+  color: #fff;
+  align-self: flex-end;
+  max-width: fit-content;
+  max-width: -moz-fit-content;
+  margin-left: auto;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  margin-top: 15px;
+  margin-bottom: 4px;
+}
+
+.incoming {
+  background-color: #f1f1f1;
+  color: #333;
+  align-self: flex-start;
+  margin-right: auto;
+  max-width: fit-content;
+  max-width: -moz-fit-content;
+  padding: 5px;
+  margin-bottom: -7px;
+  border-radius: 8px;
 }
