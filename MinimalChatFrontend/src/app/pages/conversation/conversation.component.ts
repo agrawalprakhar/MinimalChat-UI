@@ -29,7 +29,7 @@ export class ConversationComponent {
   scrolledToTop: boolean = false;
   before: Date = new Date(); 
 
-  public newMessage: string = '';
+  public newMessage : any;
   query: string = '';
   user :SocialUser | undefined;
   showSearchResult : boolean | undefined ;
@@ -153,16 +153,18 @@ export class ConversationComponent {
 
     this.chatService.messages(currentReceiverId,lastLoadedMessage.toString()).subscribe((res) => {
       console.log('loadMessages response:', res);
-      
+      this.newMessage=res;
+      if (this.newMessage.length > 0) {
+        this.lastLoadedMessage = this.newMessage[this.newMessage.length - 1].timestamp;
+      }
       this.messages = [...this.messages, ...res]
       .map((message) => ({
         ...message,
         timestamp: new Date(message.timestamp), // Convert to Date object
       }))
       .sort((a, b) => a.timestamp - b.timestamp);
-      if (this.messages.length > 0) {
-        this.lastLoadedMessage = this.messages[this.messages.length - 1].timestamp;
-      }
+        
+      console.log('time of last loaded message', this.lastLoadedMessage);
   });
 
   }
@@ -173,13 +175,14 @@ export class ConversationComponent {
     console.log(userId);
 
     this.chatService.messages(userId).subscribe((res) => {
-      console.log('getMessages response:', res);
+
+      this.messages=res
+      if (this.messages.length > 0) {
+        this.lastLoadedMessage = this.messages[this.messages.length - 1].timestamp;
+      }
      this.messages = res.reverse();
     
      console.log('getMessages messages:', this.messages);
-      if (this.messages.length > 0) {
-        this.lastLoadedMessage = this.messages[this.messages.length - 20].timestamp;
-      }
       
       console.log('time of last loaded message', this.lastLoadedMessage);
   });

@@ -37,7 +37,7 @@ export class ChatService {
       this.searchCurrentReceiverIdSubject.next(currentReceiverId);
     }
 
-  messages(userId: string, before ?: string, count: number = 20, sort: string = 'desc'):Observable<any[]>{
+  messages(userId: string, before ?: string, count: number =20, sort: string = 'desc'):Observable<any[]>{
 
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -45,8 +45,11 @@ export class ChatService {
     });
     let params = new HttpParams()
     .set('userId', userId.toString())
-    .set('count', count.toString())
     .set('sort', sort);
+
+    if (count ) {
+      params = params.set('count', count.toString());
+    }
 
   if (before ) {
     params = params.set('before', before.toString());

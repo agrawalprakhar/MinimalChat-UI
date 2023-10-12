@@ -404,7 +404,7 @@ strong {
     color: white;
     padding: 10px;
     justify-content: space-between;
-    align-items: center;
+ 
 }
 
 /* Typing indicator styling */
@@ -416,6 +416,9 @@ strong {
     padding-right: 4px;
     border-radius: 20px;
     animation: typing-animation 1s infinite;
+    max-width: fit-content;
+    max-width: -moz-fit-content;
+    margin-left: 20px;
 }
   
   /* Typing animation keyframes */
