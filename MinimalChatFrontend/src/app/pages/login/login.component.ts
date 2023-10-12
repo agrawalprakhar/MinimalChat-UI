@@ -23,6 +23,7 @@ export class LoginComponent  {
   response :any;
   loggedIn!: boolean;
   private accessToken = '';
+  currentUserId! : string;
 
   socialuser!: SocialUser;
 
@@ -53,6 +54,7 @@ export class LoginComponent  {
     return this.loginForm.get(name);
   }
   onSubmit() {
+    debugger
     if (this.loginForm.valid) {
       debugger;
       this.userService.loginUser(this.loginForm.value).subscribe(
@@ -61,7 +63,9 @@ export class LoginComponent  {
           console.log(this.respdata);
           if (this.respdata != null) {
             this.userService.saveToken(this.respdata.token);
-            
+            this.userService.saveCurrentUserId(this.respdata.profile.id)
+;            this.currentUserId=this.respdata.profile.id;
+            console.log("profile",this.respdata.profile.id)
             this.toastr.success('Login successful!', 'Success');
             this.router.navigateByUrl('/chat');
             console.log(this.loginForm.value);
@@ -102,7 +106,7 @@ export class LoginComponent  {
           this.userService.saveToken(response.token);
           // localStorage.setItem('tokenKey', response.token);
      
-          localStorage.setItem('userProfile', JSON.stringify(response.profile));
+          localStorage.setItem('currentUser', JSON.stringify(response.profile.id));
    
           // Redirect to the chat route
           this.toastr.success('Login successful!', 'Success');

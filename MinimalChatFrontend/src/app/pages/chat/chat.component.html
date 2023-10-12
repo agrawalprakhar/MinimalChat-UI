@@ -9,6 +9,16 @@
               
             </div>
           </a>
+
+
+          <div *ngIf="connectedUsersName.length > 0">
+            <h2 class="user-status">Online :  {{ (connectedUsers) }}</h2>
+            <ul>
+              <li *ngFor="let user of connectedUsersName">{{ user }}</li>
+            </ul>
+          </div>
+     
+
           <div *ngFor="let user of users" class="list-group list-group-flush border-bottom scrollarea" >
             <a class="list-group-item list-group-item-action py-3 lh-tight" aria-current="true" [routerLink]="'user/' + user.id">
               <div class="d-flex w-100 align-items-center">
@@ -19,6 +29,7 @@
                 </div>
                 <div class="row">
                   <strong class="mb-1">{{ user.name }}</strong>
+
 
                   <small>{{ user.email }}</small>
                 </div>

@@ -17,7 +17,10 @@
             </div>
           </div>
         </a>
-        <strong style="color: white">{{ currentReceiver.name }}</strong>
+        <div class="d-flex flex-column chat-header">
+          <strong style="color: white">{{ currentReceiver.name }}</strong>
+        <small *ngIf="isTyping" class="typing-indicator" >typing...</small>
+        </div>
         <div class="buttonstyle"></div>
       </div>
 
@@ -129,8 +132,11 @@
         type="text"
         placeholder="Type your message..."
         [(ngModel)]="messageContent"
-        class="chat"
+        class="chat"    (input)="sendTypingIndicator(true)"
+        (blur)="sendTypingIndicator(false)" 
+        
       />
+      
       <button class="send-button" (click)="sendMessage()"><i class="fas fa-rocket"></i></button>
     </div>
   </div>

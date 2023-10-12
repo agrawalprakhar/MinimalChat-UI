@@ -396,9 +396,41 @@ strong {
  .buttonclass{
     align-items: end;
  }
+  /* CSS file (styles.css or styles.scss) */
+
+/* Chat header styling */
+.chat-header {
+ 
+    color: white;
+    padding: 10px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Typing indicator styling */
+.typing-indicator {
+    background-color: #128C7E;
+    color: white;
+    font-size: 12px;
+    padding-left: 7px;
+    padding-right: 4px;
+    border-radius: 20px;
+    animation: typing-animation 1s infinite;
+}
   
-  
-  
-  
+  /* Typing animation keyframes */
+@keyframes typing-animation {
+    0% {
+        opacity: 0.5;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.5;
+    }
+}
+
+
   
   

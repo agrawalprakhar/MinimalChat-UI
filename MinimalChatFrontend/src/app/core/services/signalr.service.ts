@@ -1,23 +1,60 @@
 import { Injectable } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
-import { Observable,Subject } from 'rxjs';
+import { BehaviorSubject, Observable,Subject } from 'rxjs';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SignalrService {
   private hubConnection: signalR.HubConnection;
+  public countUpdated = new Subject<number>();
+  public userIdentifierUpdated = new Subject<string>();
+  public connectedUsersUpdated = new BehaviorSubject<string[]>([]); // Use BehaviorSubject to store and emit the connected users list
+  loggedInUserToken = this.user.getToken();
+  private isTypingSubject = new BehaviorSubject<boolean>(false);
+  isTyping$ = this.isTypingSubject.asObservable();
 
-  constructor() {
+
+
+  constructor(private user : UserService) {
     this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl('https://localhost:44326/chatHub') // Specify the URL of your hub
+      .withUrl(`https://localhost:44326/chatHub?access_token=${this.loggedInUserToken}`) // Specify the URL of your hub
       .build();
-
+         
     this.hubConnection
       .start()
       .then(() => console.log('Connection started'))
       .catch(err => console.log('Error while starting connection: ' + err));
+
+      this.hubConnection.on('SetUserIdentifier', (userId: string) => {
+        this.userIdentifierUpdated.next(userId);
+        console.log(  "token" , this.loggedInUserToken)
+        console.log(`Received updateduser: ${userId}`);
+      });
+
+      this.hubConnection.on('updateCount', (count: number) => {
+        this.countUpdated.next(count);
+        console.log(`Received updated count: ${count}`);
+      });
+
+      this.hubConnection.on('ReceiveConnectedUsers', (connectedUsers: string[]) => {
+        this.connectedUsersUpdated.next(connectedUsers);
+        console.log('Received connected users:', connectedUsers);
+      });
+
+      this.hubConnection.on('ReceiveTypingIndicator', (isTyping: boolean) => {
+
+        this.isTypingSubject.next(isTyping);
+        console.log('Typing', isTyping);
+      });
+
+  }
+
+  sendTypingIndicator(userId: string, isTyping: boolean) {
+    this.hubConnection.invoke('SendTypingIndicator', userId, isTyping)
+      .catch(err => console.error(err));
   }
 
   sendMessage(message: any): void {
@@ -58,6 +95,14 @@ export class SignalrService {
     return new Observable<number>(observer => {
       this.hubConnection.on('ReceiveDeletedMessage', (messageId: number) => {
         observer.next(messageId);
+      });
+    });
+  }
+
+  receiveTypingStatus$ = (): Observable<{ userId: string, isTyping: boolean }> => {
+    return new Observable(observer => {
+      this.hubConnection.on('ReceiveTypingIndicator', (userId: string, isTyping: boolean) => {
+        observer.next({ userId, isTyping});
       });
     });
   }

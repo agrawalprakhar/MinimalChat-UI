@@ -7,6 +7,7 @@ import { UserService } from 'src/app/core/services/user.service';
 import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 import { Renderer2 } from '@angular/core';
 import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -15,7 +16,7 @@ import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
   styleUrls: ['./conversation.component.css']
 })
 export class ConversationComponent {
-  currentUserId: number | any;
+  currentUserId !: string  | any;
   currentReceiverId!: string;
   currentReceiver: any = {};
   
@@ -33,6 +34,10 @@ export class ConversationComponent {
   user :SocialUser | undefined;
   showSearchResult : boolean | undefined ;
 
+  isTyping: boolean = false;
+  typeUserId: string = '';
+  private typingIndicatorSubscription: Subscription;
+
 
   constructor(
     private route: ActivatedRoute,
@@ -44,16 +49,23 @@ export class ConversationComponent {
     private router : Router,
     private signalRService: SignalrService,
     private renderer : Renderer2,
+
   ) {
-    this.currentUserId = this.userService.getLoggedInUser();
-    this.authService.authState.subscribe((user) => {
-      this.user = user;
-    });
-   
-  }
-
-  ngOnInit(): void {
-
+      // this.currentUserId = this.userService.getLoggedInUser();
+      
+      this.authService.authState.subscribe((user) => {
+        this.user = user;
+      });
+      this.typingIndicatorSubscription = this.signalRService.isTyping$.subscribe(isTyping => {
+        this.isTyping = isTyping;
+        console.log("Typing",isTyping)
+      });
+    }
+    
+    ngOnInit(): void {
+      
+      this.currentUserId = localStorage.getItem("currentUser");
+      console.log('currentUserId:',this.currentUserId)
     this.route.params.subscribe((params) => {
       const userId = params['userId'];
       this.currentReceiverId = userId.toString();
@@ -104,8 +116,18 @@ export class ConversationComponent {
         this.messages.splice(index, 1);
       }
     });
-  }
 
+    this.signalRService.receiveTypingStatus$().subscribe(indicator => {
+      if(this.currentReceiverId == indicator.userId)
+      {
+        this.isTyping = indicator.isTyping;
+      }
+      console.log("Hii");
+    });
+  }
+  ngOnDestroy() {
+    this.typingIndicatorSubscription.unsubscribe();
+  }
  
   @HostListener('scroll', ['$event'])
   onScroll(event: Event) {
@@ -181,22 +203,7 @@ export class ConversationComponent {
     };
 
     
-    // localStorage.setItem('chatMessages', JSON.stringify(this.messages));
-
-    // this.messageService.sendMessage(message).subscribe({
-    //   next: (res) => {
-    //     const existingMessage = this.conversationHistory.find((m: any) => m.messageId === res.data.messageId);
-    //     if (!existingMessage) {
-    //       this.conversationHistory.push(res.data);
-    //       this.scrollToBottom();
-    //     }
-    //     this.toast.success({ detail: "SUCCESS", summary: res.message, duration: 3000 });
-    //     this.signalRService.sendMessage$(res.data);
-    //     // Clear the input box after sending the message
-    //     this.newMessageContent = '';
-    //     this.scrollToBottom();
-    //   }
-    // });
+  
 
     this.chatService.sendMessage(message.receiverId, message.content).subscribe(
       (response) => {
@@ -356,4 +363,7 @@ export class ConversationComponent {
     });
   }
 
+ sendTypingIndicator(isTyping: boolean) {
+  this.signalRService.sendTypingIndicator(this.currentUserId, isTyping);
+}
 }

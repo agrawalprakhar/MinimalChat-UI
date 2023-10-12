@@ -31,6 +31,18 @@
   overflow-y: auto; /* Enable vertical scroll when search results overflow */
 }
 
+.user-status {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  display: inline-block;
+  margin-right: 20px;
+}
+
 /* Search Result Item */
 .search-result-item {
   margin-bottom: 10px; /* Spacing between search result items */
@@ -152,4 +164,61 @@
   padding: 5px;
   margin-bottom: -7px;
   border-radius: 8px;
+}
+/* CSS for Online Users List */
+/* CSS for Online Users List */
+h2 {
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  font-size: 1.2rem;
+  color: #f1eded;
+  width: fit-content;
+  width: -moz-fit-content;
+  margin-bottom: 0.2rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  padding: 0.5rem 1rem;
+  border: 3px solid #28a745;
+  border-radius: 17px;
+}
+
+li::after {
+  content: "\2022"; /* Unicode character for a bullet point */
+  color: #28a745; /* Green dot color */
+  margin-left: 0.5rem;
+  font-size: 2.5rem; /* Adjust the font size of the dot */
+}
+
+li:hover {
+  color: #28a745; /* Change text color on hover */
+  border-color: #28a745; /* Change border color on hover */
+  transform: translateX(5px); /* Add a subtle horizontal shift on hover */
+}
+
+/* Optional: Add animation for list item appearance */
+li {
+  opacity: 0;
+  transform: translateY(-10px);
+  animation: fadeInUp 0.5s forwards ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

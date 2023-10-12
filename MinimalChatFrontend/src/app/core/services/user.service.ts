@@ -11,6 +11,7 @@ import jwt_decode from 'jwt-decode';
 })
 export class UserService {
    private tokenKey : any;
+   currentUserID!:string;
 
   constructor(private http : HttpClient,private router : Router) { }
 
@@ -31,15 +32,23 @@ export class UserService {
   }
   // Save the token to local storage
   saveToken(token: any): void {
-    debugger
+
     localStorage.setItem(this.tokenKey, token);
+  }
+
+  saveCurrentUserId(currentUserId : string): void{
+    localStorage.setItem("currentUser", currentUserId);
+    this.currentUserID=currentUserId
   }
   // Retrieve the token from local storage
   getToken(): string | null {
  
     return localStorage.getItem(this.tokenKey);
   }
-
+ 
+   getCurrentUserId():string | null {
+    return  localStorage.getItem("currentUser")
+   }
     // Remove the token from local storage
     removeToken(): void {
       localStorage.removeItem(this.tokenKey);
@@ -64,7 +73,7 @@ export class UserService {
       decodedToken[
         'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'
       ];
-
+     
     return +id;
 
   }
