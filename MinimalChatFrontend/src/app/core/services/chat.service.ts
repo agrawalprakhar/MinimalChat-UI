@@ -62,7 +62,7 @@ export class ChatService {
 
   
   sendMessage(receiverId: string, content: string): Observable<any> {
-
+    debugger
 
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -108,7 +108,7 @@ export class ChatService {
   }
   
   searchMessages(query: string): Observable<any[]> {
-    debugger
+
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${this.user.getToken()}`,

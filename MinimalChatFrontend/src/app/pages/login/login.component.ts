@@ -119,6 +119,9 @@ export class LoginComponent  {
       (error) => {
         this.toastr.error(
           'Something Went Wrong','Error'
+
+
+          
         );
         console.error('Error sending social token to the backend:', error);
       }

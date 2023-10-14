@@ -15,7 +15,7 @@ export class SignalrService {
   loggedInUserToken = this.user.getToken();
   private isTypingSubject = new BehaviorSubject<boolean>(false);
   isTyping$ = this.isTypingSubject.asObservable();
-
+  public lastSeenTimestampsUpdated = new BehaviorSubject<{ [key: string]: Date }>({});
 
 
   constructor(private user : UserService) {
@@ -49,11 +49,15 @@ export class SignalrService {
         this.isTypingSubject.next(isTyping);
         console.log('Typing', isTyping);
       });
+      this.hubConnection.on('ReceiveLastSeenTimestamps', (lastSeenTimestamps: { [key: string]: Date }) => {
+        this.lastSeenTimestampsUpdated.next(lastSeenTimestamps);
+        console.log('Received last seen timestamps:', lastSeenTimestamps);
+      });
 
   }
 
-  sendTypingIndicator(userId: string, isTyping: boolean) {
-    this.hubConnection.invoke('SendTypingIndicator', userId, isTyping)
+  sendTypingIndicator(userId: string,receiverId:string, isTyping: boolean) {
+    this.hubConnection.invoke('SendTypingIndicator', userId,receiverId, isTyping)
       .catch(err => console.error(err));
   }
 
@@ -99,11 +103,14 @@ export class SignalrService {
     });
   }
 
-  receiveTypingStatus$ = (): Observable<{ userId: string, isTyping: boolean }> => {
+  receiveTypingStatus$ = (): Observable<{ userId: string,receiverId: string, isTyping: boolean }> => {
     return new Observable(observer => {
-      this.hubConnection.on('ReceiveTypingIndicator', (userId: string, isTyping: boolean) => {
-        observer.next({ userId, isTyping});
+      this.hubConnection.on('ReceiveTypingIndicator', (userId: string,receiverId: string, isTyping: boolean) => {
+        observer.next({ userId,receiverId, isTyping});
       });
     });
+  }
+  receiveLastSeenTimestamps(): Observable<{ [key: string]: Date }> {
+    return this.lastSeenTimestampsUpdated.asObservable();
   }
 }

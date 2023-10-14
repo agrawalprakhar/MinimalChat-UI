@@ -4,11 +4,10 @@
     box-sizing: border-box;
 }
 
- html,
+html,
 body {
     height: 100%;
 }
-
 
 #chat-container {
     display: flex;
@@ -17,13 +16,13 @@ body {
     border-radius: 10px;
 }
 
- .container-fluid{
+.container-fluid {
     justify-content: flex-start;
     max-width: 300px;
     min-width: 100px;
- }
+}
 
- .message-search {
+.message-search {
     display: flex;
     align-items: center;
     background-color: #f5f5f5;
@@ -31,13 +30,10 @@ body {
     border-radius: 5px;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
     margin-left: 300px;
- 
-   max-width: 1020px;
+    max-width: 1020px;
     width: 100%;
     margin-top: 5px;
-    height : 48px;
-  
-  
+    height: 48px;
 }
 
 .message-search input[type="text"] {
@@ -48,19 +44,12 @@ body {
     font-size: 14px;
     border: none;
     border-radius: 15px;
-    /* position: fixed; */
-    /* width: 833px;
-    right: 200px; */
- 
     border: 1px solid #ccc;
     border-radius: 40px;
     padding: 8px;
-
     position: fixed;
     left: 311px;
     right: 90px;
-
-    /* width: calc(100% - 16px); */
     z-index: 1;
     background-color: #fff;
     filter: drop-shadow(4px 4px 8px #999999);
@@ -72,23 +61,16 @@ body {
     border: none;
     border-radius: 5px;
     padding: 10px 20px;
-    /* margin-left: 863px; */
     cursor: pointer;
     transition: background-color 0.3s ease;
-   
-
-  
- 
-
-
-    position: fixed; /* Use absolute positioning */
-
+    position: fixed;
     right: 37px;
 }
 
 .message-search button:hover {
     background-color: #0056b3;
 }
+
 /* Responsive media query for smaller screens */
 @media (max-width: 768px) {
     .message-search {
@@ -105,47 +87,48 @@ body {
     }
 }
 
-
 /* Add some padding to the body to account for the fixed navbar */
 body {
-    padding-top: 60px; /* Adjust this value as needed */
+    padding-top: 60px;
+    /* Adjust this value as needed */
 }
 
 #chat-window {
     border-radius: 0 10px 10px 0;
     flex-grow: 1;
     width: 250px;
-    
 }
-.buttonclass{
+
+.buttonclass {
     height: 40px;
     width: 100px;
     margin-right: 10px;
-  
+
 }
+
 h1 {
     font-size: 40px;
     font-weight: 600;
     line-height: -2px;
     font-family: Roboto, sans-serif;
     letter-spacing: normal;
-    margin: -1px 12px 9px;}
+    margin: -1px 12px 9px;
+}
+
 /* Styles for the top navigation bar */
 .navbar {
     background-color: lavender;
     height: 61px;
-
-   
     display: flex;
     position: fixed;
-    justify-content: flex-end; /* Align items to the right */
+    justify-content: flex-end;
+    /* Align items to the right */
     left: 300px;
     right: 0px;
     /* float: left; */
     margin-left: auto;
     margin-top: 6px;
     border-radius: 14px;
-
     margin-right: 10px;
 }
 
@@ -162,19 +145,23 @@ h1 {
 
     .buttonstyle {
         flex-direction: column;
-        margin-top: 10px; /* Adjust the spacing between buttons */
+        margin-top: 10px;
+        /* Adjust the spacing between buttons */
     }
 
     .buttonclass {
         width: 100%;
-        margin-bottom: 10px; /* Adjust the spacing between buttons */
+        margin-bottom: 10px;
+        /* Adjust the spacing between buttons */
     }
 
     .navbar-brand {
-        margin-bottom: 10px; /* Adjust the spacing between brand and buttons */
+        margin-bottom: 10px;
+        /* Adjust the spacing between brand and buttons */
     }
 }
-.buttonstyle{
+
+.buttonstyle {
     display: flex;
     justify-content: flex-end;
 
@@ -188,7 +175,6 @@ h1 {
     background-color: black;
     display: flex;
     margin-left: 15px;
-   
     align-items: center;
     justify-content: center;
     font-size: 20px;
@@ -201,10 +187,6 @@ h1 {
     background-color: #f1f1f1;
     padding: 16px;
 }
-
-
-
-
 
 /* Styles for the user profile name */
 strong {
@@ -226,23 +208,23 @@ strong {
     margin-bottom: 10px;
     min-height: 70vh;
     padding-bottom: 100px;
-    max-height: 400px; /* Set a maximum height for the container */
-    overflow-y: auto; /* Add a vertical scrollbar when content overflows */
-    border: 1px solid #ccc; /* Add a border for visual separation */
+    max-height: 400px;
+    /* Set a maximum height for the container */
+    overflow-y: auto;
+    /* Add a vertical scrollbar when content overflows */
+    border: 1px solid #ccc;
+    /* Add a border for visual separation */
 
-   
-    
 }
-
 
 /* Styles for individual chat messages */
 .chat-message {
-   display: flex;
+    display: flex;
     flex-direction: column;
     padding: 10px;
     flex-grow: 1;
     overflow-y: auto;
-    
+
 }
 
 .chat-message {
@@ -281,16 +263,17 @@ strong {
 
 }
 
-.timeoutgoing{
-    font-size: 10px; /* Adjust the font size as needed */
+.timeoutgoing {
+    font-size: 10px;
+    /* Adjust the font size as needed */
     text-align: end;
-  } 
+}
 
-  .outgoing > .message-timestamp{
+.outgoing>.message-timestamp {
     font-size: 10px;
     padding-top: 17px;
-  }
-  
+}
+
 
 /* Styles for editor actions */
 .editor-actions {
@@ -320,7 +303,7 @@ strong {
     border: 1px solid #ccc;
     border-radius: 4px;
     padding: 4px 8px;
-   
+
 }
 
 /* Styles for accept and decline icons */
@@ -351,7 +334,7 @@ strong {
     z-index: 1;
     background-color: #fff;
     filter: drop-shadow(4px 4px 8px #999999);
-  }
+}
 
 
 
@@ -363,48 +346,56 @@ strong {
     border-radius: 17px;
     padding: 8px 16px;
     cursor: pointer;
-    position: fixed; /* Use absolute positioning */
+    position: fixed;
+    /* Use absolute positioning */
     bottom: 8px;
     right: 37px;
-   
-/* Adjust the distance from the right */
+
+    /* Adjust the distance from the right */
 }
 
 .send-button button:hover {
     background-color: #0056b3;
 }
+
 .message-text {
-    font-size: 16px; /* Adjust the font size as needed */
-  }
-  
-  .message-timestamp {
-    font-size: 12px; /* Adjust the font size as needed */
-  }
- 
-  
-  .chat-container::-webkit-scrollbar {
-    width: 8px; /* Customize scrollbar width */
-  }
-  
-  .chat-container::-webkit-scrollbar-thumb {
-    background-color: #888; /* Customize scrollbar thumb color */
-  }
-  
-  .chat-container::-webkit-scrollbar-thumb:hover {
-    background-color: #555; /* Customize scrollbar thumb color on hover */
-  }
- .buttonclass{
+    font-size: 16px;
+    /* Adjust the font size as needed */
+}
+
+.message-timestamp {
+    font-size: 12px;
+    /* Adjust the font size as needed */
+}
+
+
+.chat-container::-webkit-scrollbar {
+    width: 8px;
+    /* Customize scrollbar width */
+}
+
+.chat-container::-webkit-scrollbar-thumb {
+    background-color: #888;
+    /* Customize scrollbar thumb color */
+}
+
+.chat-container::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+    /* Customize scrollbar thumb color on hover */
+}
+
+.buttonclass {
     align-items: end;
- }
-  /* CSS file (styles.css or styles.scss) */
+}
+
 
 /* Chat header styling */
 .chat-header {
- 
+
     color: white;
     padding: 10px;
     justify-content: space-between;
- 
+
 }
 
 /* Typing indicator styling */
@@ -420,20 +411,18 @@ strong {
     max-width: -moz-fit-content;
     margin-left: 20px;
 }
-  
-  /* Typing animation keyframes */
+
+/* Typing animation keyframes */
 @keyframes typing-animation {
     0% {
         opacity: 0.5;
     }
+
     50% {
         opacity: 1;
     }
+
     100% {
         opacity: 0.5;
     }
 }
-
-
-  
-  

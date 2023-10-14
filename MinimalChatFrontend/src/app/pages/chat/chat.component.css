@@ -1,6 +1,5 @@
 .sidebar {
   position: fixed;
-
   height: 100%;
   width: 280px;
   overflow-y: auto;
@@ -8,69 +7,86 @@
   /* justify-content: space-between; */
   flex-direction: column;
   /* Hide the scrollbar */
-
   -ms-overflow-style: none;
-
-
   background-color: #e7e8f9;
 }
 
-.header{
+.header {
   position: sticky;
-  top:3px;
+  top: 3px;
 }
-/* styles.css (or your component-specific CSS file) */
 
 /* Search Results Container */
 .search-results {
-  background-color: #ffffff; /* Background color for search results container */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Box shadow for a subtle elevation effect */
-  border-radius: 8px; /* Border radius for rounded corners */
-  padding: 20px; /* Padding inside the search results container */
+  background-color: #ffffff;
+  /* Background color for search results container */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* Box shadow for a subtle elevation effect */
+  border-radius: 8px;
+  /* Border radius for rounded corners */
+  padding: 20px;
+  /* Padding inside the search results container */
 
-  overflow-y: auto; /* Enable vertical scroll when search results overflow */
+  overflow-y: auto;
+  /* Enable vertical scroll when search results overflow */
 }
 
 .user-status {
   background-color: #4CAF50;
   color: white;
-  padding: 10px 20px;
+  padding: 4px 74px;
   border-radius: 10px;
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 2px 0px 10px 0px rgba(0, 0, 0, 0.1);
   font-family: Arial, sans-serif;
   font-weight: bold;
-  display: inline-block;
-  margin-right: 20px;
+  /* display: inline-block; */
+  margin-right: 7px;
 }
+
 
 /* Search Result Item */
 .search-result-item {
-  margin-bottom: 10px; /* Spacing between search result items */
-  padding: 10px; /* Padding inside each search result item */
-  border: 1px solid #e0e0e0; /* Border for each search result item */
-  border-radius: 4px; /* Border radius for rounded corners */
-  transition: background-color 0.3s ease; /* Smooth transition for background color */
+  margin-bottom: 10px;
+  /* Spacing between search result items */
+  padding: 10px;
+  /* Padding inside each search result item */
+  border: 1px solid #e0e0e0;
+  /* Border for each search result item */
+  border-radius: 4px;
+  /* Border radius for rounded corners */
+  transition: background-color 0.3s ease;
+  /* Smooth transition for background color */
 }
 
 .search-result-item:hover {
-  background-color: #f9f9f9; /* Background color on hover */
+  background-color: #f9f9f9;
+  /* Background color on hover */
 }
 
 /* Close Button */
 .close-button {
-  background-color: #ff6f61; /* Close button background color */
-  color: #ffffff; /* Close button text color */
-  border: none; /* Remove button border */
-  border-radius: 4px; /* Border radius for rounded corners */
-  padding: 10px 20px; /* Padding inside the close button */
-  cursor: pointer; /* Show pointer cursor on hover */
-  margin-bottom: 20px; /* Spacing between search results and close button */
-  transition: background-color 0.3s ease; /* Smooth transition for background color */
+  background-color: #ff6f61;
+  /* Close button background color */
+  color: #ffffff;
+  /* Close button text color */
+  border: none;
+  /* Remove button border */
+  border-radius: 4px;
+  /* Border radius for rounded corners */
+  padding: 10px 20px;
+  /* Padding inside the close button */
+  cursor: pointer;
+  /* Show pointer cursor on hover */
+  margin-bottom: 20px;
+  /* Spacing between search results and close button */
+  transition: background-color 0.3s ease;
+  /* Smooth transition for background color */
   margin-left: 150px;
 }
 
 .close-button:hover {
-  background-color: #d9534f; /* Close button background color on hover */
+  background-color: #d9534f;
+  /* Close button background color on hover */
 }
 
 
@@ -101,6 +117,20 @@
   margin-right: 5px;
   margin-left: 5px;
 
+}
+
+.user-image-status {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #e0e0e0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin-right: 10px;
+  margin-left: 5px;
+  color: black;
 }
 
 .user-image span {
@@ -139,6 +169,7 @@
   font-size: 16px;
   color: #777;
 }
+
 .outgoing {
   background-color: #047BD5;
   color: #fff;
@@ -165,13 +196,6 @@
   margin-bottom: -7px;
   border-radius: 8px;
 }
-/* CSS for Online Users List */
-/* CSS for Online Users List */
-h2 {
-  font-size: 1.8rem;
-  color: #333;
-  margin-bottom: 1rem;
-}
 
 ul {
   list-style: none;
@@ -179,7 +203,6 @@ ul {
 }
 
 li {
-  font-size: 1.2rem;
   color: #f1eded;
   width: fit-content;
   width: -moz-fit-content;
@@ -187,22 +210,28 @@ li {
   transition: all 0.3s ease;
   cursor: pointer;
   position: relative;
-  padding: 0.5rem 1rem;
-  border: 3px solid #28a745;
+  padding: 0.5px 14px;
+  border: 2px solid #28a745;
   border-radius: 17px;
+  display: flex;
+  align-items: center;
+  /* Align items vertically */
 }
 
 li::after {
-  content: "\2022"; /* Unicode character for a bullet point */
-  color: #28a745; /* Green dot color */
+  content: "\2022";
+  color: #28a745;
   margin-left: 0.5rem;
-  font-size: 2.5rem; /* Adjust the font size of the dot */
+  font-size: 2.5rem;
 }
 
 li:hover {
-  color: #28a745; /* Change text color on hover */
-  border-color: #28a745; /* Change border color on hover */
-  transform: translateX(5px); /* Add a subtle horizontal shift on hover */
+  color: #28a745;
+  /* Change text color on hover */
+  border-color: #28a745;
+  /* Change border color on hover */
+  transform: translateX(5px);
+  /* Add a subtle horizontal shift on hover */
 }
 
 /* Optional: Add animation for list item appearance */
@@ -217,8 +246,38 @@ li {
     opacity: 0;
     transform: translateY(-10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* CSS file (styles.css or styles.scss) */
+
+.online-status {
+  color: green;
+  margin-left: 10px;
+}
+
+.offline-status {
+  color: red;
+  margin-left: 10px;
+}
+
+/* CSS file (styles.css or styles.scss) */
+
+/* Add this CSS to your styles.css or your component's styles */
+.last-seen {
+  font-size: 14px;
+  color: #007bff;
+  /* Blue color for last seen text */
+  margin-top: 5px;
+}
+
+.last-seen::before {
+  content: '\2022';
+  /* Unicode character for a bullet point */
+  margin-right: 5px;
+  color: #ccc;
 }
