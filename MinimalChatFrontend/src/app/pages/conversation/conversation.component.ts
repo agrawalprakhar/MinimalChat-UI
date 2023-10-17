@@ -44,6 +44,7 @@ export class ConversationComponent {
     });
   }
 
+
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       const userId = params['userId'];
@@ -160,7 +161,7 @@ export class ConversationComponent {
   }
 
   sendMessage() {
-debugger
+
     if (this.messageContent.trim() === '') {
       // Don't send an empty message
       return;
@@ -244,7 +245,7 @@ debugger
   }
 
   onAcceptDelete(message: any) {
-    debugger
+
 
     this.chatService.deleteMessage(message.id).subscribe(
       () => {
@@ -279,7 +280,7 @@ debugger
     this.router.navigate(['/logs']); // Replace 'logs' with your actual route
   }
   Logout() {
-    debugger;
+
     this.userService.removeToken();
     this.authService.signOut().then(() => {
       console.log('Logged out successfully!');
@@ -288,7 +289,7 @@ debugger
     this.router.navigate(['/login']);
   }
   searchMessages(): void {
-    debugger;
+
     this.results = [];
     if (this.query.trim() === '') {
       // Don't search with an empty query
