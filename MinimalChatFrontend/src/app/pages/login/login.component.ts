@@ -106,7 +106,7 @@ export class LoginComponent  {
           this.userService.saveToken(response.token);
           // localStorage.setItem('tokenKey', response.token);
      
-          localStorage.setItem('currentUser', JSON.stringify(response.profile.id));
+          localStorage.setItem('currentUser', (response.profile.id));
    
           // Redirect to the chat route
           this.toastr.success('Login successful!', 'Success');
