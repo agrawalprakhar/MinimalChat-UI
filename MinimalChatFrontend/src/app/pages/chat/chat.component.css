@@ -281,3 +281,9 @@ li {
   margin-right: 5px;
   color: #ccc;
 }
+.no-results-message {
+  color: #ff0000; /* Set the text color to red */
+  font-size: 18px; /* Set the font size to 18 pixels */
+  font-weight: bold; /* Set the font weight to bold */
+  margin-top: 20px; /* Add some top margin for spacing */
+}

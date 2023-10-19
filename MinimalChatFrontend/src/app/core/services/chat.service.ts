@@ -115,9 +115,7 @@ export class ChatService {
     });
     
     const params = new HttpParams().set('query', query);
-    // return this.http.get<any[]>(this.url, {headers:headers, params:params }).pipe(
-    //   map((response: any) => response.messages) // Extract the 'messages' array from the response
-    // );
+ 
     return this.http.get<any[]>(`${this.url}/search`, {
       headers: headers,
       params: params,
