@@ -4,6 +4,7 @@ import { ChatService } from 'src/app/core/services/chat.service';
 import { SignalrService } from 'src/app/core/services/signalr.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -37,7 +38,8 @@ export class ConversationComponent {
     private chatService: ChatService,
     private el: ElementRef,
     private router: Router,
-    private signalRService: SignalrService
+    private signalRService: SignalrService,
+    private toastr : ToastrService
   ) {
     this.authService.authState.subscribe((user) => {
       this.user = user;
@@ -245,8 +247,6 @@ export class ConversationComponent {
   }
 
   onAcceptDelete(message: any) {
-
-
     this.chatService.deleteMessage(message.id).subscribe(
       () => {
         const index = this.messages.findIndex(
@@ -272,12 +272,14 @@ export class ConversationComponent {
   onDeleteMessage(message: any) {
     if (message.senderId !== this.currentReceiverId) {
       message.deleteMode = true;
-      message.showContextMenu = true; // Add a property to control the context menu visibility
+      message.showContextMenu = true; 
+      // Add a property to control the context menu visibility
     }
   }
   navigateToLogs() {
     // Navigate to the 'logs' route
-    this.router.navigate(['/logs']); // Replace 'logs' with your actual route
+    this.router.navigate(['/logs']);
+     // Replace 'logs' with your actual route
   }
   Logout() {
 
@@ -298,19 +300,26 @@ export class ConversationComponent {
 
     this.chatService.searchMessages(this.query).subscribe(
       (res) => {
-        if (res) {
-          this.results = res;
-        } else {
-          this.results = []; // Empty the results array if the response is falsy
+
+        const filteredMessages = res.filter(m =>
+          ((m.senderId ===  this.currentReceiverId) ||
+           (m.receiverId === this.currentReceiverId)) 
+        );
+        if ( filteredMessages) {
+          this.results = filteredMessages;
         }
         console.log(this.results);
-        // this.chatService.setSearchQuery(this.query);
         this.chatService.setSearchResults(this.results);
         this.chatService.setCurrentReceiverId(this.currentReceiverId);
       },
       (error) => {
         console.error('Error fetching search results:', error);
-        this.results = []; // Empty the results array in case of an error
+        this.results = [];
+        this.toastr.error(
+          'Search Message Not Found ',
+          'Error'
+        );
+         // Empty the results array in case of an error
         // Handle the error as needed, such as showing a user-friendly error message.
       }
     );
