@@ -2,8 +2,42 @@
   <div id="chat-window">
     <div class="message-search">
       <input type="text" placeholder="Search messages..." [(ngModel)]="query" class="msearch" />
-      <button (click)="searchMessages()"><i class="fas fa-search"></i></button>
+      <button class="search-results" (click)="searchMessages()"><i class="fas fa-search"></i></button>
+      <span class="setStatusMessage" (click)="openStatusPopup()">
+        <div class="sender-image">
+          <span>{{ currentUser.name.charAt(0) }}</span>
+        </div>
+      </span>
     </div>
+    <div class="status-popup" *ngIf="isStatusPopupOpen ">
+      <button class="btn btn-danger cancel mb-2" (click)="closeStatusPopup()"><i class="fas fa-times"></i></button>
+      <div class="d-flex w-100 align-items-center mb-3">
+        <div class="profile">
+          <div class="user-image2">
+            <span>{{ currentUser.name.charAt(0) }}</span>
+          </div>
+        </div>
+        <div class="row">
+          <span style="color: black;font-weight: bold;font-size: 17px;">{{ currentUser.name }}</span>
+          <small>{{ currentUser.email }}</small>
+        </div>
+      </div>
+      <h3>Status Message : {{currentUserStatusMessage}}</h3>
+      <h2>Set Status Message</h2>
+      <input  style="height: 32px;" [(ngModel)]="statusMessage" placeholder="Enter your status message" />
+      <button class="btn btn-success status" (click)="updateStatus()">  <i class="fas fa-pen"></i></button>
+      <div class="buttonstyle">
+        <button class="buttonclass btn btn-success mb-2 mt-1"
+          (click)="navigateToLogs()">
+          Logs &nbsp;  <i class="fas fa-clipboard"></i>
+        </button>
+        <button class="buttonclass btn btn-danger mb-2 mt-1"
+          (click)="Logout()">
+          Sign Out&nbsp; <i class="fas fa-sign-out-alt"></i>
+        </button>
+      </div>
+    </div>
+
     <nav class="navbar" style="background-color: #047bd5; height: 63px">
       <div class="container-fluid" style="position: fixed;left: 300px;">
         <a class="navbar-brand">
@@ -17,20 +51,9 @@
           <strong style="color: white">{{ currentReceiver.name }}</strong>
           <small *ngIf="isTyping" class="typing-indicator">typing...</small>
         </div>
-        <div class="buttonstyle"></div>
+   
       </div>
 
-      <div class="buttonstyle">
-        <button class="buttonclass btn btn-success" style="position: fixed; right: 120px;top:72px;left:1080px"
-          (click)="navigateToLogs()">
-          Logs Details
-        </button>
-        <button class="buttonclass btn btn-danger" style="position: fixed; right: 10px;top:72px;left:1200px"
-          (click)="Logout()">
-          Log Out
-
-        </button>
-      </div>
 
 
     </nav>
@@ -87,6 +110,14 @@
         </div>
       </div>
     </div>
+    <div *ngIf=" isStatusMessageVisible && currentReceiverStatusMessage">
+      <p class="statusMessage"> Status of {{currentReceiver.name }} : {{ currentReceiverStatusMessage }}
+        <span (click)="toggleStatusMessageVisibility()" style="position: fixed;right:90px"> <i
+            class="fas fa-times fa-2x"></i></span>
+
+      </p>
+    </div>
+
     <!-- Chat Input -->
     <div class="chat-input">
       <input type="text" placeholder="Type your message..." [(ngModel)]="messageContent" class="chat"

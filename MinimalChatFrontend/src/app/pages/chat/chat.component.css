@@ -66,22 +66,14 @@
 /* Close Button */
 .close-button {
   background-color: #ff6f61;
-  /* Close button background color */
   color: #ffffff;
-  /* Close button text color */
   border: none;
-  /* Remove button border */
   border-radius: 4px;
-  /* Border radius for rounded corners */
-  padding: 10px 20px;
-  /* Padding inside the close button */
+  padding: 2px 10px;
   cursor: pointer;
-  /* Show pointer cursor on hover */
-  margin-bottom: 20px;
-  /* Spacing between search results and close button */
+  margin-bottom: 10px;
   transition: background-color 0.3s ease;
-  /* Smooth transition for background color */
-  margin-left: 150px;
+  margin-left: 208px;
 }
 
 .close-button:hover {
@@ -181,8 +173,7 @@
   border-radius: 8px;
   cursor: pointer;
   display: flex;
-  margin-top: 15px;
-  margin-bottom: 4px;
+
 }
 
 .incoming {
@@ -192,7 +183,7 @@
   margin-right: auto;
   max-width: fit-content;
   max-width: -moz-fit-content;
-  padding: 5px;
+  padding: 8px;
   margin-bottom: -7px;
   border-radius: 8px;
 }

@@ -30,6 +30,14 @@ export class ConversationComponent {
   showSearchResult: boolean | undefined;
   isTyping: boolean = false;
   typeUserId: string = '';
+  statusMessage: string = '';
+  isStatusPopupOpen: boolean = false;
+  currentReceiverStatusMessage:any;
+  currentUserStatusMessage: any;
+  // Boolean variable to track the visibility state
+  isStatusMessageVisible: boolean = true;
+  currentUser : any;
+  status : any;
 
   constructor(
     private route: ActivatedRoute,
@@ -52,7 +60,15 @@ export class ConversationComponent {
       const userId = params['userId'];
       this.currentReceiverId = userId.toString();
       console.log('currentReceiverId:', this.currentReceiverId);
-
+      this.userService.getUserById(this.currentReceiverId).subscribe(
+        (user: any) => {
+         this.currentReceiverStatusMessage=user.statusMessage;
+          console.log('Receiver Status:', this.currentReceiverStatusMessage);
+        },
+        error => {
+          console.error('Error fetching user status:', error);
+        }
+      );
       // Load the initial 20 messages
       this.getMessages(this.currentReceiverId);
 
@@ -64,9 +80,12 @@ export class ConversationComponent {
         );
         console.log(this.currentReceiver.name);
       });
-    });
-
-
+    }
+    
+    
+    );
+    
+    
     this.signalRService.receiveMessages().subscribe((message: any) => {
       debugger
       const existingMessage = this.messages.find(
@@ -90,20 +109,39 @@ export class ConversationComponent {
         this.messages.splice(index, 1);
       }
     });
-
+    
     this.signalRService.receiveTypingStatus$().subscribe((indicator) => {
       console.log(this.currentReceiverId, indicator.userId);
       if (
         this.currentReceiverId === indicator.userId &&
         this.currentUserId === indicator.receiverId
-      ) {
-        this.isTyping = indicator.isTyping;
-      } else {
+        ) {
+          this.isTyping = indicator.isTyping;
+        } else {
         this.isTyping = false;
       }
     });
-  }
-
+    this.userService.getUserById(this.currentUserId).subscribe(
+      (user:any)=>{
+        this.currentUser=user;
+        console.log("currentUser",this.currentUser)
+      }
+      )
+      this.userService.getUserById(this.currentUserId).subscribe(
+        (user: any) => {
+         this.currentUserStatusMessage=user.statusMessage;
+          console.log('User Status:', this.currentUserStatusMessage);
+        },
+        error => {
+          console.error('Error fetching user status:', error);
+        }
+      );
+    }
+    // Function to toggle the visibility state
+    toggleStatusMessageVisibility(): void {
+  debugger
+  this.isStatusMessageVisible = !this.isStatusMessageVisible;
+}
   @HostListener('scroll', ['$event'])
   onScroll(event: Event) {
     console.log('Scroll event detected');
@@ -319,6 +357,7 @@ export class ConversationComponent {
           'Search Message Not Found ',
           'Error'
         );
+        this.chatService.setSearchResults(this.results);
          // Empty the results array in case of an error
         // Handle the error as needed, such as showing a user-friendly error message.
       }
@@ -341,4 +380,27 @@ export class ConversationComponent {
       isTyping
     );
   }
+  openStatusPopup() {
+    this.isStatusPopupOpen = true;
+  }
+
+  closeStatusPopup() {
+    this.isStatusPopupOpen = false;
+  }
+
+    updateStatus() {
+      this.userService.updateUserStatus(this.currentUserId,this.statusMessage)
+        .subscribe(response => {
+          // Handle status update success, show success message, etc.
+          this.currentUserStatusMessage=response.statusMessage
+          console.log('Status updated successfully:', response.statusMessage);
+          this.toastr.success('Status Message Updated  Successfully ', 'Success');
+        }, error => {
+          // Handle status update error, show error message, etc.
+          console.error('Error updating status:', error);
+        });
+        this.statusMessage="";
+        this.closeStatusPopup();
+    }
+  
 }
