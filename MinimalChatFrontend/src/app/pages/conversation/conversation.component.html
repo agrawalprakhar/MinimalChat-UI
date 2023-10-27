@@ -22,7 +22,10 @@
           <small>{{ currentUser.email }}</small>
         </div>
       </div>
-      <h3>Status Message : {{currentUserStatusMessage}}</h3>
+      <div class="status-container">
+        <span class="status-message">Status Message: <span class="user-status">{{currentUserStatusMessage}}</span></span>
+      </div>
+      
       <h2>Set Status Message</h2>
       <input  style="height: 32px;" [(ngModel)]="statusMessage" placeholder="Enter your status message" />
       <button class="btn btn-success status" (click)="updateStatus()">  <i class="fas fa-pen"></i></button>
@@ -110,9 +113,9 @@
         </div>
       </div>
     </div>
-    <div *ngIf=" isStatusMessageVisible && currentReceiverStatusMessage">
+    <div class="chat-input" *ngIf=" isStatusMessageVisible && currentReceiverStatusMessage">
       <p class="statusMessage"> Status of {{currentReceiver.name }} : {{ currentReceiverStatusMessage }}
-        <span (click)="toggleStatusMessageVisibility()" style="position: fixed;right:90px"> <i
+        <span (click)="toggleStatusMessageVisibility()"  class="close-button" > <i
             class="fas fa-times fa-2x"></i></span>
 
       </p>

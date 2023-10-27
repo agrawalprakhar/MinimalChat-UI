@@ -55,7 +55,6 @@ body {
     filter: drop-shadow(4px 4px 8px #999999);
 }
 .setStatusMessage {
-      
     color: #761313;
     border: none;
     border-radius: 5px;
@@ -69,9 +68,9 @@ body {
 
   .status-popup {
     position: fixed;
-    top: 26%;
-    left: 87%;
-    transform: translate(-50%, -50%);
+    top: 30%;
+    right: 0%;
+    transform: translate(-10%, -50%);
     background-color: #fff;
     padding:1px;
     border-radius: 8px;
@@ -410,6 +409,20 @@ strong {
     align-items: center;
 }
 
+.statusMessage{
+    display: flex;
+   justify-content: flex-start;
+    text-align: center;
+    position: fixed;
+    padding-top: 5px;
+    padding-left: 10px;
+    height: 30px;
+    left: 311px;
+    right: 90px;
+    bottom: 38px;
+    background-color: #d5d5d5;
+    font-weight: 100;
+}
 /* Styles for the message input */
 .chat {
     border: 1px solid #ccc;
@@ -442,6 +455,12 @@ strong {
     right: 37px;
 
     /* Adjust the distance from the right */
+}
+.close-button{
+    position: fixed;
+    /* Use absolute positioning */
+    bottom: 48px;
+    right: 94px;
 }
 
 .send-button button:hover {
@@ -517,15 +536,32 @@ strong {
     }
 }
 
-.statusMessage{
-    display: flex;
-    text-align: center;
-    position: fixed;
-    padding-left: 10px;
-    margin-top: 5px;
-    padding-top: 5px;
-    height: 30px;
-    left: 320px;
-    width: 70%;
-    background-color: #d5d5d5;
+
+/* Style for the status container */
+.status-container {
+
+    padding: 10px;
+
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
+  
+  /* Style for the status message */
+  .status-message {
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    color: #333;
+    font-weight: bold;
+  }
+  
+  /* Style for the user status */
+  .user-status {
+    font-weight: bold;
+    color: #007bff; /* You can change this color to your preference */
+  }
+  
+  
+
+  
+  
+ 
