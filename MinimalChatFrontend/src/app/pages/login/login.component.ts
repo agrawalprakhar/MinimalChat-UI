@@ -54,16 +54,17 @@ export class LoginComponent  {
     return this.loginForm.get(name);
   }
   onSubmit() {
-    debugger
+    
     if (this.loginForm.valid) {
-      debugger;
+   
       this.userService.loginUser(this.loginForm.value).subscribe(
         (item) => {
           this.respdata = item;
           console.log(this.respdata);
           if (this.respdata != null) {
             this.userService.saveToken(this.respdata.token);
-            this.userService.saveCurrentUserId(this.respdata.profile.id)
+            this.userService.saveCurrentUserId(this.respdata.profile.id);
+            this.userService.saveCurrentUserName(this.respdata.profile.name);
 ;            this.currentUserId=this.respdata.profile.id;
             console.log("profile",this.respdata.profile.id)
             this.toastr.success('Login successful!', 'Success');
@@ -99,7 +100,7 @@ export class LoginComponent  {
     debugger
     this.userService.sendSocialToken(token).subscribe(
       (response) => {
-        console.log('Social token sent successfully to the backend:', response.token);
+        console.log('Social token sent successfully to the backend:', response);
 
         if (response && response.token) {
           // Store the token and user profile in local storage
@@ -107,7 +108,7 @@ export class LoginComponent  {
           // localStorage.setItem('tokenKey', response.token);
      
           localStorage.setItem('currentUser', (response.profile.id));
-   
+
           // Redirect to the chat route
           this.toastr.success('Login successful!', 'Success');
 

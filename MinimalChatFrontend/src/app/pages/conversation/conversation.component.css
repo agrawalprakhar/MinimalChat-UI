@@ -49,13 +49,78 @@ body {
     padding: 8px;
     position: fixed;
     left: 311px;
-    right: 90px;
+    right: 139px;
     z-index: 1;
     background-color: #fff;
     filter: drop-shadow(4px 4px 8px #999999);
 }
+.setStatusMessage {
+      
+    color: #761313;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    position: fixed;
+    right: 57px;
+    top: 18px;
+    outline: none;
+}
 
-.message-search button {
+  .status-popup {
+    position: fixed;
+    top: 26%;
+    left: 87%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding:1px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+    z-index: 1;
+  }
+  
+  .status-popup h2 {
+    font-size: 1.2rem;
+    margin-bottom: 0px;
+  
+  }
+  
+  .status-popup input {
+    width: 83%;
+    padding: 10px;
+    margin-bottom: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  
+  .status-popup button {
+ 
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 1px 7px;
+    cursor: pointer;
+    /* margin-right: 0px; */
+    margin-left: 12px;
+    transition: background-color 0.3s;
+  }
+  
+  
+  
+  .status-popup button.cancel {
+    background-color: #c73030;
+    float:right;
+  }
+  
+  .status-popup button.cancel:hover {
+    background-color: #f01c1c;
+  }
+  
+
+.search-results {
     background-color: #007bff;
     color: #fff;
     border: none;
@@ -64,10 +129,10 @@ body {
     cursor: pointer;
     transition: background-color 0.3s ease;
     position: fixed;
-    right: 37px;
+    right: 90px;
 }
 
-.message-search button:hover {
+.search-results:hover {
     background-color: #0056b3;
 }
 
@@ -129,7 +194,7 @@ h1 {
     margin-left: auto;
     margin-top: 6px;
     border-radius: 14px;
-    margin-right: 10px;
+    margin-right: 32px;
 }
 
 @media (max-width: 768px) {
@@ -143,11 +208,7 @@ h1 {
         justify-content: flex-start;
     }
 
-    .buttonstyle {
-        flex-direction: column;
-        margin-top: 10px;
-        /* Adjust the spacing between buttons */
-    }
+
 
     .buttonclass {
         width: 100%;
@@ -161,11 +222,7 @@ h1 {
     }
 }
 
-.buttonstyle {
-    display: flex;
-    justify-content: flex-end;
 
-}
 
 /* Styles for the user profile image */
 .user-image {
@@ -181,6 +238,39 @@ h1 {
     font-weight: bold;
     color: #047BD5;
 }
+.user-image2{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #3498db; 
+    display: flex;
+    margin-left: 15px;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    font-weight: bold;
+    /* margin-right: -19px; */
+    color: #ffffff; /* Set text color */
+}
+
+.sender-image {
+    margin-left: 38px;
+    position: fixed;
+    right: 28px;
+    top: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px; /* Set your desired width */
+    height: 50px; /* Set your desired height */
+    border-radius: 50%; /* Makes it a circle */
+    background-color: #3498db; /* Set your desired background color */
+    color: #ffffff; /* Set text color */
+    font-size: 37px;/* Set font size */
+    font-weight: bold; /* Set font weight if desired */
+    text-transform: uppercase; /* Convert text to uppercase */
+}
+
 
 /* Styles for the main container */
 .bg {
@@ -205,10 +295,10 @@ strong {
     /* margin-top: 52px; */
     margin-top: 72px;
     margin-right: 30px;
-    margin-bottom: 10px;
-    min-height: 70vh;
+
+    height: 66vh;
     padding-bottom: 100px;
-    max-height: 400px;
+ 
     /* Set a maximum height for the container */
     overflow-y: auto;
     /* Add a vertical scrollbar when content overflows */
@@ -425,4 +515,17 @@ strong {
     100% {
         opacity: 0.5;
     }
+}
+
+.statusMessage{
+    display: flex;
+    text-align: center;
+    position: fixed;
+    padding-left: 10px;
+    margin-top: 5px;
+    padding-top: 5px;
+    height: 30px;
+    left: 320px;
+    width: 70%;
+    background-color: #d5d5d5;
 }

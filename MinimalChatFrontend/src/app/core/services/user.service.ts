@@ -35,7 +35,10 @@ export class UserService {
 
     localStorage.setItem(this.tokenKey, token);
   }
+  saveCurrentUserName(currentUserName : string): void{
+    localStorage.setItem("currentUserName", currentUserName);
 
+  }
   saveCurrentUserId(currentUserId : string): void{
     localStorage.setItem("currentUser", currentUserId);
     this.currentUserID=currentUserId
@@ -77,15 +80,8 @@ export class UserService {
     return +id;
 
   }
-  // public signOutExternal =() =>{
-  //   localStorage.removeItem("token");
-  //   console.log("token Deleted")
-  // }
 
-  // LoginWithGoogle(credentials : string): Observable<any>{
-  //   const header = new HttpHeaders().set('Content-Type','application/json');
-  //   return  this.http.post("https://localhost:44326/api/LoginWithGoogle",JSON.stringify(credentials),{headers:header});
-  // }
+
   sendSocialToken(token: string): Observable<any> {
    
     const body = {
@@ -94,5 +90,14 @@ export class UserService {
     // Send the token to the backend
     return this.http.post("https://localhost:44326/api/LoginWithGoogle", body);
   }
+
   
+  updateUserStatus(Id :string,content: string): Observable<any> {
+
+    return this.http.put<any>(`https://localhost:44326/api/Users/${Id}`,  { content: content },);
+  }
+
+  getUserById(userId: string): Observable<any> {
+    return this.http.get<any>(`https://localhost:44326/api/Users/${userId}`);
+  }
 }

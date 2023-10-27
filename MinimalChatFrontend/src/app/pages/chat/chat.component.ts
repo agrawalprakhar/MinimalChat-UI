@@ -28,6 +28,9 @@ export class ChatComponent implements OnDestroy {
   lastSeenUserIds: string[] = []; // Array to store user IDs
   private unsubscribe$ = new Subject<void>();
   private previousLastSeenTimestamps: any;
+ 
+
+  
 
   constructor(
     private signalRService: SignalrService,
@@ -41,6 +44,7 @@ export class ChatComponent implements OnDestroy {
     this.unsubscribe$.complete();
   }
   ngOnInit(): void {
+
     this.signalRService.userIdentifierUpdated.subscribe((userId: string) => {
       // Handle updated user identifier here
       console.log(userId);
@@ -106,9 +110,7 @@ export class ChatComponent implements OnDestroy {
     });
     this.showSearchResults = false;
   }
-
-
-
+ 
   closeSearchResults(): void {
     this.showSearchResults = false; // Hide search results panel
     this.searchQuery = ''; // Clear the search query

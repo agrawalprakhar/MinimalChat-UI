@@ -10,7 +10,6 @@
       </div>
     </a>
 
-
     <div *ngIf="connectedUsersName.length > 0">
       <h2 class="user-status">Online : {{ (connectedUsers) }}</h2>
       <ul>
@@ -22,9 +21,6 @@
           </div>
           <div class="row">
             <strong class="mb-1" style="margin-top: 3px;">{{ user}}</strong>
-
-
-
 
           </div>
 
@@ -63,7 +59,7 @@
   <div class="flex-column align-items-stretch flex-shrink-0" style="background-color: #bfa7ef" *ngIf="showSearchResults"
     class="search-results">
     <!-- Close Button to Revert Back -->
-    <button class="close-button" (click)="closeSearchResults()">Close</button>
+    <button class="close-button" (click)="closeSearchResults()"> <i class="fas fa-times"></i></button>
     <!-- Search Results Content -->
 
     <div *ngFor="let result of searchResults" class="search-result-item">
