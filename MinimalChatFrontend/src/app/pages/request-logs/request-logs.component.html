@@ -7,12 +7,12 @@
     <label for="endTime">End Time:</label>
     <input type="datetime-local" id="endTime" [(ngModel)]="endTime" (change)="getLogs()" />
   </div>
+  <button class="filter-button" (click)="customTime()">Filter</button>
   <div class="time-range-buttons">
     <button class="time-range-button" (click)="getLastLogs(5)">Last 5 mins</button>
     <button class="time-range-button" (click)="getLastLogs(10)">Last 10 mins</button>
     <button class="time-range-button" (click)="getLastLogs(30)">Last 30 mins</button>
   </div>
-  <button class="filter-button" (click)="customTime()">Filter</button>
 </div>
 <div class="column-toggle">
   <label>Show Columns:</label>
