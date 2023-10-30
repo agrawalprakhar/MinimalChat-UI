@@ -24,7 +24,6 @@ export class LoginComponent  {
   loggedIn!: boolean;
   private accessToken = '';
   currentUserId! : string;
-
   socialuser!: SocialUser;
 
   constructor(
@@ -33,7 +32,6 @@ export class LoginComponent  {
     private router: Router,
     private userService: UserService,
     private toastr: ToastrService,
-    private _ngZone : NgZone,
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -43,33 +41,40 @@ export class LoginComponent  {
 	}
 
  
+// ngOnInit Lifecycle Hook
+// Description: In this code snippet, the ngOnInit lifecycle hook is implemented to handle the component initialization logic.
+// Step 1: Subscribe to the 'authState' observable provided by the authentication service.
+// Step 2: When the authentication state changes (user signs in or out), the callback function is triggered.
+// Step 3: Inside the callback function, the user's ID token is obtained from the authentication state.
+// Step 4: The obtained ID token is used to sign in the user using the 'signInWithGoogle' method.
   ngOnInit() {
     this.authService.authState.subscribe((user) => {
       this.signInWithGoogle(user.idToken);
-      console.log(user.idToken);
     });
   }
 
+ // getControl Method
+// Description: This method is used to retrieve a form control from the 'loginForm' FormGroup based on the provided control name.
   getControl(name: any): AbstractControl | null {
     return this.loginForm.get(name);
   }
+
+
+// onSubmit Method
+// Description: This method is triggered when the user submits the login form. It handles form validation,
+// authenticates the user, and navigates to the chat page if login is successful.
   onSubmit() {
-    
     if (this.loginForm.valid) {
-   
       this.userService.loginUser(this.loginForm.value).subscribe(
         (item) => {
           this.respdata = item;
-          console.log(this.respdata);
           if (this.respdata != null) {
             this.userService.saveToken(this.respdata.token);
             this.userService.saveCurrentUserId(this.respdata.profile.id);
             this.userService.saveCurrentUserName(this.respdata.profile.name);
-;            this.currentUserId=this.respdata.profile.id;
-            console.log("profile",this.respdata.profile.id)
+           this.currentUserId=this.respdata.profile.id;
             this.toastr.success('Login successful!', 'Success');
             this.router.navigateByUrl('/chat');
-            console.log(this.loginForm.value);
           }
         },
         (error) => {
@@ -86,45 +91,41 @@ export class LoginComponent  {
       );
     }
   }
-  // refreshToken(): void {
-  //   this.authService.refreshAuthToken(GoogleLoginProvider.PROVIDER_ID);
-  // }
 
+// refreshToken Method
+// Description: This method is responsible for refreshing the authentication token using the Google Login provider.
+// It initiates the token refresh process by calling the refreshAuthToken method from the authentication service.
+  refreshToken(): void {
+    this.authService.refreshAuthToken(GoogleLoginProvider.PROVIDER_ID);
+  }
+
+  // getAccessToken Method
+// Description: This method is responsible for retrieving the access token from the Google Login provider.
+// It uses the authService to fetch the access token associated with the Google Login provider.
   getAccessToken(): void {
     this.authService
       .getAccessToken(GoogleLoginProvider.PROVIDER_ID)
       .then((accessToken) => (this.accessToken = accessToken));
   }
-
+  
+// signInWithGoogle Method
+// Description: This method handles the authentication process using a Google access token.
+// It sends the token to the server for validation and authentication.
+// If the response contains a valid token, the user is logged in and redirected to the chat page.
   signInWithGoogle(token: string): void {
-    debugger
     this.userService.sendSocialToken(token).subscribe(
       (response) => {
-        console.log('Social token sent successfully to the backend:', response);
-
         if (response && response.token) {
-          // Store the token and user profile in local storage
           this.userService.saveToken(response.token);
-          // localStorage.setItem('tokenKey', response.token);
-     
           localStorage.setItem('currentUser', (response.profile.id));
-
-          // Redirect to the chat route
           this.toastr.success('Login successful!', 'Success');
-
           this.router.navigateByUrl('/chat');
-
-        
         }
       },
       (error) => {
         this.toastr.error(
-          'Something Went Wrong','Error'
-
-
-          
+          'Something Went Wrong','Error' 
         );
-        console.error('Error sending social token to the backend:', error);
       }
     );
   }

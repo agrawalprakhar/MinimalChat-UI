@@ -24,7 +24,7 @@ export class ChatComponent implements OnDestroy {
   connectedUsersName: string[] = [];
   userStatus: { [userId: string]: boolean } = {}; // Map userId to online status (true for online, false for offline)
   lastSeenTimestamps: { [key: string]: Date } = {};
-  lastSeenUserIds: string[] = []; // Array to store user IDs
+  lastSeenUserIds: string[] = []; 
   private unsubscribe$ = new Subject<void>();
   private previousLastSeenTimestamps: any;
  

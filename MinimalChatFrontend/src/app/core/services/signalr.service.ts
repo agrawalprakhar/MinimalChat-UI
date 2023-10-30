@@ -97,7 +97,6 @@ sendTypingIndicator(userId: string,receiverId:string, isTyping: boolean) {
       .catch(err => console.error(err));
   }
 
-
 // Method: editMessage
 // Description: This method sends a request to edit a specific message identified by its messageId with new content to the SignalR hub.
   editMessage(messageId: number, content: string): void {
@@ -111,7 +110,6 @@ sendTypingIndicator(userId: string,receiverId:string, isTyping: boolean) {
     this.hubConnection.invoke('DeleteMessage', messageId)
       .catch(err => console.error(err));
   }
-
 
   // Method: receiveMessages
 // Description: This method defines an observable that allows components or services to subscribe to real-time updates about incoming messages.
@@ -136,7 +134,6 @@ sendTypingIndicator(userId: string,receiverId:string, isTyping: boolean) {
     });
   }
 
-
   // Method: receiveDeletedMessages
 // Description: This method defines an observable that allows components or services to subscribe to real-time updates about deleted messages.
 // The observable emits message IDs of deleted messages.
@@ -153,7 +150,6 @@ sendTypingIndicator(userId: string,receiverId:string, isTyping: boolean) {
 // Description: This property defines an observable that allows components or services to subscribe to typing status updates in real time.
 // The observable emits objects containing user IDs, receiver IDs, and a boolean indicating whether a user is typing or not.
 // Components can subscribe to this observable to receive real-time updates about users' typing status.
-
   receiveTypingStatus$ = (): Observable<{ userId: string,receiverId: string, isTyping: boolean }> => {
     return new Observable(observer => {
       this.hubConnection.on('ReceiveTypingIndicator', (userId: string,receiverId: string, isTyping: boolean) => {

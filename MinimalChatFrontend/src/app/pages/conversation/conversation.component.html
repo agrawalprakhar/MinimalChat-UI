@@ -125,7 +125,6 @@
     <div class="chat-input">
       <input type="text" placeholder="Type your message..." [(ngModel)]="messageContent" class="chat"
         (input)="sendTypingIndicator(true)" (blur)="sendTypingIndicator(false)" />
-
       <button class="send-button" (click)="sendMessage()"><i class="fas fa-rocket"></i></button>
     </div>
   </div>

@@ -82,9 +82,6 @@ export class ConversationComponent {
       this.signalRService.getReceiverStatusUpdates().subscribe((data) => {
         if (data.userId == this.currentReceiverId) {
           this.currentReceiverStatusMessage = data.status;
-          console.log(
-            `Received status update for ${data.userId}: ${this.currentReceiverStatusMessage}`
-          );
         }
       });
       

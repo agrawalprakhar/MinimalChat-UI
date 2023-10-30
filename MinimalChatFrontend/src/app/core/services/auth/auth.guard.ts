@@ -9,6 +9,10 @@ import { UserService } from '../user.service';
 export class AuthGuard implements CanActivate {
   constructor(private userService: UserService, private router: Router) {}
 
+  // canActivate Method
+// Description: This method implements the CanActivate interface to guard routes.
+// It checks if the user is logged in. If logged in, it allows access to the route.
+// If not logged in, it redirects the user to the login page and denies access to the route.
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
