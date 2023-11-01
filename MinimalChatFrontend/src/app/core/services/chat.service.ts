@@ -10,7 +10,7 @@ import { DatePipe } from '@angular/common';
 export class ChatService {
 
   constructor(private http: HttpClient, private user: UserService) { }
-  url = 'https://localhost:44326/api/Message';
+  url = 'https://localhost:44326/api/messages';
 
   private searchResultsSubject = new BehaviorSubject<any[]>([]);
   searchResults$ = this.searchResultsSubject.asObservable();
@@ -126,7 +126,7 @@ export class ChatService {
       Authorization: `Bearer ${this.user.getToken()}`,
     });
     const params = new HttpParams().set('query', query);
-    return this.http.get<any[]>(`${this.url}/search`, {
+    return this.http.get<any[]>(`https://localhost:44326/api/conversation/search`, {
       headers: headers,
       params: params,
     }).pipe(map((response: any) => response.searchResult));
