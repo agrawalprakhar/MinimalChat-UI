@@ -36,6 +36,10 @@ export class ConversationComponent {
   currentUser: any;
   status: any;
   public receiverStatus!: string;
+  currentUserEmail : any;
+  currentReceiverName :any;
+  currentReceiverFirst : any;
+  currentUserFirst : any;
 
   constructor(
     private route: ActivatedRoute,
@@ -82,17 +86,25 @@ export class ConversationComponent {
       this.signalRService.getReceiverStatusUpdates().subscribe((data) => {
         if (data.userId == this.currentReceiverId) {
           this.currentReceiverStatusMessage = data.status;
+          console.log(
+            `Received status update for ${data.userId}: ${this.currentReceiverStatusMessage}`
+          );
         }
       });
       
       // Description: Retrieves the list of users from the user service. Subscribes to the observable returned by the user service's
       // 'retrieveUsers' method. Upon receiving the list of users, it filters and finds the user object matching the 'currentReceiverId'
       // from the retrieved users. This identified user becomes the current receiver for the chat interface.
-      this.userService.retrieveUsers().subscribe((res) => {
-        this.currentReceiver = res.find(
-          (user) => user.id === this.currentReceiverId
-        );
+      this.userService.getUserById(this.currentReceiverId).subscribe((user: any) => {
+        this.currentReceiverName = user.name;
+        this.currentReceiverFirst=this.currentReceiverName[0]
       });
+      // this.userService.retrieveUsers().subscribe((res) => {
+      //   this.currentReceiver = res.find(
+      //     (user) => user.id === this.currentReceiverId
+      //   );
+      //   this.currentReceiverName=this.currentReceiver.name
+      // });
       this.isStatusMessageVisible = true;
     });
 
@@ -149,7 +161,9 @@ export class ConversationComponent {
     // object with the received user data and assigns the 'statusMessage' property to 'currentUserStatusMessage'. If there is an error fetching
     // the user's status message, it logs an error message.
     this.userService.getUserById(this.currentUserId).subscribe((user: any) => {
-      this.currentUser = user;
+      this.currentUser = user.name;
+      this.currentUserFirst=this.currentUser[0]
+      this.currentUserEmail=user.email;
     });
     this.userService.getUserById(this.currentUserId).subscribe(
       (user: any) => {

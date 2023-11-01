@@ -9,7 +9,7 @@ import { Observable, map } from 'rxjs';
 export class LogsService {
 
   constructor(private http: HttpClient,private user:UserService) {}
-  url = "https://localhost:44326/api/Logs";
+  url = "https://localhost:44326/api/log";
 
   // getLogs Method
 // Description: This method sends a GET request to retrieve log data based on optional start and end time parameters.

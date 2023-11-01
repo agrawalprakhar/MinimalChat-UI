@@ -5,7 +5,7 @@
       <button class="search-results" (click)="searchMessages()"><i class="fas fa-search"></i></button>
       <span class="setStatusMessage" (click)="openStatusPopup()">
         <div class="sender-image">
-          <span>{{ currentUser.name.charAt(0) }}</span>
+          <span>{{ currentUserFirst }}</span>
         </div>
       </span>
     </div>
@@ -14,12 +14,12 @@
       <div class="d-flex w-100 align-items-center mb-3">
         <div class="profile">
           <div class="user-image2">
-            <span>{{ currentUser.name.charAt(0) }}</span>
+            <span>{{ currentUser.charAt(0) }}</span>
           </div>
         </div>
         <div class="row">
-          <span style="color: black;font-weight: bold;font-size: 17px;">{{ currentUser.name }}</span>
-          <small>{{ currentUser.email }}</small>
+          <span style="color: black;font-weight: bold;font-size: 17px;">{{ currentUser}}</span>
+          <small>{{ currentUserEmail }}</small>
         </div>
       </div>
       <div class="status-container">
@@ -46,12 +46,12 @@
         <a class="navbar-brand">
           <div class="profile">
             <div class="user-image">
-              <span>{{ currentReceiver.name.charAt(0) }}</span>
+              <span>{{   currentReceiverFirst}}</span>
             </div>
           </div>
         </a>
         <div class="d-flex flex-column chat-header">
-          <strong style="color: white">{{ currentReceiver.name }}</strong>
+          <strong style="color: white">{{ currentReceiverName }}</strong>
           <small *ngIf="isTyping" class="typing-indicator">typing...</small>
         </div>
    
@@ -114,7 +114,7 @@
       </div>
     </div>
     <div class="chat-input" *ngIf=" isStatusMessageVisible && currentReceiverStatusMessage">
-      <p class="statusMessage"> Status of {{currentReceiver.name }} : {{ currentReceiverStatusMessage }}
+      <p class="statusMessage"> Status of {{currentReceiverName }} : {{ currentReceiverStatusMessage }}
         <span (click)="toggleStatusMessageVisibility()"  class="close-button" > <i
             class="fas fa-times fa-2x"></i></span>
 

@@ -81,16 +81,9 @@ export class RegisterComponent {
         if (response && response.token) {
           this.userService.saveToken(response.token); 
           localStorage.setItem('currentUser', (response.profile.id));
-          this.toastr.success('Login successful!', 'Success');
-          // Redirect to the chat route
           this.router.navigateByUrl('/chat');
         }
       },
-      (error) => {
-        this.toastr.error(
-          'Something Went Wrong','Error'
-        );
-      }
     );
   }
   onReset() {

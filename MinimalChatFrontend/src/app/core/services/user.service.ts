@@ -79,7 +79,7 @@ export class UserService {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${this.getToken()}`,
     });
-    return this.http.get<any[]>("https://localhost:44326/api/Users", { headers: headers });
+    return this.http.get<any[]>("https://localhost:44326/api/users", { headers: headers });
   }
   
 
@@ -113,7 +113,7 @@ export class UserService {
 // It constructs an HTTP request body containing the updated content and sends a PUT request to the specified API endpoint.
 // The method returns an Observable, allowing asynchronous handling of the HTTP response.
   updateUserStatus(Id :string,content: string): Observable<any> {
-    return this.http.put<any>(`https://localhost:44326/api/Users/${Id}`,  { content: content },);
+    return this.http.put<any>(`https://localhost:44326/api/users/${Id}`,  { content: content },);
   }
 
   // getUserById Method
@@ -121,6 +121,6 @@ export class UserService {
 // It constructs a GET request URL with the user ID parameter and sends the request to the specified API endpoint.
 // The method returns an Observable, allowing asynchronous handling of the HTTP response containing user data.
   getUserById(userId: string): Observable<any> {
-    return this.http.get<any>(`https://localhost:44326/api/Users/${userId}`);
+    return this.http.get<any>(`https://localhost:44326/api/users/${userId}`);
   }
 }
