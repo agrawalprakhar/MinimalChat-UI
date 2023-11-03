@@ -27,12 +27,17 @@ export class ChatComponent implements OnDestroy {
   lastSeenUserIds: string[] = []; 
   private unsubscribe$ = new Subject<void>();
   private previousLastSeenTimestamps: any;
+  unReadMessages : any;
+  item : any;
+ 
+ 
  
   constructor(
     private signalRService: SignalrService,
     private cdr: ChangeDetectorRef,
     private userService: UserService,
-    private chatService: ChatService
+    private chatService: ChatService,
+    
   ) {}
 
   // Description: This hook is called just before the Angular component is destroyed. It is used to perform cleanup operations, such as
@@ -45,12 +50,6 @@ export class ChatComponent implements OnDestroy {
   }
   ngOnInit(): void {
 
-    // Description: This subscription listens for updates to the user identifier provided by the SignalR service. When a user identifier is
-    // updated, it captures the new 'userId' and assigns it to the 'userId' property in the component. This allows the component to stay
-    // synchronized with the user's identifier received from the SignalR service in real-time.
-    this.signalRService.userIdentifierUpdated.subscribe((userId: string) => {
-      this.userId = userId;
-    });
 
     // Description: Subscribes to updates in the count of connected users from the SignalR service. When the count of connected users is updated
     // in the SignalR service, this subscription receives the new 'count' value. Upon receiving the updated 'count', the function assigns it to
@@ -109,7 +108,8 @@ export class ChatComponent implements OnDestroy {
       this.users = res;
       this.currentReceiver = res[0];
     });
-
+    
+   
     // Subscribe to search query changes
     this.searchResults = [];
 
@@ -127,7 +127,24 @@ export class ChatComponent implements OnDestroy {
       this.receiverId = receiver;
     });
     this.showSearchResults = false;
+    
   }
+  getUnReadMessageCount(userId : string) {
+    this.chatService.getUnReadMessages().subscribe(
+      (response: any) => {
+        this.unReadMessages = response; 
+         const userUnreadMessages = this.unReadMessages.find((item: any) => item.senderId === userId);
+        console.log(userUnreadMessages)
+        return 5;
+      },
+      (error) => {
+        console.error('Error fetching unread messages:', error);
+        // Handle errors if any
+      }
+    );
+    return 0
+  }
+
 
 // Function: closeSearchResults
 // Description: This function is responsible for closing the search results panel in the user interface. When called, it performs the following actions:

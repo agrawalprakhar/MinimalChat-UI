@@ -5,6 +5,7 @@ import { SignalrService } from 'src/app/core/services/signalr.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-conversation',
@@ -40,7 +41,10 @@ export class ConversationComponent {
   currentReceiverName :any;
   currentReceiverFirst : any;
   currentUserFirst : any;
-
+  notifications: string[] = [];
+  readMessages: number[] = []
+  messageSenderName!: string;
+  private messagesMarkedAsReadSubscription!: Subscription;
   constructor(
     private route: ActivatedRoute,
     private authService: SocialAuthService,
@@ -57,6 +61,7 @@ export class ConversationComponent {
   }
 
   ngOnInit(): void {
+    
     this.route.params.subscribe((params) => {
 
       const userId = params['userId'];
@@ -86,9 +91,6 @@ export class ConversationComponent {
       this.signalRService.getReceiverStatusUpdates().subscribe((data) => {
         if (data.userId == this.currentReceiverId) {
           this.currentReceiverStatusMessage = data.status;
-          console.log(
-            `Received status update for ${data.userId}: ${this.currentReceiverStatusMessage}`
-          );
         }
       });
       
@@ -111,14 +113,28 @@ export class ConversationComponent {
     // Description: Subscribes to real-time message updates from the SignalR service. When a new message is received, the function checks
     // if the message already exists in the current messages list. If not, it adds the new message to the messages list for display in
     // the chat interface.
+    // markAsRead(messageId: number): void {
+    //   this.chatService.markMessageAsRead(messageId).subscribe(() => {
+    //     const message = this.messages.find(m => m.id === messageId);
+    //     if (message) {
+    //       message.isRead = true;
+    //     }
+    //   });
+    // }
     this.signalRService.receiveMessages().subscribe((message: any) => {
-      const existingMessage = this.messages.find(
-        (m: any) => m.id === message.id
-      );
-      if (!existingMessage) {
+      
+      if(this.currentReceiverId === message.senderId && this.currentUserId===message.receiverId){
         this.messages.push(message);
+        this.chatService.markMessageAsRead(message.id).subscribe();
         this.scrollToBottom();
       }
+      this.userService.getUserById(message.senderId).subscribe((user: any) => {
+        this.messageSenderName = user.name;
+        if(this.currentUserId===message.receiverId){
+          this.showToastr(message) ;
+          // this.toastr.info(`You have received 1 new message ${message.content} from ${ this.messageSenderName} `, 'Notification');
+        }
+      });
     });
 
     // Description: Subscribes to real-time edited message updates from the SignalR service. When an edited message is received, the function
@@ -139,7 +155,15 @@ export class ConversationComponent {
         this.messages.splice(index, 1);
       }
     });
-
+    //for singlemessage
+    this.signalRService.getMessagesMarkedAsRead().subscribe(messageId => {
+      // Handle the messageId here, e.g., update the UI to mark the message as read
+      const messageToUpdate = this.messages.find(message => message.id === messageId);
+      if (messageToUpdate) {
+        messageToUpdate.isRead = true;
+      }
+    });
+ 
     // Description: Subscribes to real-time typing indicator updates from the SignalR service. When a typing indicator event occurs, the function
     // receives the typing status indicator containing 'userId', 'receiverId', and 'isTyping' properties. If the indicator corresponds to the
     // current conversation between the current user and the current receiver, it updates the 'isTyping' variable accordingly to reflect the
@@ -155,7 +179,11 @@ export class ConversationComponent {
         this.isTyping = false;
       }
     });
-
+    // for array message
+     // Subscribe to receive real-time updates for messages marked as read
+     this.signalRService.receiveMessagesMarkedAsRead$().subscribe((messageIds: number[]) => {
+      this.markMessagesAsReadByIds(messageIds)
+    });
     // Description: Retrieves and updates the details of the current user, including the user object and their status message. It makes two
     // separate API calls to fetch the user details and the user's status message asynchronously. If successful, it updates the 'currentUser'
     // object with the received user data and assigns the 'statusMessage' property to 'currentUserStatusMessage'. If there is an error fetching
@@ -175,7 +203,24 @@ export class ConversationComponent {
     );
   }
 
-
+  showToastr(message: any) {
+    const toastrOptions = {
+      closeButton: true,
+      enableHtml: true,
+      positionClass: 'toast-top-right', // You can adjust the position as needed
+      timeOut: 3000, // Set the duration for the Toastr notification
+      extendedTimeOut: 2000, // Additional duration if the user hovers over the Toastr
+    };
+  
+    this.toastr.info(
+      `<div class="custom-toastr">
+        <div class="custom-toastr-title">You have received 1 new message</div>
+        ${message.content} 
+      </div>`,
+      `${this.messageSenderName}`,
+      toastrOptions
+    );
+  }
   // Function to toggle the visibility state
   toggleStatusMessageVisibility(): void {
     this.isStatusMessageVisible = !this.isStatusMessageVisible;
@@ -225,8 +270,22 @@ export class ConversationComponent {
             timestamp: new Date(message.timestamp), // Convert to Date object
           }))
           .sort((a, b) => a.timestamp - b.timestamp);
+            // Filter message IDs where receiverId matches loggedInUserId
+            this.readMessages = res
+            .filter((msg: any) => msg.receiverId === this.currentUserId)
+            .map((msg: any) => msg.id);
       });
+      
   }
+
+  // markAsRead(messageId: number): void {
+  //   this.chatService.markMessageAsRead(messageId).subscribe(() => {
+  //     const message = this.messages.find(m => m.id === messageId);
+  //     if (message) {
+  //       message.isRead = true;
+  //     }
+  //   });
+  // }
 
 
 // Function: getMessages
@@ -245,9 +304,23 @@ export class ConversationComponent {
           this.messages[this.messages.length - 1].timestamp;
       }
       this.messages = res.reverse();
+      this.readMessages = res
+      .filter((msg: any) => msg.receiverId === this.currentUserId)
+      .map((msg: any) => msg.id);
+      this.chatService.readMessages(this.readMessages).subscribe(
+      );
+
+
     });
   }
-
+  markMessagesAsReadByIds(ids: number[]): void {
+    ids.forEach(id => {
+      const messageToUpdate = this.messages.find(message => message.id === id);
+      if (messageToUpdate) {
+        messageToUpdate.isRead = true;
+      }
+    });
+  }
 
 // Function: sendMessage
 // Description: Handles sending a message to the current receiver in the chat.
@@ -270,15 +343,7 @@ export class ConversationComponent {
       (response) => {
         // Handle the response from the backend if needed
         this.messageContent = '';
-
-        const existingMessage = this.messages.find(
-          (m: any) => m.id === response.id
-        );
-        if (!existingMessage) {
-          this.messages.push(response);
-          this.signalRService.sendMessage(message);
-        }
-
+        this.messages.push(response);
         this.newMessage = '';
         this.scrollToBottom();
       },

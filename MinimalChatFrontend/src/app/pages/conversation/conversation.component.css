@@ -557,6 +557,37 @@ strong {
     font-weight: bold;
     color: #007bff; /* You can change this color to your preference */
   }
+
+ 
+
+  .custom-toastr {
+    background-color: #4caf50; /* Background color */
+    color: #a82626; /* Text color */
+    padding: 16px; /* Padding */
+    border-radius: 8px; /* Border radius */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Box shadow */
+    font-size: 16px; /* Font size */
+    max-width: 300px; /* Maximum width */
+  }
+  
+  .custom-toastr-title {
+    font-weight: bold; /* Bold font for title */
+    margin-bottom: 8px; /* Bottom margin for title */
+  }
+  
+  /* Custom animation for Toastr */
+  @keyframes slideInRight {
+    from {
+      transform: translateX(100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+  
+  .toast-custom {
+    animation: slideInRight 0.5s ease; /* Apply animation to Toastr */
+  }
   
   
 

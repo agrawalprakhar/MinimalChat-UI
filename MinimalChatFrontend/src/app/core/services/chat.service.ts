@@ -11,7 +11,7 @@ export class ChatService {
 
   constructor(private http: HttpClient, private user: UserService) { }
   url = 'https://localhost:44326/api/messages';
-
+  
   private searchResultsSubject = new BehaviorSubject<any[]>([]);
   searchResults$ = this.searchResultsSubject.asObservable();
   private searchCurrentReceiverIdSubject = new BehaviorSubject<string>('');
@@ -26,7 +26,7 @@ export class ChatService {
     this.searchResultsSubject.next(results);
   }
 
-// setCurrentUserId Method
+  // setCurrentUserId Method
 // Description: This method sets the current user ID by updating the searchCurrentUserIdSubject with the provided currentUserId value.
 // It takes the current user ID as a parameter and notifies the observers by emitting the updated ID through the searchCurrentUserIdSubject.
   setCurrentUserId(currentUserId: any) {
@@ -53,23 +53,24 @@ export class ChatService {
       .set('userId', userId.toString())
       .set('sort', sort);
 
-    if (count) {
-      params = params.set('count', count.toString());
-    }
-    if (before) {
-      params = params.set('before', before.toString());
-    }
-    return this.http.get<any[]>(this.url, { headers: headers, params: params }).pipe(
-      map((response: any) => response.messages) // Extract the 'messages' array from the response
-    );
-  }
-
-// sendMessage Method
-// Description: This method sends a new message to a specific receiver.
+      if (count) {
+        params = params.set('count', count.toString());
+      }
+      if (before) {
+        params = params.set('before', before.toString());
+      }
+      return this.http.get<any[]>(this.url, { headers: headers, params: params }).pipe(
+        map((response: any) => response.messages) // Extract the 'messages' array from the response
+        );
+      }
+      
+      // sendMessage Method
+      // Description: This method sends a new message to a specific receiver.
 // It constructs an HTTP POST request with the message content and receiver ID as the body.
 // The request includes appropriate headers, including the authorization token.
 // The method returns an observable representing the response from the server.
   sendMessage(receiverId: string, content: string): Observable<any> {
+  
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${this.user.getToken()}`,
@@ -84,12 +85,12 @@ export class ChatService {
       })
     );
   }
-
+  
   // editMessage Method
-// Description: This method edits an existing message with a specified ID.
-// It constructs an HTTP PUT request with the updated message content and the message ID in the URL.
-// The request includes appropriate headers, including the authorization token.
-// The method returns an observable representing the response from the server.
+  // Description: This method edits an existing message with a specified ID.
+  // It constructs an HTTP PUT request with the updated message content and the message ID in the URL.
+  // The request includes appropriate headers, including the authorization token.
+  // The method returns an observable representing the response from the server.
   editMessage(messageId: number, content: string): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -104,10 +105,10 @@ export class ChatService {
     );
   }
 
-// deleteMessage Method
-// Description: This method deletes a message with the specified ID.
-// It constructs an HTTP DELETE request with the message ID in the URL and includes appropriate headers, including the authorization token.
-// The method returns an observable representing the response from the server
+  // deleteMessage Method
+  // Description: This method deletes a message with the specified ID.
+  // It constructs an HTTP DELETE request with the message ID in the URL and includes appropriate headers, including the authorization token.
+  // The method returns an observable representing the response from the server
   deleteMessage(messageId: number): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -115,11 +116,11 @@ export class ChatService {
     });
     return this.http.delete<any>(`${this.url}/${messageId}`, { headers: headers })
   }
-
+  
   // searchMessages Method
-// Description: This method searches for messages based on the provided query string.
-// It constructs an HTTP GET request with the query parameter in the URL and includes appropriate headers, including the authorization token.
-// The method returns an observable representing the search results from the server.
+  // Description: This method searches for messages based on the provided query string.
+  // It constructs an HTTP GET request with the query parameter in the URL and includes appropriate headers, including the authorization token.
+  // The method returns an observable representing the search results from the server.
   searchMessages(query: string): Observable<any[]> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -130,5 +131,35 @@ export class ChatService {
       headers: headers,
       params: params,
     }).pipe(map((response: any) => response.searchResult));
+  }
+
+  
+  getMessages(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.url}`);
+  }
+  markMessageAsRead(messageId: number): Observable<any> {
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${this.user.getToken()}`,
+    });
+    return this.http.post<any>(`https://localhost:44326/api/Message/markasread/${messageId}`, {},{ headers: headers });
+  }
+  readMessages(array : number[]){
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${this.user.getToken()}`,
+    });
+    return this.http.put<any>(`https://localhost:44326/api/Message/read`, array,{ headers: headers });
+  }
+
+  getUnReadMessages(){
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${this.user.getToken()}`,
+    });
+    return this.http.get<any>(`https://localhost:44326/api/Message/unread`,{ headers: headers }).pipe(
+      map((response: any) => response)
+    );
   }
 }
