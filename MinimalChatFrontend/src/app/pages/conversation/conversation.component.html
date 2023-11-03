@@ -69,8 +69,10 @@
               'chat-message outgoing': message?.senderId !== currentReceiverId,
               'chat-message incoming': message?.senderId === currentReceiverId
             }">
-            <div class="message-content">
-              <span class="message-text" *ngIf="!message.editMode && !message.deleteMode">{{ message.content }}</span>
+            <div class="message-content" [class.read]="message.isRead">
+              <span class="message-text" *ngIf="!message.editMode && !message.deleteMode">{{ message.content }}</span> &nbsp;
+              <span *ngIf="message.isRead && ( message?.senderId !== currentReceiverId)" class="read-status"><i class="fas fa-check-double"></i></span>
+              <span *ngIf="!message.isRead && ( message?.senderId !== currentReceiverId) " class="unread-status"><i class="fas fa-check"></i></span>
 
               <div *ngIf="
                   message.isEvent && !message.editMode && !message.deleteMode
@@ -120,7 +122,6 @@
 
       </p>
     </div>
-
     <!-- Chat Input -->
     <div class="chat-input">
       <input type="text" placeholder="Type your message..." [(ngModel)]="messageContent" class="chat"
