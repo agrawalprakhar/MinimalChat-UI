@@ -22,7 +22,14 @@ export class ChatService {
   unReadMessages$: Observable<any[]> = this.unReadMessagesSubject.asObservable();
 
   unReadMessages : any[] = []
-
+  
+  markMessageAsRead(messageId: number): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${this.user.getToken()}`,
+    });
+    return this.http.post<any>(`https://localhost:44326/api/Message/markasread/${messageId}`, {},{ headers: headers });
+  }
   updateUnreadMessages(messages: any[]) {
     this.unReadMessages = messages;
     this.unReadMessagesSubject.next(messages); // Notify subscribers
@@ -143,14 +150,6 @@ export class ChatService {
 
   
  
-  markMessageAsRead(messageId: number): Observable<any> {
-
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${this.user.getToken()}`,
-    });
-    return this.http.post<any>(`https://localhost:44326/api/Message/markasread/${messageId}`, {},{ headers: headers });
-  }
   readMessages(array : number[]){
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',

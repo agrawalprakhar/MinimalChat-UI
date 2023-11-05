@@ -372,10 +372,7 @@ export class ConversationComponent {
         // Handle the error if needed
       }
       );
-      this.chatService.getUnReadMessages().subscribe(response=>
-        {
-          console.log(response)
-        })
+ 
   }
 
 // Function: onContextMenu
