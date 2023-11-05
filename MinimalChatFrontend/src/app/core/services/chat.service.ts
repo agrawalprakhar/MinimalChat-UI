@@ -18,7 +18,15 @@ export class ChatService {
   searchcurrentReceiverId$ = this.searchCurrentReceiverIdSubject.asObservable();
   private searchCurrentUserIdSubject = new BehaviorSubject<string>('');
   searchcurrentUserId$ = this.searchCurrentUserIdSubject.asObservable();
+  private unReadMessagesSubject = new BehaviorSubject<any[]>([]);
+  unReadMessages$: Observable<any[]> = this.unReadMessagesSubject.asObservable();
 
+  unReadMessages : any[] = []
+
+  updateUnreadMessages(messages: any[]) {
+    this.unReadMessages = messages;
+    this.unReadMessagesSubject.next(messages); // Notify subscribers
+  }
 // setSearchResults Method
 // Description: This method sets the search results by updating the searchResultsSubject with the provided results array.
 // It takes an array of search results as a parameter and notifies the observers by emitting the updated results through the searchResultsSubject.
@@ -134,9 +142,7 @@ export class ChatService {
   }
 
   
-  getMessages(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.url}`);
-  }
+ 
   markMessageAsRead(messageId: number): Observable<any> {
 
     const headers = new HttpHeaders({

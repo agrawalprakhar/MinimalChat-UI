@@ -35,7 +35,6 @@
           <div class="profile">
             <div class="user-image">
               <span>{{ user.name.charAt(0) }}</span>
-              
             </div>
           </div>
           <div class="row">
@@ -46,11 +45,18 @@
             <span *ngIf="lastSeenTimestamps[user.name]" class="last-seen">
               Last seen: {{ lastSeenTimestamps[user.name] | date: 'shortTime' }}
             </span>
-            <!-- If the user's name is not in lastSeenUserIds array, display a default message -->
             <span *ngIf="!lastSeenTimestamps[user.name]" class="last-seen">
-              Last seen: N/A
+              Last seen:  A while ago
             </span>
             <span *ngIf="user.lastSeen" class="last-seen">Last seen: {{ user.lastSeen | date }}</span>
+          </div>
+          <div *ngIf="getUnReadMessageCount(user.id) > 0">
+            <div class="pt-1">
+              <span  class="badge bg-danger rounded-pill float-end">
+                {{getUnReadMessageCount(user.id)}}
+            </span>
+            
+            </div>
           </div>
         </div>
       </a>

@@ -41,6 +41,7 @@
       </div>
     </div>
 
+
     <nav class="navbar" style="background-color: #047bd5; height: 63px">
       <div class="container-fluid" style="position: fixed;left: 300px;">
         <a class="navbar-brand">
@@ -54,11 +55,8 @@
           <strong style="color: white">{{ currentReceiverName }}</strong>
           <small *ngIf="isTyping" class="typing-indicator">typing...</small>
         </div>
-   
-      </div>
-
-
-
+          </div>
+  
     </nav>
 
     <div class="chat-container" (scroll)="onScroll($event)">
