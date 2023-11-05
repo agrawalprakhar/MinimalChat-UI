@@ -38,6 +38,9 @@ export class SignalrService {
       .catch((err) => console.log('Error while starting connection: ' + err));
 
 
+      this.hubConnection.on('MessagesMarkedAsRead', (messageId: number) => {
+        this.messagesMarkedAsReadSubject.next(messageId);
+      });
 
     //  Listen for the 'updateCount' event, indicating a change in the count of connected users.
     this.hubConnection.on('updateCount', (count: number) => {
@@ -68,9 +71,6 @@ export class SignalrService {
       }
     );
 
-    this.hubConnection.on('MessagesMarkedAsRead', (messageId: number) => {
-      this.messagesMarkedAsReadSubject.next(messageId);
-    });
 
     this.hubConnection.on('MessagesMarkedAsRead', (messageIds: number[]) => {
       this.messagesMarkedAsReadsSubject.next(messageIds);

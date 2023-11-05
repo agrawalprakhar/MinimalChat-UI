@@ -27,7 +27,7 @@ export class ChatComponent implements OnDestroy {
   lastSeenUserIds: string[] = []; 
   private unsubscribe$ = new Subject<void>();
   private previousLastSeenTimestamps: any;
-  unReadMessages : any;
+  unReadMessages = this.chatService.unReadMessages;
   item : any;
  
  
@@ -49,7 +49,7 @@ export class ChatComponent implements OnDestroy {
     this.unsubscribe$.complete();
   }
   ngOnInit(): void {
-
+   console.log(this.unReadMessages)
 
     // Description: Subscribes to updates in the count of connected users from the SignalR service. When the count of connected users is updated
     // in the SignalR service, this subscription receives the new 'count' value. Upon receiving the updated 'count', the function assigns it to
@@ -127,22 +127,18 @@ export class ChatComponent implements OnDestroy {
       this.receiverId = receiver;
     });
     this.showSearchResults = false;
-    
+    this.chatService.unReadMessages$.subscribe((messages: any[]) => {
+      console.log(messages)
+      this.unReadMessages = messages;})
   }
-  getUnReadMessageCount(userId : string) {
-    this.chatService.getUnReadMessages().subscribe(
-      (response: any) => {
-        this.unReadMessages = response; 
-         const userUnreadMessages = this.unReadMessages.find((item: any) => item.senderId === userId);
-        console.log(userUnreadMessages)
-        return 5;
-      },
-      (error) => {
-        console.error('Error fetching unread messages:', error);
-        // Handle errors if any
-      }
-    );
-    return 0
+
+  getUnReadMessageCount(userId: String) {
+    const userUnreadMessages = this.unReadMessages.find((item: { senderId: String; }) => item.senderId === userId);
+
+    if (!userUnreadMessages || !userUnreadMessages.messages || userUnreadMessages.messages.length === 0) {
+      return 0;
+    }
+    return userUnreadMessages.messages.length;
   }
 
 

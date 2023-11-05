@@ -1,7 +1,7 @@
 .sidebar {
   position: fixed;
   height: 100%;
-  width: 280px;
+  width: 300px;
   overflow-y: auto;
   display: flex;
   /* justify-content: space-between; */
@@ -277,4 +277,28 @@ li {
   font-size: 18px; /* Set the font size to 18 pixels */
   font-weight: bold; /* Set the font weight to bold */
   margin-top: 20px; /* Add some top margin for spacing */
+}
+.countNotification {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: #36c5f0; /* Slack's primary color */
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.unread-status {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #ff4500; /* Slack's orange color for unread status */
 }
