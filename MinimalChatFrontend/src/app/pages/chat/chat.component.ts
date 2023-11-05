@@ -49,7 +49,7 @@ export class ChatComponent implements OnDestroy {
     this.unsubscribe$.complete();
   }
   ngOnInit(): void {
-   console.log(this.unReadMessages)
+  
 
     // Description: Subscribes to updates in the count of connected users from the SignalR service. When the count of connected users is updated
     // in the SignalR service, this subscription receives the new 'count' value. Upon receiving the updated 'count', the function assigns it to
@@ -128,7 +128,6 @@ export class ChatComponent implements OnDestroy {
     });
     this.showSearchResults = false;
     this.chatService.unReadMessages$.subscribe((messages: any[]) => {
-      console.log(messages)
       this.unReadMessages = messages;})
   }
 
